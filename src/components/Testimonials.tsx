@@ -1,5 +1,5 @@
 const TESTIMONIALS = [
-  { initials: 'SL', name: 'Sarah L.', role: 'Beta tester · Melbourne', quote: 'I was completely lost before Brick. After one session I understood my borrowing power, what grants I qualified for, and exactly what to offer. We bought in 6 weeks.' },
+  { initials: 'KX', name: 'Kelly X.', role: 'Beta tester · Melbourne', quote: 'I was completely lost before Brick. After one session I understood my borrowing power, what grants I qualified for, and exactly what to offer. We bought in 6 weeks.' },
   { initials: 'JL', name: 'Joseph L.', role: 'Beta tester · Sydney', quote: 'Brick found two clauses in our contract that our conveyancer missed. Saved us a potentially huge problem. Worth every cent.' },
   { initials: 'LL', name: 'Linfeng L.', role: 'Beta tester · Brisbane', quote: 'The negotiation coach is unreal. I went into auction knowing my absolute ceiling and the vendor\'s price history. Bought $22k under what I was prepared to pay.' },
 ]
