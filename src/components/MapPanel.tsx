@@ -122,7 +122,7 @@ export default function MapPanel() {
             className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors shadow-sm backdrop-blur-sm ${
               filter === t ? 'bg-black text-white border-black' : 'bg-white/90 border-[#E2E2E2] text-black hover:bg-white'
             }`}>
-            {t === 'all' ? 'All' : t === 'buy' ? 'For sale' : 'Investment'}
+            {t === 'all' ? 'All' : t === 'buy' ? 'Owner-occupier' : 'Investment'}
           </button>
         ))}
       </div>
