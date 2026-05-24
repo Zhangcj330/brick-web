@@ -13,10 +13,10 @@ export default function Testimonials() {
         <p className="text-sm text-[#888] mb-10">From our closed beta trial — before we launch.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {TESTIMONIALS.map((t, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border border-[#E2E2E2] hover:shadow-lg transition-shadow">
+            <div key={i} className="bg-white rounded-2xl p-6 border border-[#E2E2E2] hover:shadow-lg transition-shadow flex flex-col">
               <div className="text-yellow-400 text-base mb-3">★★★★★</div>
-              <p className="text-sm leading-relaxed text-[#1A1A1A] mb-5">&ldquo;{t.quote}&rdquo;</p>
-              <div className="h-px bg-[#EEEEEE] mb-4" />
+              <p className="text-sm leading-relaxed text-[#1A1A1A] mb-5 flex-1">&ldquo;{t.quote}&rdquo;</p>
+              <div className="h-px bg-[#EEEEEE] mb-4 mt-auto" />
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-black text-white text-xs font-bold flex items-center justify-center flex-shrink-0">{t.initials}</div>
                 <div>
