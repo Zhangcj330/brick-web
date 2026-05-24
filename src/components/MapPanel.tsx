@@ -31,7 +31,7 @@ export default function MapPanel() {
       if (cancelled) { map.remove(); return }
       mapInstance.current = map
 
-      L.control.zoom({ position: 'bottomright' }).addTo(map)
+      L.control.zoom({ position: 'topright' }).addTo(map)
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap © CARTO',
