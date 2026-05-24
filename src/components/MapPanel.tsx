@@ -109,25 +109,24 @@ export default function MapPanel() {
   }
 
   return (
-    <div>
-      {/* Filter toolbar — outside overflow:hidden */}
-      <div className="flex gap-2 mb-2.5">
+    <div className="relative rounded-2xl overflow-hidden shadow-md" style={{ height: 560 }}>
+      {/* Map container */}
+      <div ref={mapRef} className="w-full h-full" />
+
+      {/* Filter toolbar — overlaid top-left on the map */}
+      <div className="absolute top-3 left-3 z-[1000] flex gap-2">
         {(['all', 'buy', 'invest'] as const).map(t => (
           <button key={t} onClick={() => handleFilter(t)}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors shadow-sm ${
-              filter === t ? 'bg-black text-white border-black' : 'bg-white border-[#E2E2E2] text-black hover:bg-[#F6F6F6]'
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors shadow-sm backdrop-blur-sm ${
+              filter === t ? 'bg-black text-white border-black' : 'bg-white/90 border-[#E2E2E2] text-black hover:bg-white'
             }`}>
             {t === 'all' ? 'All' : t === 'buy' ? 'For sale' : 'Investment'}
           </button>
         ))}
       </div>
 
-      {/* Map container */}
-      <div className="relative rounded-2xl overflow-hidden shadow-md" style={{ height: 440 }}>
-        <div ref={mapRef} className="w-full h-full" />
-
-        {/* Property card */}
-        {selected && (
+      {/* Property card */}
+      {selected && (
           <div className="absolute bottom-4 left-4 right-4 bg-white rounded-2xl p-4 shadow-xl z-[1000] transition-all">
             <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#F6F6F6] flex items-center justify-center text-xs text-[#6B6B6B] hover:bg-[#E2E2E2]">✕</button>
             <div className="flex items-start gap-3">
@@ -164,6 +163,5 @@ export default function MapPanel() {
           </div>
         )}
       </div>
-    </div>
   )
 }

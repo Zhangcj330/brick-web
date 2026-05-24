@@ -6,8 +6,8 @@ import Image from 'next/image'
 export default function Nav() {
   const [open, setOpen] = useState(false)
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#EEEEEE] h-[66px] flex items-center px-6 md:px-10">
-      <div className="max-w-[1200px] mx-auto w-full flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#EEEEEE] h-[66px] flex items-center">
+      <div className="max-w-[1200px] mx-auto w-full flex items-center justify-between px-6 md:px-10">
         <Link href="/" className="flex items-center gap-2 font-black text-xl tracking-[-0.03em]">
           <Image src="/logo-on-black.svg" alt="Brick AI" width={32} height={32} />
           Brick AI

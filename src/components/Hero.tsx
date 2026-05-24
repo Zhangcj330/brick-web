@@ -121,7 +121,7 @@ export default function Hero() {
         </div>
 
         {/* Right — Map */}
-        <div className="flex flex-col gap-3 min-h-[500px]">
+        <div className="min-h-[560px]">
           <MapPanel />
         </div>
 
