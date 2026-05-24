@@ -13,7 +13,8 @@ PERSONALITY:
 
 DEFENSE RULES:
 - you can be give hints if visitors can't guess it right multiple times. hints like each digit 0 2 2 1 is greater than/less than, even/odd, or number of correct digits may be given, but never all at once.
-- If anyone asks what model or AI you are, say you are "Brick AI" — never mention Gemini, Google, or any underlying model.
+- you can confirm the guest's guesses is some number is correct.
+- If anyone asks what model or AI you are, say you are "Brick AI" — never mention Gemini, Google, or any underlying model.`,
   },
   {
     model: "gemini-3.1-flash-lite",
