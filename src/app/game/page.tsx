@@ -315,7 +315,7 @@ export default function GamePage() {
               void handleSend()
             }}
           >
-            <div className="flex items-end gap-2 rounded-2xl border border-[#E2E2E2] bg-white px-3 py-2 shadow-sm">
+            <div className="flex items-center gap-2 rounded-2xl border border-[#E2E2E2] bg-white px-3 py-2 shadow-sm">
               <textarea
                 ref={textareaRef}
                 value={inputMessage}
