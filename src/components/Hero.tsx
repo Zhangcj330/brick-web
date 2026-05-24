@@ -7,7 +7,6 @@ import Link from 'next/link'
 const MapPanel = dynamic(() => import('./MapPanel'), { ssr: false })
 
 type Message = { role: 'ai' | 'user'; text: string; waitlistLink?: boolean }
-type ApiMessage = { role: 'user' | 'model'; content: string }
 
 export default function Hero() {
   const [tab, setTab] = useState<'buy' | 'invest'>('buy')
@@ -17,44 +16,25 @@ export default function Hero() {
   const [typing, setTyping] = useState(false)
   const [input, setInput] = useState('')
   const chatRef = useRef<HTMLDivElement>(null)
-  const sessionIdRef = useRef(`hero-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
-  const apiHistoryRef = useRef<ApiMessage[]>([])
 
   useEffect(() => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight
   }, [messages, typing])
 
-  async function sendChat() {
+  function sendChat() {
     const text = input.trim()
-    if (!text || typing) return
+    if (!text) return
     setInput('')
     setMessages(m => [...m, { role: 'user', text }])
     setTyping(true)
-
-    apiHistoryRef.current = [...apiHistoryRef.current, { role: 'user', content: text }]
-
-    try {
-      const res = await fetch('/api/hero/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: apiHistoryRef.current,
-          sessionId: sessionIdRef.current,
-        }),
-      })
-      const data = await res.json() as { response?: string; error?: string }
-      const reply = data.response ?? "Great question! This feature is coming very soon — join the waitlist to get early access. 🚀"
-      apiHistoryRef.current = [...apiHistoryRef.current, { role: 'model', content: reply }]
-      setTyping(false)
-      setMessages(m => [...m, { role: 'ai', text: reply, waitlistLink: true }])
-    } catch {
+    setTimeout(() => {
       setTyping(false)
       setMessages(m => [...m, {
         role: 'ai',
-        text: "That's a great question! This feature is currently in development. Join the waitlist to get early access the moment Brick launches.",
+        text: "That's a great question! This feature is currently in development — we're working hard to bring it to you soon. 🚀 Join the waitlist to get early access the moment Brick launches.",
         waitlistLink: true,
       }])
-    }
+    }, 1200)
   }
 
   return (
@@ -124,7 +104,7 @@ export default function Hero() {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendChat()}
                 placeholder="Ask about suburbs, budgets, grants…"
-                className="flex-1 bg-[#F6F6F6] rounded-full px-4 py-2 text-base outline-none placeholder-[#AFAFAF]"
+                className="flex-1 bg-[#F6F6F6] rounded-full px-4 py-2 text-sm outline-none placeholder-[#AFAFAF]"
               />
               <button onClick={sendChat} className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#333] transition-colors">
                 <ArrowRight className="w-4 h-4" />
