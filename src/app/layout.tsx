@@ -11,7 +11,12 @@ const hanken = Hanken_Grotesk({
 
 export const metadata: Metadata = {
   title: 'Brick AI — The AI co-pilot for first-home buyers',
-  description: 'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right.',
+  description: 'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.',
+  icons: {
+    icon: '/logo-on-black.svg',
+    shortcut: '/logo-on-black.svg',
+    apple: '/logo-on-black.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
