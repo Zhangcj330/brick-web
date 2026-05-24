@@ -101,14 +101,14 @@ export default function WaitlistPage() {
         <p className="text-[#6B6B6B] mb-8">We&apos;ll email you at <strong>{form.email}</strong> the moment Brick launches.</p>
         <div className="flex gap-3 justify-center">
           <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Brick AI waitlist — an AI co-pilot for first-home buyers in Australia 🏠 brickai.com.au")}`}
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Brick AI waitlist — an AI co-pilot for first-home buyers in Australia 🏠 thebrickai.com")}`}
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-black text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#333] transition-colors"
           >
             Share on X
           </a>
           <button
-            onClick={() => navigator.clipboard.writeText('https://brickai.com.au')}
+            onClick={() => navigator.clipboard.writeText('https://thebrickai.com')}
             className="inline-flex items-center gap-2 border border-[#EEEEEE] text-black text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#F6F6F6] transition-colors"
           >
             Copy link
