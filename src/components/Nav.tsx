@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function Nav() {
   const [open, setOpen] = useState(false)
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#EEEEEE] h-[66px] flex items-center px-10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#EEEEEE] h-[66px] flex items-center px-6 md:px-10">
       <div className="max-w-[1200px] mx-auto w-full flex items-center justify-between">
         <Link href="/" className="font-black text-xl tracking-[-0.03em]">Brick AI</Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#3A3A3A]">
@@ -26,7 +26,7 @@ export default function Nav() {
         </button>
       </div>
       {open && (
-        <div className="absolute top-[66px] left-0 right-0 bg-white border-b border-[#EEEEEE] px-10 py-6 flex flex-col gap-4 md:hidden">
+        <div className="absolute top-[66px] left-0 right-0 bg-white border-b border-[#EEEEEE] px-6 md:px-10 py-6 flex flex-col gap-4 md:hidden">
           <a href="#suggestions" className="text-sm font-medium" onClick={() => setOpen(false)}>Features</a>
           <a href="#how" className="text-sm font-medium" onClick={() => setOpen(false)}>How it works</a>
           <a href="#proof" className="text-sm font-medium" onClick={() => setOpen(false)}>Reviews</a>

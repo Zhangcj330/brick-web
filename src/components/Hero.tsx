@@ -43,8 +43,8 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="pt-[66px]">
-      <div className="max-w-[1200px] mx-auto px-10 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="hero" className="pt-[66px] bg-white">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
         {/* Left */}
         <div>
@@ -121,7 +121,7 @@ export default function Hero() {
         </div>
 
         {/* Right — Map */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 min-h-[500px]">
           <MapPanel />
         </div>
 

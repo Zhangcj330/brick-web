@@ -12,7 +12,7 @@ const FEATURES = [
 export default function Features() {
   return (
     <section id="suggestions" className="bg-[#F6F6F6] py-20">
-      <div className="max-w-[1200px] mx-auto px-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#6B6B6B] mb-3">What Brick AI does</p>
         <h2 className="text-[40px] font-black tracking-[-0.02em] mb-12">Everything you need.<br />Nothing you don&apos;t.</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

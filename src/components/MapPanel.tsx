@@ -11,17 +11,24 @@ export default function MapPanel() {
   const propertiesRef = useRef(DEE_WHY_PROPERTIES.map(p => ({ ...p })))
 
   useEffect(() => {
-    if (mapInstance.current || !mapRef.current) return
+    let cancelled = false
+
     ;(async () => {
+      if (!mapRef.current) return
       const L = (await import('leaflet')).default
       await import('leaflet/dist/leaflet.css')
 
-      const map = L.map(mapRef.current!, {
+      if (cancelled || !mapRef.current) return
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((mapRef.current as any)._leaflet_id) return
+
+      const map = L.map(mapRef.current, {
         center: [-33.7495, 151.2885],
         zoom: 15,
         zoomControl: true,
         scrollWheelZoom: false,
       })
+      if (cancelled) { map.remove(); return }
       mapInstance.current = map
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -70,11 +77,22 @@ export default function MapPanel() {
       })
 
       setTimeout(() => {
+        if (cancelled) return
         const first = propertiesRef.current[0]
         map.flyTo([first.lat, first.lng] as [number,number], 16, { duration: 0.9 })
         setSelected({ ...first })
       }, 900)
     })()
+
+    return () => {
+      cancelled = true
+      if (mapInstance.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ;(mapInstance.current as any).remove()
+        mapInstance.current = null
+        markersRef.current = {}
+      }
+    }
   }, [])
 
   async function handleFilter(type: 'all' | 'buy' | 'invest') {

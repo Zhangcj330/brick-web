@@ -7,7 +7,7 @@ const TESTIMONIALS = [
 export default function Testimonials() {
   return (
     <section id="proof" className="bg-[#F6F6F6] py-20">
-      <div className="max-w-[1200px] mx-auto px-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#6B6B6B] mb-3">What beta testers say</p>
         <h2 className="text-[40px] font-black tracking-[-0.02em] mb-2">Early feedback.<br />Real reactions.</h2>
         <p className="text-sm text-[#888] mb-10">From our closed beta trial — before we launch.</p>

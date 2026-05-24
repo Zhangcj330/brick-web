@@ -92,7 +92,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how" className="bg-black py-20">
-      <div className="max-w-[1200px] mx-auto px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
         {/* Steps */}
         <div>

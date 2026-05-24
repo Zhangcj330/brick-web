@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 export default function CtaStrip() {
   return (
     <section id="cta" className="bg-black py-20">
-      <div className="max-w-[1200px] mx-auto px-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#6B6B6B] mb-3">Now in development</p>
           <h2 className="text-[40px] font-black tracking-[-0.02em] text-white mb-3">Be first when we launch.</h2>
