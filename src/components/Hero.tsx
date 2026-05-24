@@ -96,17 +96,12 @@ export default function Hero() {
               )}
             </div>
             <div className="flex items-center gap-2 px-4 py-3 border-t border-[#EEEEEE]">
-              <input
-                type="text"
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && sendChat()}
-                placeholder="Ask about suburbs, budgets, grants…"
-                className="flex-1 bg-[#F6F6F6] rounded-full px-4 py-2 text-sm outline-none placeholder-[#AFAFAF]"
-              />
-              <button onClick={sendChat} className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#333] transition-colors">
+              <Link href="/waitlist" className="flex-1 flex items-center gap-2 bg-[#F6F6F6] rounded-full px-4 py-2 text-sm text-[#AFAFAF] hover:bg-[#EEEEEE] transition-colors cursor-pointer">
+                <span className="flex-1">Ask about suburbs, budgets, grants…</span>
+              </Link>
+              <Link href="/waitlist" className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#333] transition-colors">
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </div>
 
