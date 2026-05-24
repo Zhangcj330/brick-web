@@ -30,7 +30,6 @@ export default function GamePage() {
   const [isSending, setIsSending] = useState(false)
   const [isUnlocking, setIsUnlocking] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const passwordInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const sessionStartedAtRef = useRef(0)
   const currentLevel = GATEKEEPER_LEVELS[currentLevelIndex]
@@ -60,7 +59,7 @@ export default function GamePage() {
     setPassword('')
     setPasswordError(false)
     setIsSending(false)
-    requestAnimationFrame(() => passwordInputRef.current?.focus())
+    requestAnimationFrame(() => textareaRef.current?.focus())
   }
 
   const handlePasswordChange = (value: string) => {
@@ -263,47 +262,62 @@ export default function GamePage() {
         )}
       </div>
 
-      <div className="shrink-0 space-y-3 border-t border-[#EEEEEE] bg-white px-4 py-4 sm:px-6">
+      <div className="shrink-0 border-t border-[#EEEEEE] bg-white px-4 py-4 sm:px-6">
         <div className="mx-auto max-w-2xl space-y-3">
-          <form onSubmit={handlePasswordSubmit} className="flex items-center justify-center gap-3">
-            <div
-              className={`flex cursor-text items-center gap-2 rounded-2xl border bg-white px-2.5 py-2 shadow-sm transition ${
-                passwordError ? 'border-red-400 bg-red-50' : 'border-[#E2E2E2]'
-              }`}
-              onClick={() => passwordInputRef.current?.focus()}
-            >
-              <input
-                ref={passwordInputRef}
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                value={password}
-                onChange={(event) => handlePasswordChange(event.target.value)}
-                className="absolute h-0 w-0 opacity-0"
-                maxLength={4}
-                aria-label="4-digit password"
-              />
+          {/* Password display + keypad */}
+          <form onSubmit={handlePasswordSubmit}>
+            {/* 4-digit display */}
+            <div className="flex items-center justify-center gap-2 mb-3">
               {passwordDigits.map((digit, index) => (
                 <div
                   key={index}
-                  className={`flex h-10 w-10 items-center justify-center rounded-xl border text-[17px] font-bold transition ${
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl border-2 text-xl font-black transition-all duration-150 ${
                     passwordError
-                      ? 'border-red-200 text-red-500'
+                      ? 'border-red-400 bg-red-50 text-red-500 shake'
                       : digit
-                        ? 'border-black bg-white text-black'
+                        ? 'border-black bg-black text-white scale-105'
                         : 'border-[#E2E2E2] bg-[#F6F6F6] text-[#AFAFAF]'
                   }`}
                 >
-                  {digit}
+                  {digit || '·'}
                 </div>
               ))}
+              {/* Backspace */}
+              <button
+                type="button"
+                onClick={() => handlePasswordChange(password.slice(0, -1))}
+                disabled={!password}
+                className="ml-1 flex h-12 w-12 items-center justify-center rounded-xl border-2 border-[#E2E2E2] bg-white text-lg text-[#6B6B6B] transition active:scale-90 active:bg-[#F6F6F6] disabled:opacity-30"
+              >
+                ⌫
+              </button>
             </div>
+
+            {/* Numpad grid */}
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {['1','2','3','4','5','6','7','8','9','','0',''].map((key, i) => {
+                if (key === '') return <div key={i} />
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => password.length < 4 && handlePasswordChange(password + key)}
+                    disabled={password.length >= 4}
+                    className="flex h-12 items-center justify-center rounded-xl border-2 border-[#E2E2E2] bg-white text-lg font-bold text-black shadow-sm transition-all duration-75 active:scale-90 active:bg-black active:text-white active:border-black hover:border-[#AAAAAA] disabled:opacity-30 select-none"
+                  >
+                    {key}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Unlock button */}
             <button
               type="submit"
               disabled={isUnlocking || password.length !== 4}
-              className="rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-40"
+              className="w-full rounded-full bg-black py-2.5 text-sm font-semibold text-white transition hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {isUnlocking ? 'Checking…' : 'Unlock'}
+              {isUnlocking ? 'Checking…' : 'Unlock →'}
             </button>
           </form>
 
