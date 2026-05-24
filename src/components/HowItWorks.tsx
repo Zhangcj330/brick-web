@@ -30,7 +30,7 @@ const DEMO_SCRIPT: DemoStep[] = [
     ]}
   },
   { role: 'user', text: "Is 14 Fisher Rd a good buy?", delay: 1200, typing: 800 },
-  { role: 'ai', text: "Comparable sales avg $2.08M (90 days). Sold Apr 2025 at $2.15M — 3.4% above median but 512m² block is premium for Dee Why. Solid buy.", delay: 1200, typing: 1800,
+  { role: 'ai', text: "Comparable sales avg $2.08M (90 days). Sold Apr 2026 at $2.15M — 3.4% above median but 512m² block is premium for Dee Why. Solid buy.", delay: 1200, typing: 1800,
     card: { rows: [
       { label: 'Comp. sales avg', val: '$2.08M' },
       { label: 'Land size', val: '512m²', badge: '✓ Good buy' },

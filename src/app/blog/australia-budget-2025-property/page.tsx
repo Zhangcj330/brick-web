@@ -4,8 +4,8 @@ import Footer from '@/components/Footer'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: "Australia's 2025 Federal Budget: What It Means for First-Home Buyers — Brick AI",
-  description: "The 2025 Federal Budget delivered housing supply measures and demand-side support. We break down what actually matters if you're trying to buy your first home.",
+  title: "Australia's 2026 Federal Budget: What It Means for First-Home Buyers — Brick AI",
+  description: "The 2026 Federal Budget delivered housing supply measures and demand-side support. We break down what actually matters if you're trying to buy your first home.",
 }
 
 export default function BlogPost() {
@@ -22,13 +22,13 @@ export default function BlogPost() {
             </Link>
             <div className="flex items-center gap-3 mb-5">
               <span className="text-xs font-bold bg-white border border-[#EEEEEE] px-2.5 py-1 rounded-full">Market Analysis</span>
-              <span className="text-xs text-[#AFAFAF]">6 min read · 24 May 2025</span>
+              <span className="text-xs text-[#AFAFAF]">6 min read · 24 May 2026</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-6">
               Australia&apos;s 2025 Federal Budget: What It Means for First-Home Buyers
             </h1>
             <p className="text-[#6B6B6B] text-lg leading-relaxed">
-              The 2025 Federal Budget delivered a mix of housing supply measures and demand-side support. We break down what actually matters if you&apos;re trying to buy your first home this year.
+              The 2026 Federal Budget delivered a mix of housing supply measures and demand-side support. We break down what actually matters if you&apos;re trying to buy your first home this year.
             </p>
           </div>
         </section>
@@ -40,10 +40,10 @@ export default function BlogPost() {
             <section>
               <h2 className="text-2xl font-black tracking-tight mb-4">The big picture</h2>
               <p className="leading-relaxed text-[#6B6B6B]">
-                The Albanese government&apos;s 2025–26 Federal Budget continued its focus on housing affordability — a persistent sore point for younger Australians locked out of the property market. With median house prices in Sydney exceeding $1.6M and Melbourne above $900k, the budget measures are welcome, but the question is whether they&apos;re enough.
+                The Albanese government&apos;s 2026–27 Federal Budget continued its focus on housing affordability — a persistent sore point for younger Australians locked out of the property market. With median house prices in Sydney exceeding $1.6M and Melbourne above $900k, the budget measures are welcome, but the question is whether they&apos;re enough.
               </p>
               <p className="leading-relaxed text-[#6B6B6B] mt-4">
-                Here&apos;s what was announced, and more importantly, what it means in practice if you&apos;re a first-home buyer looking to enter the market in 2025.
+                Here&apos;s what was announced, and more importantly, what it means in practice if you&apos;re a first-home buyer looking to enter the market in 2026.
               </p>
             </section>
 
@@ -55,7 +55,7 @@ export default function BlogPost() {
                 The government&apos;s shared equity scheme, <strong>Help to Buy</strong>, was allocated additional funding to expand its reach. Under the scheme, the federal government co-purchases a home with eligible buyers — contributing up to 40% of the purchase price for new builds and 30% for existing homes.
               </p>
               <div className="bg-[#F6F6F6] rounded-2xl p-5 mt-5">
-                <p className="text-sm font-bold mb-2">Key eligibility (2025 update):</p>
+                <p className="text-sm font-bold mb-2">Key eligibility (2026 update):</p>
                 <ul className="text-sm text-[#6B6B6B] space-y-1.5 list-disc pl-4">
                   <li>Income cap: $90,000 for singles, $120,000 for couples</li>
                   <li>Property price caps apply by state (e.g. up to $950k in Sydney)</li>
@@ -76,7 +76,7 @@ export default function BlogPost() {
                 The budget reaffirmed the government&apos;s Housing Australia Future Fund target of <strong>1.2 million new homes by 2029</strong>, backed by $32 billion in commitments across construction incentives, social housing, and infrastructure funding for greenfield development.
               </p>
               <p className="leading-relaxed text-[#6B6B6B] mt-4">
-                In practice, new supply takes 2–4 years to reach the market. For buyers looking to purchase in 2025–26, this won&apos;t ease price pressure in the short term — especially in inner-ring suburbs with planning restrictions.
+                In practice, new supply takes 2–4 years to reach the market. For buyers looking to purchase in 2026–27, this won&apos;t ease price pressure in the short term — especially in inner-ring suburbs with planning restrictions.
               </p>
               <p className="leading-relaxed text-[#6B6B6B] mt-4">
                 However, outer suburban and regional markets attached to growth corridors (e.g. Western Sydney around the new airport, southeast Queensland, outer Melbourne) may see increased supply and more competitive pricing within 18–24 months.
@@ -91,7 +91,7 @@ export default function BlogPost() {
                 The <strong>First Home Guarantee</strong> (formerly FHLDS) — which allows eligible buyers to purchase with a 5% deposit without paying Lenders Mortgage Insurance — continues with 35,000 places per financial year. The Regional First Home Buyer Guarantee also continues with 10,000 additional places for regional purchases.
               </p>
               <div className="bg-[#F6F6F6] rounded-2xl p-5 mt-5">
-                <p className="text-sm font-bold mb-2">2025–26 price caps (selected cities):</p>
+                <p className="text-sm font-bold mb-2">2026–27 price caps (selected cities):</p>
                 <ul className="text-sm text-[#6B6B6B] space-y-1.5 list-disc pl-4">
                   <li>Sydney / NSW: $900,000</li>
                   <li>Melbourne / VIC: $800,000</li>
@@ -110,7 +110,7 @@ export default function BlogPost() {
             <section>
               <h2 className="text-2xl font-black tracking-tight mb-4">4. Interest rate outlook — the real driver</h2>
               <p className="leading-relaxed text-[#6B6B6B]">
-                The budget operates in the context of the RBA&apos;s rate cycle. After cutting rates in February 2025 for the first time since 2020, the RBA held at its May meeting. Markets are pricing in 1–2 further cuts by end of 2025.
+                The budget operates in the context of the RBA&apos;s rate cycle. After cutting rates in February 2026 for the first time since 2020, the RBA held at its May meeting. Markets are pricing in 1–2 further cuts by end of 2026.
               </p>
               <p className="leading-relaxed text-[#6B6B6B] mt-4">
                 Each 0.25% rate cut increases borrowing capacity by approximately 2–3%. If rates fall by 0.75% by year-end, a household with $120k combined income could borrow an additional $30,000–$45,000. That matters at this end of the market.

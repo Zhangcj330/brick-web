@@ -156,7 +156,7 @@ export default function WaitlistPage() {
           </div>
         </div>
 
-        <p className="text-xs text-[#6B6B6B]">© 2025 Brick AI</p>
+        <p className="text-xs text-[#6B6B6B]">© 2026 Brick AI</p>
       </div>
 
       {/* Right — form */}

@@ -58,7 +58,7 @@ export default function Footer() {
         ))}
       </div>
       <div className="border-t border-[#EEEEEE] px-10 py-5 max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-        <p className="text-xs text-[#AFAFAF]">© 2025 Brick AI. All rights reserved.</p>
+        <p className="text-xs text-[#AFAFAF]">© 2026 Brick AI. All rights reserved.</p>
         <p className="text-xs text-[#AFAFAF]">Built for Australian first-home buyers.</p>
       </div>
     </footer>

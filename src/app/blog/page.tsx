@@ -11,10 +11,10 @@ export const metadata = {
 const POSTS = [
   {
     slug: 'australia-budget-2025-property',
-    date: '24 May 2025',
+    date: '24 May 2026',
     tag: 'Market Analysis',
-    title: "Australia's 2025 Federal Budget: What It Means for First-Home Buyers",
-    excerpt: "The 2025 Federal Budget delivered a mix of housing supply measures and demand-side support. We break down what actually matters if you're trying to buy your first home this year.",
+    title: "Australia's 2026 Federal Budget: What It Means for First-Home Buyers",
+    excerpt: "The 2026 Federal Budget delivered a mix of housing supply measures and demand-side support. We break down what actually matters if you're trying to buy your first home this year.",
     readTime: '6 min read',
   },
 ]
