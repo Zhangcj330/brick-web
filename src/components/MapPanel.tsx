@@ -39,11 +39,6 @@ export default function MapPanel() {
         maxZoom: 19,
       }).addTo(map)
 
-      L.polygon(
-        [[-33.744,151.282],[-33.744,151.296],[-33.756,151.296],[-33.756,151.282]] as [number,number][],
-        { color: 'transparent', fillColor: '#D9E5D8', fillOpacity: 0.40, interactive: false }
-      ).addTo(map)
-
       L.marker([-33.750, 151.289] as [number,number], {
         icon: L.divIcon({ className: 'suburb-label', html: 'DEE WHY', iconAnchor: [35, 8] }),
         interactive: false,
