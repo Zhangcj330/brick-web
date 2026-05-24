@@ -179,9 +179,9 @@ export default function GamePage() {
           <div className="ml-auto flex items-center gap-2">
             <Link
               href="/"
-              className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-[#6B6B6B] hover:text-black transition-colors"
+              className="hidden sm:inline-flex items-center text-sm font-semibold border border-[#E2E2E2] px-4 py-1.5 rounded-full hover:bg-[#F6F6F6] transition-colors"
             >
-              ← Home
+              Home
             </Link>
             <button
               onClick={resetLevel}
