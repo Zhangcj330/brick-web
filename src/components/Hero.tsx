@@ -6,24 +6,15 @@ import Link from 'next/link'
 
 const MapPanel = dynamic(() => import('./MapPanel'), { ssr: false })
 
-const SUGGESTIONS = [
-  '3-bed house in Dee Why, budget $2M',
-  'What grants am I eligible for as a NSW first-home buyer?',
-  'Is Narrabeen good value right now?',
-]
-
-const AI_REPLY = "Great choice! Dee Why has a median house price of $1.94M with 74% clearance rate. As a NSW first-home buyer you may also qualify for $0 stamp duty under First Home Buyer Assist. Want me to pull comparable sales from the last 90 days?"
-
-type Message = { role: 'ai' | 'user'; text: string }
+type Message = { role: 'ai' | 'user'; text: string; waitlistLink?: boolean }
 
 export default function Hero() {
   const [tab, setTab] = useState<'buy' | 'invest'>('buy')
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'ai', text: "👋 Hi! I'm Brick. Tell me about the home you're looking for — suburb, budget, must-haves. I'll find matches and run the numbers." }
+    { role: 'ai', text: "👋 Hi! I'm Brick. Tell me about the home you're looking for — suburb, budget, must-haves." }
   ])
   const [typing, setTyping] = useState(false)
   const [input, setInput] = useState('')
-  const [suggIdx, setSuggIdx] = useState(0)
   const chatRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -31,15 +22,19 @@ export default function Hero() {
   }, [messages, typing])
 
   function sendChat() {
-    const text = input.trim() || SUGGESTIONS[suggIdx % SUGGESTIONS.length]
-    setSuggIdx(i => i + 1)
+    const text = input.trim()
+    if (!text) return
     setInput('')
     setMessages(m => [...m, { role: 'user', text }])
     setTyping(true)
     setTimeout(() => {
       setTyping(false)
-      setMessages(m => [...m, { role: 'ai', text: AI_REPLY }])
-    }, 1800)
+      setMessages(m => [...m, {
+        role: 'ai',
+        text: "That's a great question! This feature is currently in development — we're working hard to bring it to you soon. 🚀 Join the waitlist to get early access the moment Brick launches.",
+        waitlistLink: true,
+      }])
+    }, 1200)
   }
 
   return (
@@ -84,7 +79,14 @@ export default function Hero() {
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug ${
                     m.role === 'ai' ? 'bg-[#F6F6F6] text-black rounded-tl-sm' : 'bg-black text-white rounded-tr-sm'
-                  }`}>{m.text}</div>
+                  }`}>
+                    {m.text}
+                    {m.waitlistLink && (
+                      <Link href="/waitlist" className="block mt-1.5 font-semibold underline underline-offset-2 hover:text-[#333]">
+                        Join the waitlist →
+                      </Link>
+                    )}
+                  </div>
                 </div>
               ))}
               {typing && (
@@ -96,12 +98,17 @@ export default function Hero() {
               )}
             </div>
             <div className="flex items-center gap-2 px-4 py-3 border-t border-[#EEEEEE]">
-              <Link href="/waitlist" className="flex-1 flex items-center gap-2 bg-[#F6F6F6] rounded-full px-4 py-2 text-sm text-[#AFAFAF] hover:bg-[#EEEEEE] transition-colors cursor-pointer">
-                <span className="flex-1">Ask about suburbs, budgets, grants…</span>
-              </Link>
-              <Link href="/waitlist" className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#333] transition-colors">
+              <input
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && sendChat()}
+                placeholder="Ask about suburbs, budgets, grants…"
+                className="flex-1 bg-[#F6F6F6] rounded-full px-4 py-2 text-sm outline-none placeholder-[#AFAFAF]"
+              />
+              <button onClick={sendChat} className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-[#333] transition-colors">
                 <ArrowRight className="w-4 h-4" />
-              </Link>
+              </button>
             </div>
           </div>
 

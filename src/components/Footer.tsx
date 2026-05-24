@@ -1,9 +1,29 @@
 import Link from 'next/link'
 
 const COLS = [
-  { heading: 'Product', links: ['Features', 'How it works', 'Reviews'] },
-  { heading: 'Company', links: ['About', 'Blog', 'Careers'] },
-  { heading: 'Legal', links: ['Privacy', 'Terms', 'Cookies'] },
+  {
+    heading: 'Product',
+    links: [
+      { label: 'Features', href: '/#suggestions' },
+      { label: 'How it works', href: '/#how' },
+      { label: 'Reviews', href: '/#proof' },
+    ],
+  },
+  {
+    heading: 'Company',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Join waitlist', href: '/waitlist' },
+      { label: 'Play game', href: '/game' },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+    ],
+  },
 ]
 
 export default function Footer() {
@@ -19,8 +39,8 @@ export default function Footer() {
             <div className="text-xs font-bold uppercase tracking-[0.1em] text-[#AFAFAF] mb-4">{col.heading}</div>
             <ul className="flex flex-col gap-2.5">
               {col.links.map(l => (
-                <li key={l}>
-                  <Link href="#" className="text-sm text-[#3A3A3A] hover:text-black transition-colors">{l}</Link>
+                <li key={l.label}>
+                  <Link href={l.href} className="text-sm text-[#3A3A3A] hover:text-black transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
