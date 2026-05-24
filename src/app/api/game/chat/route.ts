@@ -1,4 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Langfuse } from "langfuse";
+
+const langfuse = new Langfuse({
+  publicKey: process.env.LANGFUSE_PUBLIC_KEY,
+  secretKey: process.env.LANGFUSE_SECRET_KEY,
+  baseUrl: process.env.LANGFUSE_BASE_URL ?? "https://cloud.langfuse.com",
+});
 
 const LEVEL_CONFIGS = [
   {
@@ -73,6 +80,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
     }
 
+    const trace = langfuse.trace({
+      name: "game-chat",
+      metadata: { level },
+    });
+
+    const generation = trace.generation({
+      name: `level-${level}-response`,
+      model: levelConfig.model,
+      input: messages.map((m: { role: string; content: string }) => ({
+        role: m.role,
+        content: m.content,
+      })),
+      modelParameters: levelConfig.generationConfig,
+    });
+
     const contents = [
       { role: "user", parts: [{ text: levelConfig.systemPrompt }] },
       ...messages.map((m: { role: string; content: string }) => ({
@@ -89,11 +111,17 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const error = await response.json();
+      generation.end({ output: error, level: "ERROR" });
+      await langfuse.flushAsync();
       return NextResponse.json({ error: error.error?.message || "Failed to get response" }, { status: response.status });
     }
 
     const data = await response.json();
     const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+    generation.end({ output: responseText });
+    await langfuse.flushAsync();
+
     return NextResponse.json({ response: responseText });
   } catch (error) {
     console.error("[Game Chat API] Error:", error);
