@@ -133,7 +133,12 @@ export default function MapPanel() {
             {/* Header row: price + close button */}
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-start gap-3 flex-1 min-w-0">
-                <div className="w-14 h-14 rounded-xl bg-[#F6F6F6] flex items-center justify-center flex-shrink-0 text-[#AFAFAF] text-2xl">🏠</div>
+                {selected.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={selected.image} alt={selected.address} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
+                ) : (
+                  <div className="w-14 h-14 rounded-xl bg-[#F6F6F6] flex items-center justify-center flex-shrink-0 text-[#AFAFAF] text-2xl">🏠</div>
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-sm truncate">{selected.address}</div>
                   <div className="text-xs text-[#6B6B6B] mt-0.5">{selected.meta}</div>
