@@ -184,7 +184,7 @@ export default function WaitlistPage() {
               <label className="text-xs font-semibold mb-1.5 block">First name <span className="text-red-500">*</span></label>
               <input
                 value={form.first_name} onChange={e => set('first_name', e.target.value)}
-                placeholder="Alex"
+                placeholder="First name"
                 className={`w-full bg-[#F6F6F6] rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-black/20 ${errors.first_name ? 'ring-2 ring-red-400' : ''}`}
               />
               {errors.first_name && <p className="text-xs text-red-500 mt-1">{errors.first_name}</p>}
@@ -193,7 +193,7 @@ export default function WaitlistPage() {
               <label className="text-xs font-semibold mb-1.5 block">Last name</label>
               <input
                 value={form.last_name} onChange={e => set('last_name', e.target.value)}
-                placeholder="Smith"
+                placeholder="Last name"
                 className="w-full bg-[#F6F6F6] rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-black/20"
               />
             </div>
@@ -204,7 +204,7 @@ export default function WaitlistPage() {
             <label className="text-xs font-semibold mb-1.5 block">Email <span className="text-red-500">*</span></label>
             <input
               type="email" value={form.email} onChange={e => set('email', e.target.value)}
-              placeholder="alex@email.com"
+              placeholder="Your email address"
               className={`w-full bg-[#F6F6F6] rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-black/20 ${errors.email ? 'ring-2 ring-red-400' : ''}`}
             />
             {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}

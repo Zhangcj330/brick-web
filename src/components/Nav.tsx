@@ -1,13 +1,17 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#EEEEEE] h-[66px] flex items-center px-6 md:px-10">
       <div className="max-w-[1200px] mx-auto w-full flex items-center justify-between">
-        <Link href="/" className="font-black text-xl tracking-[-0.03em]">Brick AI</Link>
+        <Link href="/" className="flex items-center gap-2 font-black text-xl tracking-[-0.03em]">
+          <Image src="/logo.svg" alt="Brick AI" width={28} height={28} />
+          Brick AI
+        </Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#3A3A3A]">
           <a href="#suggestions" className="hover:text-black transition-colors">Features</a>
           <a href="#how" className="hover:text-black transition-colors">How it works</a>
