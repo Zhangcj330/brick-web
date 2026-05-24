@@ -315,7 +315,7 @@ export default function GamePage() {
               void handleSend()
             }}
           >
-            <div className="flex items-center gap-2 rounded-2xl border border-[#E2E2E2] bg-white px-3 py-2 shadow-sm">
+            <div className="flex items-center gap-2 rounded-2xl border border-[#E2E2E2] bg-white px-3 py-2.5 shadow-sm">
               <textarea
                 ref={textareaRef}
                 value={inputMessage}
@@ -331,12 +331,12 @@ export default function GamePage() {
                 placeholder="Ask the gatekeeper…"
                 rows={1}
                 disabled={isSending}
-                className="max-h-[110px] flex-1 resize-none bg-transparent text-sm leading-5 text-black placeholder:text-[#AFAFAF] focus:outline-none"
+                className="max-h-[110px] flex-1 resize-none self-center bg-transparent text-sm leading-5 text-black placeholder:text-[#AFAFAF] focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={!inputMessage.trim() || isSending}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#333] disabled:bg-[#E2E2E2] disabled:text-[#AFAFAF]"
+                className="flex h-8 w-8 shrink-0 self-center items-center justify-center rounded-full bg-black text-white transition hover:bg-[#333] disabled:bg-[#E2E2E2] disabled:text-[#AFAFAF]"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
