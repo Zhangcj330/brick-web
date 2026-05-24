@@ -98,8 +98,7 @@ export default function WaitlistPage() {
           <Check className="w-8 h-8 text-white" />
         </div>
         <h1 className="text-3xl font-black tracking-tight mb-3">You&apos;re in.</h1>
-        <p className="text-[#6B6B6B] mb-2">We&apos;ll email you at <strong>{form.email}</strong> the moment Brick launches.</p>
-        <p className="text-2xl font-black mb-8">Position <span className="text-[#6B6B6B]">#{position}</span></p>
+        <p className="text-[#6B6B6B] mb-8">We&apos;ll email you at <strong>{form.email}</strong> the moment Brick launches.</p>
         <div className="flex gap-3 justify-center">
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Brick AI waitlist — an AI co-pilot for first-home buyers in Australia 🏠 brickai.com.au")}`}
