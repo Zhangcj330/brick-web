@@ -338,7 +338,7 @@ export default function GamePage() {
                 placeholder="Ask the gatekeeper…"
                 rows={1}
                 disabled={isSending}
-                className="max-h-[110px] flex-1 resize-none self-center bg-transparent text-sm leading-5 text-black placeholder:text-[#AFAFAF] focus:outline-none"
+                className="max-h-[110px] flex-1 resize-none self-center bg-transparent text-base leading-5 text-black placeholder:text-[#AFAFAF] focus:outline-none"
               />
               <button
                 type="submit"
