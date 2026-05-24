@@ -25,11 +25,13 @@ export default function MapPanel() {
       const map = L.map(mapRef.current, {
         center: [-33.7495, 151.2885],
         zoom: 15,
-        zoomControl: true,
+        zoomControl: false,
         scrollWheelZoom: false,
       })
       if (cancelled) { map.remove(); return }
       mapInstance.current = map
+
+      L.control.zoom({ position: 'bottomright' }).addTo(map)
 
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap © CARTO',
