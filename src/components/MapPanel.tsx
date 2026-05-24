@@ -128,19 +128,24 @@ export default function MapPanel() {
       {/* Property card */}
       {selected && (
           <div className="absolute bottom-4 left-4 right-4 bg-white rounded-2xl p-4 shadow-xl z-[1000] transition-all">
-            <button onClick={() => setSelected(null)} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-[#F6F6F6] flex items-center justify-center text-xs text-[#6B6B6B] hover:bg-[#E2E2E2]">✕</button>
-            <div className="flex items-start gap-3">
-              <div className="w-14 h-14 rounded-xl bg-[#F6F6F6] flex items-center justify-center flex-shrink-0 text-[#AFAFAF] text-2xl">🏠</div>
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-sm truncate">{selected.address}</div>
-                <div className="text-xs text-[#6B6B6B] mt-0.5">{selected.meta}</div>
-                <span className="inline-block mt-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ background: selected.verdictColor, color: selected.verdictText }}>
-                  {selected.verdict}
-                </span>
+            {/* Header row: price + close button */}
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start gap-3 flex-1 min-w-0">
+                <div className="w-14 h-14 rounded-xl bg-[#F6F6F6] flex items-center justify-center flex-shrink-0 text-[#AFAFAF] text-2xl">🏠</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-sm truncate">{selected.address}</div>
+                  <div className="text-xs text-[#6B6B6B] mt-0.5">{selected.meta}</div>
+                  <span className="inline-block mt-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ background: selected.verdictColor, color: selected.verdictText }}>
+                    {selected.verdict}
+                  </span>
+                </div>
               </div>
-              <div className="text-right flex-shrink-0">
-                <div className="font-bold text-base tracking-tight">{selected.price}</div>
-                <div className="text-[11px] text-[#6B6B6B] mt-0.5">{selected.growth}</div>
+              <div className="flex items-start gap-2 flex-shrink-0 ml-2">
+                <div className="text-right">
+                  <div className="font-bold text-base tracking-tight">{selected.price}</div>
+                  <div className="text-[11px] text-[#6B6B6B] mt-0.5">{selected.growth}</div>
+                </div>
+                <button onClick={() => setSelected(null)} className="w-6 h-6 rounded-full bg-[#F6F6F6] flex items-center justify-center text-xs text-[#6B6B6B] hover:bg-[#E2E2E2] flex-shrink-0">✕</button>
               </div>
             </div>
             <div className="h-px bg-[#EEEEEE] my-3" />
