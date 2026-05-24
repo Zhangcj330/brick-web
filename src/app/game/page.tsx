@@ -169,21 +169,29 @@ export default function GamePage() {
     <div className="flex h-screen flex-col overflow-hidden bg-white text-black">
       <nav className="relative flex h-[66px] shrink-0 items-center border-b border-[#EEEEEE] bg-white">
         <div className="max-w-[1200px] mx-auto flex w-full items-center px-6 md:px-10">
-          <Link href="/" className="flex items-center gap-2 text-lg font-black tracking-[-0.03em]">
-            <Image src="/logo.svg" alt="Brick AI" width={30} height={30} />
+          <Link href="/" className="flex items-center gap-2 text-xl font-black tracking-[-0.03em]">
+            <Image src="/logo-on-black.svg" alt="Brick AI" width={32} height={32} />
             Brick AI
           </Link>
           <span className="absolute left-1/2 -translate-x-1/2 text-[15px] font-bold tracking-tight">
             HomeBreaker
           </span>
-          <button
-            onClick={resetLevel}
-            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-[#E2E2E2] transition hover:bg-[#F6F6F6]"
-            title="Restart level"
-            type="button"
-          >
-            <RotateCcw className="h-4 w-4" />
-          </button>
+          <div className="ml-auto flex items-center gap-2">
+            <Link
+              href="/"
+              className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-[#6B6B6B] hover:text-black transition-colors"
+            >
+              ← Home
+            </Link>
+            <button
+              onClick={resetLevel}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E2E2E2] transition hover:bg-[#F6F6F6]"
+              title="Restart level"
+              type="button"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </nav>
 

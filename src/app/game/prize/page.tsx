@@ -52,8 +52,8 @@ export default function GamePrizePage() {
     <div className="flex min-h-screen flex-col bg-[#F6F6F6] text-black">
       <nav className="flex h-[66px] items-center border-b border-[#EEEEEE] bg-white px-6 md:px-10">
         <div className="max-w-[1200px] mx-auto flex w-full items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-lg font-black tracking-[-0.03em]">
-            <Image src="/logo.svg" alt="Brick AI" width={30} height={30} />
+          <Link href="/" className="flex items-center gap-2 text-xl font-black tracking-[-0.03em]">
+            <Image src="/logo-on-black.svg" alt="Brick AI" width={32} height={32} />
             Brick AI
           </Link>
           <div className="flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-700">
@@ -136,6 +136,15 @@ export default function GamePrizePage() {
           >
             Play again <ArrowRight className="h-4 w-4" />
           </Link>
+          <Link
+            href="/waitlist"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-[#E2E2E2] bg-white py-4 font-bold text-black transition hover:bg-[#F6F6F6]"
+          >
+            Join the waitlist <ArrowRight className="h-4 w-4" />
+          </Link>
+          <p className="mt-4 text-xs text-[#AFAFAF]">
+            Brick AI is the AI co-pilot for first-home buyers in Australia.
+          </p>
         </div>
       </main>
     </div>
