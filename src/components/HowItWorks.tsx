@@ -116,7 +116,6 @@ export default function HowItWorks() {
           <div className="flex items-center gap-2 px-4 py-3 border-b border-[#EEEEEE]">
             <span className="w-2 h-2 rounded-full bg-green-500" />
             <span className="text-xs font-semibold">Brick AI</span>
-            <span className="ml-auto text-[10px] text-[#AFAFAF]">Live demo</span>
           </div>
           <div ref={containerRef} className="h-[480px] overflow-y-auto p-5 flex flex-col gap-3 scroll-smooth">
             {messages.map(m => (
