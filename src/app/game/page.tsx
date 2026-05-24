@@ -195,38 +195,24 @@ export default function GamePage() {
         </div>
       </nav>
 
-      <div className="shrink-0 border-b border-[#EEEEEE] px-6 py-3 md:px-10">
-        <div className="mx-auto flex max-w-2xl items-center gap-4">
-          <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B]">
-            Level {currentLevelIndex + 1}/{GATEKEEPER_LEVELS.length}
-          </span>
-          <div className="flex flex-1 items-center gap-0">
-            {GATEKEEPER_LEVELS.map((_, index) => (
-              <div key={index} className="flex flex-1 items-center last:flex-none">
-                <span
-                  className={`flex h-3.5 w-3.5 shrink-0 rounded-full border transition ${
-                    index === currentLevelIndex
-                      ? 'border-black bg-black'
-                      : index < currentLevelIndex
-                        ? 'border-black bg-white'
-                        : 'border-[#E2E2E2] bg-[#F6F6F6]'
-                  }`}
-                >
-                  {index < currentLevelIndex ? (
-                    <span className="m-auto h-1 w-1 rounded-full bg-black" />
-                  ) : null}
+      <div className="shrink-0 border-b border-[#EEEEEE] px-6 py-4 md:px-10">
+        <div className="mx-auto flex max-w-2xl flex-col gap-3">
+          <div className="flex items-center justify-between text-xs text-[#6B6B6B]">
+            <span className="font-semibold uppercase tracking-[0.08em]">Level {currentLevelIndex + 1} of {GATEKEEPER_LEVELS.length}</span>
+            <span className="font-medium">{currentLevel.title} · <span className="text-black font-semibold">{currentLevel.difficulty}</span></span>
+          </div>
+          <div className="flex items-center gap-2">
+            {GATEKEEPER_LEVELS.map((lvl, index) => (
+              <div key={index} className="flex flex-1 flex-col gap-1.5">
+                <div className={`h-1.5 w-full rounded-full transition-all ${
+                  index < currentLevelIndex ? 'bg-black' : index === currentLevelIndex ? 'bg-black' : 'bg-[#E2E2E2]'
+                }`} style={index === currentLevelIndex ? { background: 'black' } : {}} />
+                <span className={`text-[10px] font-medium truncate ${index === currentLevelIndex ? 'text-black font-bold' : index < currentLevelIndex ? 'text-[#6B6B6B]' : 'text-[#AFAFAF]'}`}>
+                  {index < currentLevelIndex ? '✓ ' : ''}{lvl.title}
                 </span>
-                {index < GATEKEEPER_LEVELS.length - 1 ? (
-                  <span
-                    className={`mx-1.5 h-px flex-1 ${index < currentLevelIndex ? 'bg-black' : 'bg-[#E2E2E2]'}`}
-                  />
-                ) : null}
               </div>
             ))}
           </div>
-          <span className="text-[11px] text-[#6B6B6B]">
-            {currentLevel.title} · {currentLevel.difficulty}
-          </span>
         </div>
       </div>
 
@@ -234,10 +220,10 @@ export default function GamePage() {
         {isEmptyState ? (
           <div className="flex h-full items-center justify-center pb-32">
             <div className="flex max-w-sm flex-col items-center gap-4 px-4 text-center">
-              <div className="rounded-[24px] bg-black p-3">
-                <Image src="/logo-on-black.svg" alt="Brick AI" width={72} height={72} className="rounded-2xl" />
+              <div className="rounded-[28px] bg-black p-4">
+                <Image src="/logo-on-black.svg" alt="Brick AI" width={96} height={96} className="rounded-2xl" />
               </div>
-              <p className="text-xl font-black leading-snug tracking-tight">
+              <p className="text-xl font-normal leading-snug tracking-tight">
                 Chat with the AI and trick it into revealing the secret password.
               </p>
               <p className="text-sm text-[#6B6B6B]">
