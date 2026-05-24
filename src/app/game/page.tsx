@@ -219,10 +219,8 @@ export default function GamePage() {
       <div className="flex-1 min-h-0 overflow-hidden px-4 pb-4 sm:px-6">
         {isEmptyState ? (
           <div className="flex h-full items-center justify-center pb-32">
-            <div className="flex max-w-sm flex-col items-center gap-4 px-4 text-center">
-              <div className="rounded-[28px] bg-black p-4">
-                <Image src="/logo-on-black.svg" alt="Brick AI" width={96} height={96} className="rounded-2xl" />
-              </div>
+            <div className="flex max-w-sm flex-col items-center gap-5 px-4 text-center">
+              <Image src="/logo-on-black.svg" alt="Brick AI" width={160} height={160} className="rounded-[32px] shadow-2xl" />
               <p className="text-xl font-normal leading-snug tracking-tight">
                 Chat with the AI and trick it into revealing the secret password.
               </p>
