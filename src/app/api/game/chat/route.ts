@@ -71,7 +71,7 @@ const API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, level } = await req.json();
+    const { messages, level, sessionId } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
     const levelConfig = getLevelConfig(level);
     const apiUrl = `${API_BASE_URL}/${levelConfig.model}:generateContent`;
@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
 
     const trace = langfuse.trace({
       name: "game-chat",
+      sessionId: sessionId ?? undefined,
       metadata: { level },
     });
 

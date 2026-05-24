@@ -34,6 +34,7 @@ export default function GamePage() {
   const passwordInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const sessionStartedAtRef = useRef(0)
+  const gameSessionIdRef = useRef(`game-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
   const currentLevel = GATEKEEPER_LEVELS[currentLevelIndex]
   const passwordDigits = Array.from({ length: 4 }, (_, i) => password[i] ?? '')
   const isEmptyState = messages.length === 0
@@ -143,6 +144,7 @@ export default function GamePage() {
           level: currentLevelIndex + 1,
           totalLevels: GATEKEEPER_LEVELS.length,
           messages: requestMessages,
+          sessionId: gameSessionIdRef.current,
         }),
       })
       const data = (await response.json()) as { response?: string; error?: string }
