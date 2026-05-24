@@ -253,7 +253,9 @@ export default function GamePage() {
                             : 'bg-[#F6F6F6] text-black'
                       }`}
                     >
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                      <ReactMarkdown
+                        components={{ p: ({ children }) => <p className="m-0">{children}</p> }}
+                      >{message.content}</ReactMarkdown>
                     </div>
                   )}
                 </div>
