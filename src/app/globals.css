@@ -73,3 +73,17 @@
   80%       { transform: translateX(4px); }
 }
 .shake { animation: shake 0.4s ease-in-out; }
+
+/* ── Digit input blinking cursor ────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.digit-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 18px;
+  background: black;
+  border-radius: 1px;
+  animation: blink 1s step-start infinite;
+}
