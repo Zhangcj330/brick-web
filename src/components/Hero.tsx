@@ -31,7 +31,7 @@ export default function Hero() {
       setTyping(false)
       setMessages(m => [...m, {
         role: 'ai',
-        text: "That's a great question! This feature is currently in development — we're working hard to bring it to you soon. 🚀 Join the waitlist to get early access the moment Brick launches.",
+        text: "This feature is currently in development — we're working hard to bring it to you soon. 🚀 Join the waitlist to get early access the moment Brick launches.",
         waitlistLink: true,
       }])
     }, 1200)
