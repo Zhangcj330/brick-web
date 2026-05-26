@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 interface StreetViewProps {
   address?: string
   lat?: number
@@ -8,23 +10,36 @@ interface StreetViewProps {
 }
 
 export default function StreetView({ address = '', lat, lng, image_url }: StreetViewProps) {
-  const apiKey = ''
-  const location = lat != null && lng != null ? `${lat},${lng}` : encodeURIComponent(address)
-  const embedSrc = image_url
+  const [failed, setFailed] = useState(false)
+  const params = new URLSearchParams()
+  if (lat != null && lng != null) {
+    params.set("lat", String(lat))
+    params.set("lng", String(lng))
+  } else if (address) {
+    params.set("address", address)
+  }
+
+  const src = image_url
     ? `/api/proxy-image?url=${encodeURIComponent(image_url)}`
-    : `https://maps.googleapis.com/maps/api/streetview?size=640x320&location=${location}&key=${apiKey}`
+    : params.toString()
+      ? `/api/street-view?${params}`
+      : null
 
   return (
     <div className="text-[#0d0d0d]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={embedSrc}
-        alt={`Street view of ${address}`}
-        className="block max-h-[200px] w-full rounded-[6px] object-cover bg-[#f0f0f0]"
-        onError={e => {
-          (e.target as HTMLImageElement).style.display = 'none'
-        }}
-      />
+      {src && !failed ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={`Street view of ${address}`}
+          className="block max-h-[200px] w-full rounded-[6px] object-cover bg-[#f0f0f0]"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <div className="flex h-[160px] w-full items-center justify-center rounded-[6px] bg-[#f6f6f6] text-[12px] text-[#8a8a8a]">
+          Street view unavailable
+        </div>
+      )}
       {address && <div className="mt-2 text-[12px] text-[#8a8a8a]">{address}</div>}
     </div>
   )

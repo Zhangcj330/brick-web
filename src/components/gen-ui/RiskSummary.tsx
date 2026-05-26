@@ -2,8 +2,10 @@
 
 interface Risk {
   category: string
-  level: 'high' | 'medium' | 'low'
-  detail: string
+  level?: 'high' | 'medium' | 'low'
+  severity?: 'high' | 'medium' | 'low'
+  detail?: string
+  description?: string
 }
 
 interface RiskSummaryProps {
@@ -53,7 +55,9 @@ export default function RiskSummary({
 
       <div className="flex flex-col gap-0">
         {risks.map((risk, index) => {
-          const style = LEVEL_STYLES[risk.level]
+          const levelKey = (risk.level ?? risk.severity ?? 'medium').toLowerCase() as keyof typeof LEVEL_STYLES
+          const style = LEVEL_STYLES[levelKey] ?? LEVEL_STYLES.medium
+          const detail = risk.detail ?? risk.description ?? ''
           return (
             <div
               key={`${risk.category}-${index}`}
@@ -62,7 +66,7 @@ export default function RiskSummary({
               <span className={`h-2 w-2 flex-shrink-0 rounded-full ${style.dot}`} />
               <div className="min-w-0 flex-1">
                 <div className="text-[13px] font-semibold text-[#0d0d0d]">{risk.category}</div>
-                <div className="mt-px text-[12px] text-[#8a8a8a]">{risk.detail}</div>
+                <div className="mt-px text-[12px] text-[#8a8a8a]">{detail}</div>
               </div>
               <div className={`shrink-0 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] ${style.status}`}>
                 {style.label}
