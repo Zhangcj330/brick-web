@@ -111,7 +111,7 @@ export default function MapPanel() {
   }
 
   return (
-    <div className="relative rounded-2xl overflow-hidden shadow-md" style={{ height: 560 }}>
+    <div className="relative isolate rounded-2xl overflow-hidden shadow-md" style={{ height: 560 }}>
       {/* Map container */}
       <div ref={mapRef} className="w-full h-full" />
 
