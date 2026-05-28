@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
+
+export const metadata: Metadata = {
+  title: 'Brick AI — The AI co-pilot for first-home buyers',
+  alternates: { canonical: 'https://thbrickai.com' },
+}
+
 import Hero from '@/components/Hero'
 import StatsBar from '@/components/StatsBar'
 import Features from '@/components/Features'

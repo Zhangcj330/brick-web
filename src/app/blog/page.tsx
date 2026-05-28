@@ -6,6 +6,13 @@ import { ArrowRight } from 'lucide-react'
 export const metadata = {
   title: 'Blog — Brick AI',
   description: 'Insights, analysis, and guides for Australian first-home buyers.',
+  openGraph: {
+    title: 'Blog — Brick AI',
+    description: 'Insights, analysis, and guides for Australian first-home buyers.',
+    url: 'https://thbrickai.com/blog',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://thbrickai.com/blog' },
 }
 
 const POSTS = [
