@@ -39,13 +39,11 @@ export const metadata: Metadata = {
     title: defaultTitle,
     description: defaultDescription,
     url: siteUrl,
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Brick AI' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: ['/og-image.png'],
   },
   alternates: {
     canonical: siteUrl,
