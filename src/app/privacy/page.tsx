@@ -2,8 +2,19 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata = {
-  title: 'Privacy Policy — Brick AI',
-  description: 'How Brick AI collects, uses, and protects your personal information.',
+  title: 'Privacy Policy',
+  description: 'How Brick AI collects, uses, and protects your personal information under Australian Privacy law.',
+  alternates: { canonical: 'https://thebrickai.com/privacy' },
+  openGraph: {
+    title: 'Privacy Policy — Brick AI',
+    description: 'How Brick AI collects, uses, and protects your personal information under Australian Privacy law.',
+    url: 'https://thebrickai.com/privacy',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Privacy Policy — Brick AI',
+    description: 'How Brick AI collects, uses, and protects your personal information under Australian Privacy law.',
+  },
 }
 
 export default function PrivacyPage() {

@@ -9,10 +9,10 @@ export const metadata = {
   openGraph: {
     title: 'Blog — Brick AI',
     description: 'Insights, analysis, and guides for Australian first-home buyers.',
-    url: 'https://thbrickai.com/blog',
+    url: 'https://thebrickai.com/blog',
     type: 'website',
   },
-  alternates: { canonical: 'https://thbrickai.com/blog' },
+  alternates: { canonical: 'https://thebrickai.com/blog' },
 }
 
 const POSTS = [

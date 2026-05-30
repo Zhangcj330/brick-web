@@ -11,7 +11,7 @@ const hanken = Hanken_Grotesk({
   display: 'swap',
 })
 
-const siteUrl = 'https://thbrickai.com'
+const siteUrl = 'https://thebrickai.com'
 const defaultTitle = 'Brick AI — The AI co-pilot for first-home buyers'
 const defaultDescription =
   'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.'
@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     icon: '/logo-on-black.svg',
     shortcut: '/logo-on-black.svg',
     apple: '/logo-on-black.svg',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
   },
   openGraph: {
     type: 'website',
@@ -54,7 +59,24 @@ const jsonLd = {
   url: siteUrl,
   logo: `${siteUrl}/logo.svg`,
   description: defaultDescription,
-  sameAs: [],
+  sameAs: [
+    'https://x.com/brickaiofficial',
+    'https://www.instagram.com/brickaiofficial',
+    'https://www.tiktok.com/@brickaiofficial',
+  ],
+}
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Brick AI',
+  url: siteUrl,
+  description: defaultDescription,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/chat?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -67,6 +89,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           id="org-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Script
+          id="website-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </body>
     </html>

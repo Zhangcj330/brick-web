@@ -4,8 +4,21 @@ import Footer from '@/components/Footer'
 import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'About — Brick AI',
-  description: 'Brick AI is the AI co-pilot for first-home buyers in Australia.',
+  title: 'About',
+  description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+  alternates: { canonical: 'https://thebrickai.com/about' },
+  openGraph: {
+    title: 'About — Brick AI',
+    description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+    url: 'https://thebrickai.com/about',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Brick AI' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About — Brick AI',
+    description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+    images: ['/og-image.png'],
+  },
 }
 
 const VALUES = [

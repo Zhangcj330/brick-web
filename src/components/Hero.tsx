@@ -49,7 +49,7 @@ export default function Hero() {
           </div>
 
           <h1 className="text-[52px] md:text-[64px] font-black leading-[1.0] tracking-[-0.03em] mb-6">
-            From confused<br />to confident.
+            Brick AI — turn uncertainty<br />into clarity.
           </h1>
           <p className="text-[#6B6B6B] text-lg leading-relaxed mb-8 max-w-md">
             Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.

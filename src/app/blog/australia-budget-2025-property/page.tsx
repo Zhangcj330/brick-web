@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import Script from 'next/script'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 export const metadata = {
@@ -9,16 +10,47 @@ export const metadata = {
   openGraph: {
     title: "Australia's 2026-27 Federal Budget: What It Means for First-Home Buyers",
     description: "The 2026-27 Federal Budget delivered landmark housing reforms — negative gearing changes, CGT overhaul, $47 billion in housing investment, and a rate rise. Here's what it means for first-home buyers.",
-    url: 'https://thbrickai.com/blog/australia-budget-2025-property',
+    url: 'https://thebrickai.com/blog/australia-budget-2025-property',
     type: 'article',
     publishedTime: '2026-05-24T00:00:00.000Z',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: "Australia's 2026-27 Federal Budget and first-home buyers — Brick AI" }],
   },
-  alternates: { canonical: 'https://thbrickai.com/blog/australia-budget-2025-property' },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Australia's 2026-27 Federal Budget: What It Means for First-Home Buyers",
+    description: "The 2026-27 Federal Budget delivered landmark housing reforms — negative gearing changes, CGT overhaul, $47 billion in housing investment, and a rate rise.",
+    images: ['/og-image.png'],
+  },
+  alternates: { canonical: 'https://thebrickai.com/blog/australia-budget-2025-property' },
+}
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Australia's 2026-27 Federal Budget: What It Means for First-Home Buyers",
+  description:
+    "The 2026-27 Federal Budget delivered landmark housing reforms — negative gearing changes, CGT overhaul, $47 billion in housing investment, and a rate rise. Here's what it means for first-home buyers.",
+  datePublished: '2026-05-24T00:00:00.000Z',
+  dateModified: '2026-05-24T00:00:00.000Z',
+  author: { '@type': 'Organization', name: 'Brick AI', url: 'https://thebrickai.com' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Brick AI',
+    logo: { '@type': 'ImageObject', url: 'https://thebrickai.com/logo.svg' },
+  },
+  image: 'https://thebrickai.com/og-image.png',
+  url: 'https://thebrickai.com/blog/australia-budget-2025-property',
+  mainEntityOfPage: 'https://thebrickai.com/blog/australia-budget-2025-property',
 }
 
 export default function BlogPost() {
   return (
     <>
+      <Script
+        id="article-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Nav />
       <main className="pt-[66px]">
 
