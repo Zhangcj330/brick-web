@@ -19,10 +19,10 @@ export default function Nav() {
           
         </div>
         <Link
-          href="/waitlist"
+          href="/sign-in"
           className="hidden md:inline-flex items-center gap-2 bg-black text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#333] transition-colors"
         >
-          Join waitlist
+          Sign in
         </Link>
         <button className="md:hidden" onClick={() => setOpen(!open)}>
           <span className="block w-5 h-0.5 bg-black mb-1" />
@@ -36,7 +36,7 @@ export default function Nav() {
           <a href="#how" className="text-sm font-medium" onClick={() => setOpen(false)}>How it works</a>
           <a href="#proof" className="text-sm font-medium" onClick={() => setOpen(false)}>Reviews</a>
           
-          <Link href="/waitlist" className="text-sm font-semibold" onClick={() => setOpen(false)}>Join waitlist →</Link>
+          <Link href="/sign-in" className="text-sm font-semibold" onClick={() => setOpen(false)}>Sign in →</Link>
         </div>
       )}
     </nav>
