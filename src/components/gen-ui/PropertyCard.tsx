@@ -43,29 +43,47 @@ export default function PropertyCard({
   return (
     <div className="text-[#0d0d0d]">
       {images[0] && (
-        <div className="relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={proxyUrl(images[0])}
-            alt={address ?? 'Property image'}
-            className="block max-h-[240px] w-full object-cover bg-[#f0f0f0]"
-            onError={e => {
-              (e.target as HTMLImageElement).src = '/api/proxy-image'
-            }}
-          />
+        <div className="space-y-0.5">
+          {/* Hero image */}
+          <div className="relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={proxyUrl(images[0])}
+              alt={address ?? 'Property image'}
+              className="block h-[220px] w-full object-cover bg-[#f0f0f0]"
+              onError={e => {
+                (e.target as HTMLImageElement).src = '/api/proxy-image'
+              }}
+            />
+            {(price || property_type) && (
+              <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
+                {price && (
+                  <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium text-white backdrop-blur-[4px]">
+                    {price}
+                  </span>
+                )}
+                {property_type && (
+                  <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.04em] text-white backdrop-blur-[4px]">
+                    {property_type}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
 
-          {(price || property_type) && (
-            <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
-              {price && (
-                <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium text-white backdrop-blur-[4px]">
-                  {price}
-                </span>
-              )}
-              {property_type && (
-                <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.04em] text-white backdrop-blur-[4px]">
-                  {property_type}
-                </span>
-              )}
+          {/* Thumbnail grid — up to 4 extra photos */}
+          {images.length > 1 && (
+            <div className={`grid gap-0.5 ${images.slice(1, 5).length === 1 ? 'grid-cols-1' : images.slice(1, 5).length === 2 ? 'grid-cols-2' : images.slice(1, 5).length === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
+              {images.slice(1, 5).map((img, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={i}
+                  src={proxyUrl(img)}
+                  alt=""
+                  className="h-[72px] w-full object-cover bg-[#f0f0f0]"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+              ))}
             </div>
           )}
         </div>
@@ -134,22 +152,7 @@ export default function PropertyCard({
         </div>
       )}
 
-      {images.length > 1 && (
-        <div className="mt-[14px] flex gap-1.5 overflow-x-auto pb-1">
-          {images.slice(1).map((image, index) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`${image}-${index}`}
-              src={proxyUrl(image)}
-              alt=""
-              className="h-[60px] w-20 flex-shrink-0 object-cover"
-              onError={e => {
-                (e.target as HTMLImageElement).style.display = 'none'
-              }}
-            />
-          ))}
-        </div>
-      )}
+
     </div>
   )
 }
