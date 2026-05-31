@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 interface PropertyCardProps {
   address?: string
   price?: string
@@ -31,6 +34,11 @@ export default function PropertyCard({
   listing_url,
   warnings = [],
 }: PropertyCardProps) {
+  const [current, setCurrent] = useState(0)
+
+  const prev = () => setCurrent(i => (i - 1 + images.length) % images.length)
+  const next = () => setCurrent(i => (i + 1) % images.length)
+
   const detailRows = [
     bedrooms != null ? { label: 'Bedrooms', value: `${bedrooms}` } : null,
     bathrooms != null ? { label: 'Bathrooms', value: `${bathrooms}` } : null,
@@ -42,55 +50,79 @@ export default function PropertyCard({
 
   return (
     <div className="text-[#0d0d0d]">
-      {images[0] && (
-        <div className="space-y-0.5">
-          {/* Hero image */}
-          <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={proxyUrl(images[0])}
-              alt={address ?? 'Property image'}
-              className="block h-[220px] w-full object-cover bg-[#f0f0f0]"
-              onError={e => {
-                (e.target as HTMLImageElement).src = '/api/proxy-image'
-              }}
-            />
-            {(price || property_type) && (
-              <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
-                {price && (
-                  <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium text-white backdrop-blur-[4px]">
-                    {price}
-                  </span>
-                )}
-                {property_type && (
-                  <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.04em] text-white backdrop-blur-[4px]">
-                    {property_type}
-                  </span>
-                )}
-              </div>
-            )}
+      {images.length > 0 && (
+        <div className="relative overflow-hidden bg-[#f0f0f0]">
+          {/* Sliding strip */}
+          <div
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(-${current * 100}%)` }}
+          >
+            {images.map((img, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={i}
+                src={proxyUrl(img)}
+                alt={i === 0 ? (address ?? 'Property image') : ''}
+                className="w-full flex-shrink-0 object-cover"
+                style={{ aspectRatio: '4/3' }}
+                onError={e => {
+                  (e.target as HTMLImageElement).style.display = 'none'
+                }}
+              />
+            ))}
           </div>
 
-          {/* Thumbnail grid — up to 4 extra photos */}
+          {/* Prev / Next arrows — only show if multiple images */}
           {images.length > 1 && (
-            <div className={`grid gap-0.5 ${images.slice(1, 5).length === 1 ? 'grid-cols-1' : images.slice(1, 5).length === 2 ? 'grid-cols-2' : images.slice(1, 5).length === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
-              {images.slice(1, 5).map((img, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={i}
-                  src={proxyUrl(img)}
-                  alt=""
-                  className="h-[72px] w-full object-cover bg-[#f0f0f0]"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-              ))}
+            <>
+              <button
+                onClick={prev}
+                className="absolute left-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm hover:bg-black/70 transition-colors"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={next}
+                className="absolute right-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm hover:bg-black/70 transition-colors"
+                aria-label="Next"
+              >
+                <ChevronRight size={16} />
+              </button>
+
+              {/* Dot indicators */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrent(i)}
+                    className={`h-1.5 rounded-full transition-all ${i === current ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Price / type badges */}
+          {(price || property_type) && (
+            <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
+              {price && (
+                <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium text-white backdrop-blur-[4px]">
+                  {price}
+                </span>
+              )}
+              {property_type && (
+                <span className="inline-flex items-center rounded-[4px] bg-black/65 px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.04em] text-white backdrop-blur-[4px]">
+                  {property_type}
+                </span>
+              )}
             </div>
           )}
         </div>
       )}
 
       {(address || addressSub) && (
-        <div className={images[0] ? 'mt-[14px]' : ''}>
+        <div className={images.length > 0 ? 'mt-[14px]' : ''}>
           {address && (
             <div className="text-[16px] font-bold tracking-[-0.01em] text-[#0d0d0d]">
               {address}
@@ -151,8 +183,7 @@ export default function PropertyCard({
           </a>
         </div>
       )}
-
-
     </div>
   )
 }
+
