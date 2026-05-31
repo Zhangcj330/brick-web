@@ -40,7 +40,7 @@ const PROPERTY_CARD = {
   sunlight_note: 'North-facing rear garden — excellent natural light year-round (ideal in Australia)',
   // Condition
   kitchen_condition: 'Fair',
-  bathroom_condition: 'Needs Renovation',
+  bathroom_condition: 'Poor',
   renovation_needed: true,
   renovation_note: 'Original 1970s bathroom tiles and dated kitchen — budget $60–90k for full refresh',
   // Risk

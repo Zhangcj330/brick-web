@@ -76,10 +76,11 @@ function ConditionBox({ label, condition, renovationNeeded }: {
   condition: string
   renovationNeeded?: boolean
 }) {
+  const poor = condition === 'Poor'
   return (
     <div className="flex-1 rounded-[6px] border border-[#e5e7eb] px-3 py-2.5">
       <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">{label}</div>
-      <div className="mt-0.5 text-[13px] font-semibold text-[#0d0d0d]">{condition}</div>
+      <div className={`mt-0.5 text-[13px] font-semibold ${poor ? 'text-[#0d0d0d]' : 'text-[#0d0d0d]'}`}>{condition}</div>
       {renovationNeeded && (
         <div className="mt-1 text-[11px] text-[#8a8a8a]">Renovation needed</div>
       )}
@@ -291,11 +292,11 @@ export default function PropertyCard({
           <div className="flex gap-2">
             {kitchen_condition && (
               <ConditionBox label="Kitchen" condition={kitchen_condition}
-                renovationNeeded={renovation_needed && kitchen_condition !== 'Modern' && kitchen_condition !== 'Good'} />
+                renovationNeeded={renovation_needed && kitchen_condition !== 'Excellent' && kitchen_condition !== 'Good'} />
             )}
             {bathroom_condition && (
               <ConditionBox label="Bathroom" condition={bathroom_condition}
-                renovationNeeded={renovation_needed && bathroom_condition !== 'Modern' && bathroom_condition !== 'Good'} />
+                renovationNeeded={renovation_needed && bathroom_condition !== 'Excellent' && bathroom_condition !== 'Good'} />
             )}
           </div>
         </div>
