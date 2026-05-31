@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type React from 'react'
-import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, Hammer } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, Hammer, MountainSnow, Volume2, HardHat, History, ClipboardCheck, Bug } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -30,6 +30,20 @@ interface PropertyCardProps {
   bathroom_condition?: string
   renovation_needed?: boolean
   renovation_note?: string
+  // Risk assessment
+  land_slope?: string
+  land_slope_note?: string
+  noise_level?: string
+  noise_sources?: string[]
+  noise_note?: string
+  builder_name?: string
+  builder_quality?: string
+  builder_note?: string
+  property_history_flags?: string[]
+  property_history_note?: string
+  needs_inspection?: boolean
+  needs_pest_control?: boolean
+  due_diligence_note?: string
 }
 
 function proxyUrl(url: string) {
@@ -95,6 +109,19 @@ export default function PropertyCard({
   bathroom_condition,
   renovation_needed,
   renovation_note,
+  land_slope,
+  land_slope_note,
+  noise_level,
+  noise_sources = [],
+  noise_note,
+  builder_name,
+  builder_quality,
+  builder_note,
+  property_history_flags = [],
+  property_history_note,
+  needs_inspection,
+  needs_pest_control,
+  due_diligence_note,
 }: PropertyCardProps) {
   const [current, setCurrent] = useState(0)
 
@@ -260,6 +287,77 @@ export default function PropertyCard({
           </div>
           {renovation_note && (
             <p className="mt-2 text-[11px] leading-[1.4] text-[#8a8a8a]">{renovation_note}</p>
+          )}
+        </div>
+      )}
+
+      {/* Risk section */}
+      {(land_slope || noise_level || builder_quality || property_history_flags.length > 0 || needs_inspection || needs_pest_control) && (
+        <div className="mt-3 border-t border-[#f0f0f0] pt-3">
+          <div className="mb-2 flex items-center gap-1.5">
+            <ClipboardCheck size={13} strokeWidth={2} className="text-[#8a8a8a]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Risk</span>
+          </div>
+          <div className="flex flex-col gap-[6px]">
+            {/* Land slope */}
+            {land_slope && (
+              <StreetRow icon={MountainSnow} concern={land_slope === 'Steep Slope'}
+                label={land_slope}
+                note={land_slope_note} />
+            )}
+            {/* Noise */}
+            {noise_level && (
+              <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${noise_level === 'High' ? 'bg-[#fef2f2]' : noise_level === 'Moderate' ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
+                <Volume2 size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${noise_level === 'High' ? 'text-[#b91c1c]' : noise_level === 'Moderate' ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
+                <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
+                  <span className="font-semibold">Noise: {noise_level}</span>
+                  {noise_sources.length > 0 && <span className="text-[#8a8a8a]"> — {noise_sources.join(', ')}</span>}
+                  {noise_note && !noise_sources.length && ` — ${noise_note}`}
+                </span>
+              </div>
+            )}
+            {/* Builder quality */}
+            {builder_quality && builder_quality !== 'Unknown' && (
+              <StreetRow icon={HardHat} concern={builder_quality === 'Poor track record'}
+                label={builder_name ? `Builder: ${builder_name}` : 'Builder quality'}
+                note={builder_note} />
+            )}
+            {/* Property history flags */}
+            {property_history_flags.length > 0 && (
+              <div className="flex items-start gap-2 rounded-[6px] bg-[#fff7ed] px-2.5 py-2">
+                <History size={13} strokeWidth={2} className="mt-0.5 shrink-0 text-[#d97706]" />
+                <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
+                  <span className="font-semibold">History flags</span>
+                  <span className="text-[#8a8a8a]"> — {property_history_flags.join(' · ')}</span>
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Due diligence callout */}
+          {(needs_inspection || needs_pest_control) && (
+            <div className="mt-2 rounded-[8px] border border-[#e5e7eb] bg-[#f9f9f9] px-3 py-2.5">
+              <div className="flex items-center gap-2">
+                <span className="text-[12px] font-semibold text-[#0d0d0d]">Recommended before offer</span>
+              </div>
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {needs_inspection && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-[#e5e7eb] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0d0d0d]">
+                    <ClipboardCheck size={10} strokeWidth={2.5} />
+                    Building inspection
+                  </span>
+                )}
+                {needs_pest_control && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-[#e5e7eb] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0d0d0d]">
+                    <Bug size={10} strokeWidth={2.5} />
+                    Pest inspection
+                  </span>
+                )}
+              </div>
+              {due_diligence_note && (
+                <p className="mt-1.5 text-[11px] leading-[1.4] text-[#8a8a8a]">{due_diligence_note}</p>
+              )}
+            </div>
           )}
         </div>
       )}
