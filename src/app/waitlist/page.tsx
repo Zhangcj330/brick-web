@@ -101,7 +101,7 @@ export default function WaitlistPage() {
         <p className="text-[#6B6B6B] mb-8">We&apos;ll email you at <strong>{form.email}</strong> the moment Brick launches.</p>
         <div className="flex gap-3 justify-center">
           <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Brick AI waitlist — an AI co-pilot for first-home buyers in Australia 🏠 thebrickai.com")}`}
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Brick AI waitlist — an AI buyer's agent for first-home buyers in Australia 🏠 thebrickai.com")}`}
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-black text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[#333] transition-colors"
           >
@@ -135,7 +135,7 @@ export default function WaitlistPage() {
             You&apos;re early.<br />That&apos;s smart.
           </h1>
           <p className="text-[#AFAFAF] text-base leading-relaxed max-w-sm mb-10">
-            Brick AI is the co-pilot first-home buyers deserve. Join the waitlist and get exclusive early access when we launch.
+            Brick AI is the AI buyer's agent first-home buyers deserve. Join the waitlist and get exclusive early access when we launch.
           </p>
 
           <div className="grid grid-cols-2 gap-3 mb-10">

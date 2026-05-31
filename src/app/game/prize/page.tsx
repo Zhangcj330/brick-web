@@ -143,7 +143,7 @@ export default function GamePrizePage() {
             Join the waitlist <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-4 text-xs text-[#AFAFAF]">
-            Brick AI is the AI co-pilot for first-home buyers in Australia.
+            Brick AI is the AI buyer's agent for first-home buyers in Australia.
           </p>
         </div>
       </main>

@@ -4,11 +4,11 @@ import Footer from '@/components/Footer'
 import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'Blog — Brick AI',
-  description: 'Insights, analysis, and guides for Australian first-home buyers.',
+  title: 'Property Guides for First-Home Buyers',
+  description: 'Insights, analysis, and guides for Australian first-home buyers — suburb trends, grants, budgeting, and negotiation.',
   openGraph: {
-    title: 'Blog — Brick AI',
-    description: 'Insights, analysis, and guides for Australian first-home buyers.',
+    title: 'Property Guides for First-Home Buyers — Brick AI',
+    description: 'Insights, analysis, and guides for Australian first-home buyers — suburb trends, grants, budgeting, and negotiation.',
     url: 'https://thebrickai.com/blog',
     type: 'website',
   },

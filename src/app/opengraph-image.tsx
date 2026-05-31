@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Brick AI — The AI co-pilot for first-home buyers'
+export const alt = 'Brick AI — The AI buyer's agent for first-home buyers'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -52,7 +52,7 @@ export default function Image() {
               maxWidth: '780px',
             }}
           >
-            The AI co-pilot for first-home buyers.
+            The AI buyer's agent for first-home buyers.
           </div>
           <div
             style={{

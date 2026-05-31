@@ -4,18 +4,18 @@ import Footer from '@/components/Footer'
 import { ArrowRight } from 'lucide-react'
 
 export const metadata = {
-  title: 'About',
-  description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+  title: 'About Brick AI — AI Buyer\'s Agent for First-Home Buyers',
+  description: 'Brick AI is the AI buyer's agent for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
   alternates: { canonical: 'https://thebrickai.com/about' },
   openGraph: {
     title: 'About — Brick AI',
-    description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+    description: 'Brick AI is the AI buyer's agent for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
     url: 'https://thebrickai.com/about',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'About — Brick AI',
-    description: 'Brick AI is the AI co-pilot for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
+    description: 'Brick AI is the AI buyer's agent for first-home buyers in Australia. We help you buy with clarity, data, and confidence — no commissions, no conflict of interest.',
   },
 }
 
@@ -49,7 +49,7 @@ export default function AboutPage() {
           <div className="max-w-[1200px] mx-auto px-6 md:px-10">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#AFAFAF] mb-6">About Brick AI</p>
             <h1 className="text-[48px] md:text-[72px] font-black leading-[1.0] tracking-[-0.03em] max-w-3xl mb-8">
-              We built the co-pilot<br />first-home buyers deserve.
+              We built the AI buyer's agent<br />first-home buyers deserve.
             </h1>
             <p className="text-[#AFAFAF] text-lg leading-relaxed max-w-xl">
               Australia has one of the world&apos;s most competitive property markets. First-home buyers are navigating it alone — outgunned by investors, overwhelmed by jargon, and underserved by technology. Brick AI changes that.
@@ -69,7 +69,7 @@ export default function AboutPage() {
                 We started Brick AI because buying a first home in Australia is unnecessarily hard. The market moves fast, the data is scattered, and the people who should be helping you often have their own interests at heart.
               </p>
               <p className="text-[#6B6B6B] leading-relaxed">
-                Brick AI is an AI-powered co-pilot that gives first-home buyers the clarity, data, and negotiation edge to buy confidently — without the guesswork, without the jargon, and without the conflict of interest.
+                Brick AI is an AI buyer's agent that gives first-home buyers the clarity, data, and negotiation edge to buy confidently — without the guesswork, without the jargon, and without the conflict of interest.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">

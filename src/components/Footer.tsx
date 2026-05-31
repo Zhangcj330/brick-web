@@ -31,7 +31,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
         <div>
           <div className="font-black text-lg tracking-tight mb-3">Brick AI</div>
-          <p className="text-sm text-[#6B6B6B] leading-relaxed">The AI co-pilot for first-home buyers in Australia.</p>
+          <p className="text-sm text-[#6B6B6B] leading-relaxed">The AI buyer's agent for first-home buyers in Australia.</p>
         </div>
         {/* Product links — use <a> for hash scroll to work on home page */}
         <div>
