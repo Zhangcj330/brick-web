@@ -7,7 +7,7 @@ const ALLOWED_DOMAINS = [
   'media.realestate.com.au',
   'photos.domain.com.au',
   'i2.au.reastatic.net',
-  'bucket-api.domain.com.au',
+  'images.allhomes.com.au',
   'images.unsplash.com',
   'streetviewpixels-pa.googleapis.com',
   'maps.googleapis.com',
