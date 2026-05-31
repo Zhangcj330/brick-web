@@ -3,12 +3,29 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { LayoutDashboard, Menu, RefreshCw } from 'lucide-react'
 import { usePropertyChat } from '@/hooks/usePropertyChat'
+import { getSupabase } from '@/lib/supabase'
 import MessageList from '@/components/chat/MessageList'
 import ChatInput from '@/components/chat/ChatInput'
 import WarningBanner from '@/components/chat/WarningBanner'
 import GenUIPanel from '@/components/gen-ui/GenUIPanel'
 
 function ChatPageContent({ onReset }: { onReset: () => void }) {
+  const [userName, setUserName] = useState('')
+  const [userAvatar, setUserAvatar] = useState('')
+
+  useEffect(() => {
+    getSupabase().auth.getUser().then(({ data: { user } }) => {
+      if (!user) return
+      const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email || ''
+      setUserName(name)
+      setUserAvatar(user.user_metadata?.avatar_url || user.user_metadata?.picture || '')
+    })
+  }, [])
+
+  const initials = userName
+    ? userName.split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase()
+    : '?'
+
   const {
     messages,
     genUIBlocks,
@@ -620,8 +637,11 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           <div className="topbar-right">
             <div className="report-label">Property Report</div>
             <div className="topbar-divider">|</div>
-            <div className="topbar-name">Sarah L.</div>
-            <div className="topbar-avatar" aria-hidden="true">SL</div>
+            <div className="topbar-name">{userName || '…'}</div>
+            {userAvatar
+              ? <img src={userAvatar} alt={initials} className="topbar-avatar" style={{ objectFit: 'cover' }} />
+              : <div className="topbar-avatar" aria-hidden="true">{initials}</div>
+            }
           </div>
         </header>
 
