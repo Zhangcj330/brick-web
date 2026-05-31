@@ -29,6 +29,34 @@ const PROPERTY_CARD = {
   ],
   listing_url: 'https://www.allhomes.com.au/22-addison-avenue-roseville-nsw-2069',
   warnings: ['Heritage overlay may restrict renovations'],
+  // Street check
+  on_main_road: false,
+  main_road_note: 'Quiet tree-lined residential street — minimal traffic',
+  powerlines_nearby: false,
+  powerlines_note: 'No high-voltage infrastructure identified',
+  t_junction: false,
+  t_junction_note: 'No T-junction concern',
+  orientation: 'North-facing',
+  sunlight_note: 'North-facing rear garden — excellent natural light year-round (ideal in Australia)',
+  // Condition
+  kitchen_condition: 'Fair',
+  bathroom_condition: 'Needs Renovation',
+  renovation_needed: true,
+  renovation_note: 'Original 1970s bathroom tiles and dated kitchen — budget $60–90k for full refresh',
+  // Risk
+  land_slope: 'Gentle Slope',
+  land_slope_note: 'Slight rear slope — check retaining walls and drainage',
+  noise_level: 'Low',
+  noise_sources: ['Some traffic from Pacific Hwy 400m west'],
+  noise_note: 'Generally quiet — no flight path or rail line impact',
+  builder_name: undefined,
+  builder_quality: 'Unknown',
+  builder_note: 'Older 1970s brick construction — no known builder defects',
+  property_history_flags: ['Heritage conservation area — check council DCP before any works'],
+  property_history_note: 'No flood risk; heritage overlay may limit renovation scope',
+  needs_inspection: true,
+  needs_pest_control: true,
+  due_diligence_note: 'Pre-purchase building + pest inspection strongly recommended — older brick construction with unknown structural history',
 }
 
 const SUBURB_STATS = {
