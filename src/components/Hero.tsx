@@ -31,7 +31,7 @@ export default function Hero() {
       setTyping(false)
       setMessages(m => [...m, {
         role: 'ai',
-        text: "This feature is currently in development — we're working hard to bring it to you soon. 🚀 Join the waitlist to get early access the moment Brick launches.",
+        text: "Sign in to get your personalised property analysis, grant eligibility, and negotiation strategy. 🏡",
         waitlistLink: true,
       }])
     }, 1200)
@@ -45,7 +45,7 @@ export default function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 bg-[#F6F6F6] border border-[#EEEEEE] rounded-full px-4 py-2 text-xs font-semibold mb-6">
             <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
-            Now in build · Join the waitlist
+            Now live · Sign in to get started
           </div>
 
           <h1 className="text-[52px] md:text-[64px] font-black leading-[1.0] tracking-[-0.03em] mb-6">
@@ -82,8 +82,8 @@ export default function Hero() {
                   }`}>
                     {m.text}
                     {m.waitlistLink && (
-                      <Link href="/waitlist" className="block mt-1.5 font-semibold underline underline-offset-2 hover:text-[#333]">
-                        Join the waitlist →
+                      <Link href="/sign-up" className="block mt-1.5 font-semibold underline underline-offset-2 hover:text-[#333]">
+                        Create your free account →
                       </Link>
                     )}
                   </div>
@@ -113,8 +113,8 @@ export default function Hero() {
           </div>
 
           <div className="flex gap-4 mt-6">
-            <Link href="/waitlist" className="inline-flex items-center gap-2 bg-black text-white font-semibold px-6 py-3 rounded-full hover:bg-[#333] transition-colors text-sm">
-              Join waitlist <ArrowRight className="w-4 h-4" />
+            <Link href="/sign-in" className="inline-flex items-center gap-2 bg-black text-white font-semibold px-6 py-3 rounded-full hover:bg-[#333] transition-colors text-sm">
+              Sign in <ArrowRight className="w-4 h-4" />
             </Link>
             <a href="#how" className="inline-flex items-center gap-2 border border-[#EEEEEE] text-black font-semibold px-6 py-3 rounded-full hover:bg-[#F6F6F6] transition-colors text-sm">
               See how it works

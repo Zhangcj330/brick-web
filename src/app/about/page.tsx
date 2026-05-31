@@ -124,12 +124,12 @@ export default function AboutPage() {
         <section className="py-20">
           <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center">
             <h2 className="text-4xl font-black tracking-tight mb-4">Ready to buy with confidence?</h2>
-            <p className="text-[#6B6B6B] mb-8">Join thousands of first-home buyers on the waitlist.</p>
+            <p className="text-[#6B6B6B] mb-8">Sign in to start buying smarter with your AI buyer&apos;s agent.</p>
             <Link
-              href="/waitlist"
+              href="/sign-in"
               className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-full hover:bg-[#333] transition-colors"
             >
-              Join the waitlist <ArrowRight className="w-4 h-4" />
+              Sign in <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>

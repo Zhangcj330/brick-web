@@ -137,10 +137,10 @@ export default function GamePrizePage() {
             Play again <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
-            href="/waitlist"
+            href="/sign-in"
             className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-[#E2E2E2] bg-white py-4 font-bold text-black transition hover:bg-[#F6F6F6]"
           >
-            Join the waitlist <ArrowRight className="h-4 w-4" />
+            Sign in to Brick AI <ArrowRight className="h-4 w-4" />
           </Link>
           <p className="mt-4 text-xs text-[#AFAFAF]">
             Brick AI is the AI buyer's agent for first-home buyers in Australia.

@@ -38,7 +38,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-bold mb-3">2. Information we collect</h2>
               <p className="leading-relaxed text-[#6B6B6B] mb-3">We collect information you provide directly to us, including:</p>
               <ul className="list-disc pl-5 space-y-2 text-[#6B6B6B]">
-                <li>Name and email address (when joining the waitlist)</li>
+                <li>Name and email address (when creating an account)</li>
                 <li>Property preferences such as buyer type, target city, and budget</li>
                 <li>Conversation data when interacting with Brick AI</li>
                 <li>How you heard about us</li>
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
               <p className="leading-relaxed text-[#6B6B6B] mb-3">We use the information we collect to:</p>
               <ul className="list-disc pl-5 space-y-2 text-[#6B6B6B]">
                 <li>Operate and improve the Service</li>
-                <li>Communicate with you about product updates and your waitlist status</li>
+                <li>Communicate with you about product updates and account activity</li>
                 <li>Understand how users interact with Brick AI to improve AI responses</li>
                 <li>Comply with legal obligations</li>
               </ul>

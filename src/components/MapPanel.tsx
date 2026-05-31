@@ -169,7 +169,7 @@ export default function MapPanel() {
               ))}
             </div>
             <div className="flex gap-2 mt-3">
-              <a href="/waitlist" className="flex-1 text-center bg-black text-white text-xs font-bold py-2.5 rounded-full hover:bg-[#333] transition-colors">Join waitlist</a>
+              <a href="/sign-in" className="flex-1 text-center bg-black text-white text-xs font-bold py-2.5 rounded-full hover:bg-[#333] transition-colors">Sign in</a>
               <button className="flex-1 bg-[#F6F6F6] text-black text-xs font-semibold py-2.5 rounded-full hover:bg-[#EEEEEE] transition-colors">Save</button>
             </div>
           </div>

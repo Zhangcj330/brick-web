@@ -12,8 +12,8 @@ const COLS = [
     links: [
       { label: 'About', href: '/about' },
       { label: 'Blog', href: '/blog' },
-      { label: 'Join waitlist', href: '/waitlist' },
-      { label: 'Play game', href: '/game' },
+      { label: 'Sign in', href: '/sign-in' },
+      { label: 'Create account', href: '/sign-up' },
     ],
   },
   {

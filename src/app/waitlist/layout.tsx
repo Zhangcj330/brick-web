@@ -1,21 +1,18 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Join the Waitlist',
-  description:
-    "Get early access to Brick AI — the AI buyer's agent helping first-home buyers in Australia buy with confidence. Join thousands already on the waitlist.",
-  alternates: { canonical: 'https://thebrickai.com/waitlist' },
+  title: 'Create Account — Brick AI',
+  description: "Sign up for Brick AI — the AI buyer's agent helping first-home buyers in Australia buy with confidence.",
+  alternates: { canonical: 'https://thebrickai.com/sign-up' },
   openGraph: {
-    title: 'Join the Waitlist — Brick AI',
-    description:
-      "Get early access to Brick AI — the AI buyer's agent helping first-home buyers in Australia buy with confidence.",
-    url: 'https://thebrickai.com/waitlist',
+    title: 'Create Account — Brick AI',
+    description: "Sign up for Brick AI — the AI buyer's agent for first-home buyers in Australia.",
+    url: 'https://thebrickai.com/sign-up',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Join the Waitlist — Brick AI',
-    description:
-      "Get early access to Brick AI — the AI buyer's agent helping first-home buyers in Australia buy with confidence.",
+    title: 'Create Account — Brick AI',
+    description: "Sign up for Brick AI — the AI buyer's agent for first-home buyers in Australia.",
   },
 }
 

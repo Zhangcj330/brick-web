@@ -248,12 +248,12 @@ export default function BlogPost() {
         <section className="border-t border-[#EEEEEE] py-16 bg-[#F6F6F6]">
           <div className="max-w-[720px] mx-auto px-6 md:px-10 text-center">
             <h2 className="text-3xl font-black tracking-tight mb-3">Want personalised insights for your suburb?</h2>
-            <p className="text-[#6B6B6B] mb-8">Brick AI analyses market data so you can buy with confidence. Join the waitlist for early access.</p>
+            <p className="text-[#6B6B6B] mb-8">Brick AI analyses market data so you can buy with confidence. Sign in to get started.</p>
             <Link
-              href="/waitlist"
+              href="/sign-in"
               className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-4 rounded-full hover:bg-[#333] transition-colors"
             >
-              Join the waitlist <ArrowRight className="w-4 h-4" />
+              Sign in <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </section>
