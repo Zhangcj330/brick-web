@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -39,14 +39,14 @@ export default function PropertyCard({
   const prev = () => setCurrent(i => (i - 1 + images.length) % images.length)
   const next = () => setCurrent(i => (i + 1) % images.length)
 
-  const detailRows = [
-    bedrooms != null ? { label: 'Bedrooms', value: `${bedrooms}` } : null,
-    bathrooms != null ? { label: 'Bathrooms', value: `${bathrooms}` } : null,
-    carspaces != null ? { label: 'Car spaces', value: `${carspaces}` } : null,
-    land_size ? { label: 'Land size', value: land_size } : null,
-  ].filter(Boolean) as Array<{ label: string; value: string }>
+  const stats = [
+    bedrooms  != null ? { icon: BedDouble,     value: `${bedrooms}`,  label: 'bed' }  : null,
+    bathrooms != null ? { icon: Bath,           value: `${bathrooms}`, label: 'bath' } : null,
+    carspaces != null ? { icon: Car,            value: `${carspaces}`, label: 'car' }  : null,
+    land_size         ? { icon: SquareDashed,   value: land_size,      label: 'm²' }   : null,
+  ].filter(Boolean) as Array<{ icon: React.ComponentType<{ size?: number; strokeWidth?: number }>, value: string, label: string }>
 
-  const addressSub = [property_type, land_size].filter(Boolean).join(' · ')
+  const addressSub = [property_type].filter(Boolean).join(' · ')
 
   return (
     <div className="text-[#0d0d0d]">
@@ -72,7 +72,6 @@ export default function PropertyCard({
             ))}
           </div>
 
-          {/* Prev / Next arrows — only show if multiple images */}
           {images.length > 1 && (
             <>
               <button
@@ -89,8 +88,6 @@ export default function PropertyCard({
               >
                 <ChevronRight size={16} />
               </button>
-
-              {/* Dot indicators */}
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
                 {images.map((_, i) => (
                   <button
@@ -136,15 +133,17 @@ export default function PropertyCard({
         </div>
       )}
 
-      {detailRows.length > 0 && (
-        <div className={address || addressSub ? 'mt-[14px]' : ''}>
-          {detailRows.map((row, index) => (
+      {/* Stats row — icon chips */}
+      {stats.length > 0 && (
+        <div className={`flex flex-wrap gap-2 ${address || addressSub ? 'mt-3' : images.length > 0 ? 'mt-[14px]' : ''}`}>
+          {stats.map(({ icon: Icon, value, label }, i) => (
             <div
-              key={`${row.label}-${index}`}
-              className="flex items-center justify-between gap-3 border-b border-[#f9f9f9] py-2 last:border-b-0"
+              key={i}
+              className="flex items-center gap-1.5 rounded-[6px] border border-[#f0f0f0] bg-[#f9f9f9] px-2.5 py-1.5"
             >
-              <span className="text-[13px] text-[#8a8a8a]">{row.label}</span>
-              <span className="text-right text-[14px] font-semibold text-[#0d0d0d]">{row.value}</span>
+              <Icon size={14} strokeWidth={2} />
+              <span className="text-[13px] font-semibold text-[#0d0d0d]">{value}</span>
+              <span className="text-[11px] text-[#8a8a8a]">{label}</span>
             </div>
           ))}
         </div>
@@ -166,8 +165,8 @@ export default function PropertyCard({
 
       {listing_url && (
         <div className="mt-[14px] flex items-center gap-[10px] border-t border-[#f0f0f0] pt-[14px]">
-          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] bg-[#f9f9f9] text-[13px] font-bold text-[#0d0d0d]">
-            →
+          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] bg-[#f9f9f9]">
+            <ArrowRight size={14} strokeWidth={2} />
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-[13px] font-semibold text-[#0d0d0d]">Listing available</div>
@@ -186,4 +185,3 @@ export default function PropertyCard({
     </div>
   )
 }
-
