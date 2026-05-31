@@ -58,6 +58,27 @@ export default function MessageBubble({ message, isStreaming }: MessageBubblePro
             {isStreaming && hasContent && (
               <span className="inline-block w-0.5 h-3.5 bg-black ml-0.5 align-middle animate-[chat-cursor-blink_0.8s_step-end_infinite]" />
             )}
+          {!isStreaming && message.sources && message.sources.length > 0 && (
+            <div className="mt-2 pt-2 border-t border-black/10">
+              <p className="text-[10px] font-semibold text-[#AFAFAF] uppercase tracking-wide mb-1.5">Sources</p>
+              <div className="flex flex-wrap gap-1.5">
+                {message.sources.map((s, i) => (
+                  <a
+                    key={i}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 bg-white border border-[#E5E5E5] rounded-full px-2.5 py-1 text-[11px] font-medium text-[#3A3A3A] hover:border-black hover:text-black transition-colors"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="opacity-40 flex-shrink-0">
+                      <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    {s.title || new URL(s.url).hostname.replace('www.','')}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
           </>
         )}
       </div>

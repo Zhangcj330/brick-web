@@ -1,10 +1,16 @@
 export type MessageRole = 'user' | 'assistant'
 
+export interface SourceItem {
+  title: string
+  url: string
+}
+
 export interface ChatMessage {
   id: string
   role: MessageRole
   content: string
   timestamp: number
+  sources?: SourceItem[]
 }
 
 export interface ToolCallEvent {
@@ -21,6 +27,7 @@ export interface WarningEvent {
 export type SSEEvent =
   | { type: 'text_delta'; content: string }
   | { type: 'tool_call'; id: string; name: string; args: Record<string, unknown> }
+  | { type: 'sources'; items: SourceItem[] }
   | { type: 'warning'; level: 'high' | 'medium' | 'low'; text: string }
   | { type: 'error'; message: string }
   | { type: 'done' }

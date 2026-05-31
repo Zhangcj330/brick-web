@@ -105,6 +105,14 @@ export function usePropertyChat() {
               }
               return [...prev, block]
             })
+          } else if (event.type === 'sources') {
+            setMessages(prev =>
+              prev.map(m =>
+                m.id === assistantId
+                  ? { ...m, sources: event.items }
+                  : m
+              )
+            )
           } else if (event.type === 'warning') {
             setActiveWarnings(prev => [...prev, { level: event.level, text: event.text }])
           } else if (event.type === 'error') {
