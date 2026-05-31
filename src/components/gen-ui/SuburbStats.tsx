@@ -171,11 +171,6 @@ export default function SuburbStats({
       value: days_on_market == null ? '—' : `${days_on_market} days`,
     },
     {
-      label: '5yr price growth',
-      width: growth_5yr == null ? 0 : clamp((growth_5yr / 100) * 100, 0, 100),
-      value: growth_5yr == null ? '—' : `${growth_5yr > 0 ? '+' : ''}${growth_5yr.toFixed(1)}%`,
-    },
-    {
       label: 'Vacancy rate',
       width: vacancy_rate == null ? 0 : clamp((vacancy_rate / 5) * 100, 0, 100),
       value: vacancy_rate == null ? '—' : `${vacancy_rate.toFixed(1)}%`,
