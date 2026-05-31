@@ -275,10 +275,7 @@ export default function SuburbStats({
 
       {/* Long-term factors */}
       {(economic_verdict || affordability_verdict || lifestyle_education_verdict) && (
-        <div className="mt-[14px] divide-y divide-[#f0f0f0] rounded-[10px] border border-[#f0f0f0]">
-          <div className="px-3">
-            <div className="pt-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Long-term Factors</div>
-          </div>
+        <div className="mt-[10px] divide-y divide-[#f0f0f0] border-t border-[#f0f0f0]">
           <FactorRow
             icon={Briefcase}
             label="Economic"
