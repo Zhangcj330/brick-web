@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type React from 'react'
-import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, Hammer } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -22,10 +22,51 @@ interface PropertyCardProps {
   main_road_note?: string
   powerlines_nearby?: boolean
   powerlines_note?: string
+  t_junction?: boolean
+  t_junction_note?: string
+  orientation?: string
+  sunlight_note?: string
+  kitchen_condition?: string
+  bathroom_condition?: string
+  renovation_needed?: boolean
+  renovation_note?: string
 }
 
 function proxyUrl(url: string) {
   return `/api/proxy-image?url=${encodeURIComponent(url)}`
+}
+
+function StreetRow({ icon: Icon, concern, label, note }: {
+  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
+  concern: boolean
+  label: string
+  note?: string
+}) {
+  return (
+    <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${concern ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
+      <Icon size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${concern ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
+      <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
+        <span className="font-semibold">{label}</span>
+        {note ? ` — ${note}` : ''}
+      </span>
+    </div>
+  )
+}
+
+const CONDITION_COLOR: Record<string, string> = {
+  Modern: 'border-[#bbf7d0] bg-[#f0fdf4] text-[#16a34a]',
+  Good: 'border-[#e2f0d9] bg-[#f6fbf3] text-[#4a7c3f]',
+  Fair: 'border-[#fde68a] bg-[#fffbeb] text-[#b45309]',
+  'Needs Renovation': 'border-[#fca5a5] bg-[#fef2f2] text-[#b91c1c]',
+}
+
+function ConditionChip({ label, condition }: { label: string; condition: string }) {
+  const cls = CONDITION_COLOR[condition] ?? 'border-[#f0f0f0] bg-[#f9f9f9] text-[#8a8a8a]'
+  return (
+    <div className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${cls}`}>
+      {label}: {condition}
+    </div>
+  )
 }
 
 export default function PropertyCard({
@@ -46,6 +87,14 @@ export default function PropertyCard({
   main_road_note,
   powerlines_nearby,
   powerlines_note,
+  t_junction,
+  t_junction_note,
+  orientation,
+  sunlight_note,
+  kitchen_condition,
+  bathroom_condition,
+  renovation_needed,
+  renovation_note,
 }: PropertyCardProps) {
   const [current, setCurrent] = useState(0)
 
@@ -166,25 +215,51 @@ export default function PropertyCard({
       )}
 
       {/* Street check */}
-      {(on_main_road != null || powerlines_nearby != null) && (
-        <div className="mt-3 flex flex-col gap-2">
+      {(on_main_road != null || powerlines_nearby != null || t_junction != null || orientation) && (
+        <div className="mt-3 flex flex-col gap-[6px]">
           {on_main_road != null && (
-            <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${on_main_road ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
-              <Navigation size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${on_main_road ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
-              <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
-                <span className="font-semibold">{on_main_road ? 'Main road' : 'Quiet street'}</span>
-                {main_road_note ? ` — ${main_road_note}` : ''}
-              </span>
-            </div>
+            <StreetRow icon={Navigation} concern={on_main_road}
+              label={on_main_road ? 'Main road' : 'Quiet street'}
+              note={main_road_note} />
           )}
           {powerlines_nearby != null && (
-            <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${powerlines_nearby ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
-              <Zap size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${powerlines_nearby ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
-              <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
-                <span className="font-semibold">{powerlines_nearby ? 'Powerlines detected' : 'No powerlines'}</span>
-                {powerlines_note ? ` — ${powerlines_note}` : ''}
-              </span>
-            </div>
+            <StreetRow icon={Zap} concern={powerlines_nearby}
+              label={powerlines_nearby ? 'Powerlines detected' : 'No powerlines'}
+              note={powerlines_note} />
+          )}
+          {t_junction != null && (
+            <StreetRow icon={TriangleAlert} concern={t_junction}
+              label={t_junction ? 'T-junction (路冲)' : 'No T-junction'}
+              note={t_junction_note} />
+          )}
+          {orientation && (
+            <StreetRow icon={Sun} concern={orientation.toLowerCase().includes('south')}
+              label={orientation}
+              note={sunlight_note} />
+          )}
+        </div>
+      )}
+
+      {/* Renovation assessment */}
+      {(kitchen_condition || bathroom_condition) && (
+        <div className="mt-3 border-t border-[#f0f0f0] pt-3">
+          <div className="mb-2 flex items-center gap-1.5">
+            <Hammer size={13} strokeWidth={2} className="text-[#8a8a8a]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Condition</span>
+            {renovation_needed && (
+              <span className="ml-auto rounded-full bg-[#fef3c7] px-2 py-0.5 text-[10px] font-semibold text-[#d97706]">Renovation likely</span>
+            )}
+          </div>
+          <div className="flex gap-2">
+            {kitchen_condition && (
+              <ConditionChip label="Kitchen" condition={kitchen_condition} />
+            )}
+            {bathroom_condition && (
+              <ConditionChip label="Bathroom" condition={bathroom_condition} />
+            )}
+          </div>
+          {renovation_note && (
+            <p className="mt-2 text-[11px] leading-[1.4] text-[#8a8a8a]">{renovation_note}</p>
           )}
         </div>
       )}
