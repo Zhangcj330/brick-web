@@ -17,6 +17,8 @@ interface SuburbStatsProps {
   stock_on_market?: number
   rental_yield?: number
   vacancy_rate?: number
+  crime_rate?: number
+  crime_label?: string
   growth_1yr?: number
   growth_5yr?: number
   growth_10yr?: number
@@ -151,6 +153,8 @@ export default function SuburbStats({
   rental_yield,
   vacancy_rate,
   stock_on_market,
+  crime_rate,
+  crime_label,
   growth_1yr,
   growth_5yr,
   growth_10yr,
@@ -187,6 +191,12 @@ export default function SuburbStats({
       label: 'Stock on market',
       width: stock_on_market == null ? 0 : clamp((stock_on_market / 500) * 100, 0, 100),
       value: stock_on_market == null ? '—' : `${stock_on_market}`,
+    },
+    {
+      label: 'Crime rate',
+      width: crime_rate == null ? 0 : clamp((crime_rate / 200) * 100, 0, 100),
+      value: crime_rate == null ? '—' : crime_label ? `${crime_label}` : `${crime_rate}/1k`,
+      warning: crime_rate != null && crime_rate > 100,
     },
   ]
 
@@ -267,11 +277,11 @@ export default function SuburbStats({
                 ref={element => {
                   barRefs.current[index] = element
                 }}
-                className="h-full rounded-full bg-[#0d0d0d] transition-[width] duration-700 ease-out"
+                className={`h-full rounded-full transition-[width] duration-700 ease-out ${bar.warning ? 'bg-[#d97706]' : 'bg-[#0d0d0d]'}`}
                 style={{ width: 0 }}
               />
             </div>
-            <div className="min-w-[52px] text-right text-[13px] font-semibold text-[#0d0d0d]">{bar.value}</div>
+            <div className={`min-w-[52px] text-right text-[13px] font-semibold ${bar.warning ? 'text-[#d97706]' : 'text-[#0d0d0d]'}`}>{bar.value}</div>
           </div>
         ))}
       </div>

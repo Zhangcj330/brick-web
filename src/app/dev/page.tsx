@@ -42,6 +42,8 @@ const SUBURB_STATS = {
   rental_yield: 3.2,
   vacancy_rate: 1.44,
   stock_on_market: 161,
+  crime_rate: 58,
+  crime_label: 'Low',
   growth_1yr: 7.3,
   growth_5yr: 48.1,
   growth_10yr: 66.5,

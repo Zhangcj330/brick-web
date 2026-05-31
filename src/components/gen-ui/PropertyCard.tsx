@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type React from 'react'
-import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -18,6 +18,10 @@ interface PropertyCardProps {
   description?: string
   listing_url?: string
   warnings?: string[]
+  on_main_road?: boolean
+  main_road_note?: string
+  powerlines_nearby?: boolean
+  powerlines_note?: string
 }
 
 function proxyUrl(url: string) {
@@ -38,6 +42,10 @@ export default function PropertyCard({
   description,
   listing_url,
   warnings = [],
+  on_main_road,
+  main_road_note,
+  powerlines_nearby,
+  powerlines_note,
 }: PropertyCardProps) {
   const [current, setCurrent] = useState(0)
 
@@ -154,6 +162,30 @@ export default function PropertyCard({
               <span className="text-[11px] text-[#8a8a8a]">{label}</span>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Street check */}
+      {(on_main_road != null || powerlines_nearby != null) && (
+        <div className="mt-3 flex flex-col gap-2">
+          {on_main_road != null && (
+            <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${on_main_road ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
+              <Navigation size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${on_main_road ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
+              <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
+                <span className="font-semibold">{on_main_road ? 'Main road' : 'Quiet street'}</span>
+                {main_road_note ? ` — ${main_road_note}` : ''}
+              </span>
+            </div>
+          )}
+          {powerlines_nearby != null && (
+            <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${powerlines_nearby ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
+              <Zap size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${powerlines_nearby ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
+              <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
+                <span className="font-semibold">{powerlines_nearby ? 'Powerlines detected' : 'No powerlines'}</span>
+                {powerlines_note ? ` — ${powerlines_note}` : ''}
+              </span>
+            </div>
+          )}
         </div>
       )}
 
