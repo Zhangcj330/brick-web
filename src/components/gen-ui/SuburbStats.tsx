@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import type React from 'react'
-import { TrendingUp, Activity } from 'lucide-react'
+import { TrendingUp, Activity, Briefcase, DollarSign, GraduationCap } from 'lucide-react'
 
 interface SuburbStatsProps {
   suburb?: string
@@ -11,6 +11,7 @@ interface SuburbStatsProps {
   median_price?: number
   median_rent?: number
   annual_growth?: number
+  growth_12mo?: number  // alias from Gemini tool call
   clearance_rate?: number
   days_on_market?: number
   stock_on_market?: number
@@ -23,6 +24,12 @@ interface SuburbStatsProps {
   short_term_reason?: string
   long_term_outlook?: string
   long_term_reason?: string
+  economic_verdict?: string
+  economic_reason?: string
+  affordability_verdict?: string
+  affordability_reason?: string
+  lifestyle_education_verdict?: string
+  lifestyle_education_reason?: string
   population?: number
   buyer_profile?: string
 }
@@ -53,6 +60,16 @@ const OUTLOOK_COLOR: Record<string, string> = {
   Neutral: 'text-[#6b6b6b]',
   Weak: 'text-[#b91c1c]',
   Caution: 'text-[#d97706]',
+  Challenging: 'text-[#d97706]',
+}
+
+const VERDICT_DOT: Record<string, string> = {
+  Strong: 'bg-[#16a34a]',
+  Moderate: 'bg-[#0d0d0d]',
+  Neutral: 'bg-[#c0c0c0]',
+  Weak: 'bg-[#b91c1c]',
+  Caution: 'bg-[#d97706]',
+  Challenging: 'bg-[#d97706]',
 }
 
 function OutlookCard({
@@ -83,11 +100,46 @@ function OutlookCard({
   )
 }
 
+function FactorRow({
+  icon: Icon,
+  label,
+  verdict,
+  reason,
+}: {
+  icon: React.ElementType
+  label: string
+  verdict?: string
+  reason?: string
+}) {
+  const textColor = verdict ? (OUTLOOK_COLOR[verdict] ?? 'text-[#0d0d0d]') : 'text-[#c0c0c0]'
+  const dotColor = verdict ? (VERDICT_DOT[verdict] ?? 'bg-[#0d0d0d]') : 'bg-[#e0e0e0]'
+  return (
+    <div className="flex items-start gap-3 py-3">
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f4f4f4]">
+        <Icon size={14} strokeWidth={2} className="text-[#0d0d0d]" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="text-[12px] font-semibold text-[#0d0d0d]">{label}</span>
+          {verdict && (
+            <span className={`flex items-center gap-1 text-[11px] font-semibold ${textColor}`}>
+              <span className={`inline-block h-1.5 w-1.5 rounded-full ${dotColor}`} />
+              {verdict}
+            </span>
+          )}
+        </div>
+        {reason && <p className="mt-0.5 text-[11px] leading-[1.4] text-[#8a8a8a]">{reason}</p>}
+      </div>
+    </div>
+  )
+}
+
 export default function SuburbStats({
   suburb,
   state,
   median_price,
   annual_growth,
+  growth_12mo,
   clearance_rate,
   days_on_market,
   rental_yield,
@@ -100,8 +152,16 @@ export default function SuburbStats({
   short_term_reason,
   long_term_outlook,
   long_term_reason,
+  economic_verdict,
+  economic_reason,
+  affordability_verdict,
+  affordability_reason,
+  lifestyle_education_verdict,
+  lifestyle_education_reason,
   buyer_profile,
 }: SuburbStatsProps) {
+  // Prefer SQM 1-year growth (real data), fall back to Gemini's growth_12mo or annual_growth
+  const displayGrowth = growth_1yr ?? growth_12mo ?? annual_growth
   const barRefs = useRef<Array<HTMLDivElement | null>>([])
 
   const bars = [
@@ -145,11 +205,11 @@ export default function SuburbStats({
     return () => window.clearTimeout(timeout)
   }, [bars])
 
-  const growthColor = annual_growth == null
+  const growthColor = displayGrowth == null
     ? 'text-[#0d0d0d]'
-    : annual_growth > 0
+    : displayGrowth > 0
       ? 'text-[#19c37d]'
-      : annual_growth < 0
+      : displayGrowth < 0
         ? 'text-[#1a1a1a]'
         : 'text-[#8a8a8a]'
 
@@ -182,7 +242,7 @@ export default function SuburbStats({
           <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Median price</div>
         </div>
         <div className="border-r border-[#f0f0f0] p-3 text-center last:border-r-0">
-          <div className={`text-[18px] font-bold tracking-[-0.02em] ${growthColor}`}>{formatGrowth(annual_growth)}</div>
+          <div className={`text-[18px] font-bold tracking-[-0.02em] ${growthColor}`}>{formatGrowth(displayGrowth)}</div>
           <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Annual growth</div>
         </div>
         <div className="border-r border-[#f0f0f0] p-3 text-center last:border-r-0">
@@ -212,6 +272,33 @@ export default function SuburbStats({
           </div>
         ))}
       </div>
+
+      {/* Long-term factors */}
+      {(economic_verdict || affordability_verdict || lifestyle_education_verdict) && (
+        <div className="mt-[14px] divide-y divide-[#f0f0f0] rounded-[10px] border border-[#f0f0f0]">
+          <div className="px-3">
+            <div className="pt-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Long-term Factors</div>
+          </div>
+          <FactorRow
+            icon={Briefcase}
+            label="Economic"
+            verdict={economic_verdict}
+            reason={economic_reason}
+          />
+          <FactorRow
+            icon={DollarSign}
+            label="Affordability"
+            verdict={affordability_verdict}
+            reason={affordability_reason}
+          />
+          <FactorRow
+            icon={GraduationCap}
+            label="Lifestyle & Education"
+            verdict={lifestyle_education_verdict}
+            reason={lifestyle_education_reason}
+          />
+        </div>
+      )}
 
       {buyer_profile && (
         <div className="mt-[14px] border-t border-[#f0f0f0] pt-3 text-[12px] text-[#8a8a8a]">
