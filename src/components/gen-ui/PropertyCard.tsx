@@ -51,7 +51,7 @@ export default function PropertyCard({
   return (
     <div className="text-[#0d0d0d]">
       {images.length > 0 && (
-        <div className="relative overflow-hidden bg-[#f0f0f0]">
+        <div data-carousel className="relative overflow-hidden bg-[#f0f0f0]">
           {/* Sliding strip */}
           <div
             className="flex transition-transform duration-300 ease-in-out"

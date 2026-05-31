@@ -547,6 +547,13 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           color: var(--grey-800) !important;
         }
 
+        /* Exempt carousel overlays — arrows, dots, price badges must stay white */
+        .report-generated [data-carousel] [class*='text-white'],
+        .report-generated [data-carousel] [class*='bg-white'],
+        .report-generated [data-carousel] [class*='bg-white/50'] {
+          color: white !important;
+        }
+
         .report-generated [class*='border-white'] {
           border-color: var(--line) !important;
         }

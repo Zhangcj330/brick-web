@@ -44,6 +44,7 @@ export default function SuburbStats({
   clearance_rate,
   days_on_market,
   rental_yield,
+  stock_on_market,
   buyer_profile,
 }: SuburbStatsProps) {
   const barRefs = useRef<Array<HTMLDivElement | null>>([])
@@ -55,14 +56,14 @@ export default function SuburbStats({
       value: days_on_market == null ? '—' : `${days_on_market} days`,
     },
     {
-      label: 'Clearance rate',
-      width: clearance_rate == null ? 0 : clamp(clearance_rate, 0, 100),
-      value: clearance_rate == null ? '—' : `${clearance_rate.toFixed(0)}%`,
+      label: 'Rental yield',
+      width: rental_yield == null ? 0 : clamp((rental_yield / 8) * 100, 0, 100),
+      value: rental_yield == null ? '—' : `${rental_yield.toFixed(1)}%`,
     },
     {
-      label: 'Annual growth',
-      width: annual_growth == null ? 0 : clamp((Math.abs(annual_growth) / 20) * 100, 0, 100),
-      value: annual_growth == null ? '—' : `${annual_growth.toFixed(1)}%`,
+      label: 'Stock on market',
+      width: stock_on_market == null ? 0 : clamp((stock_on_market / 500) * 100, 0, 100),
+      value: stock_on_market == null ? '—' : `${stock_on_market}`,
     },
   ]
 
