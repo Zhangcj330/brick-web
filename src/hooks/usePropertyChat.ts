@@ -109,7 +109,7 @@ export function usePropertyChat() {
             setMessages(prev =>
               prev.map(m =>
                 m.id === assistantId
-                  ? { ...m, sources: event.items }
+                  ? { ...m, sources: [...(m.sources ?? []), ...event.items] }
                   : m
               )
             )
