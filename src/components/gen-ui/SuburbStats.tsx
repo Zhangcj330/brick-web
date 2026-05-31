@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import type React from 'react'
-import { TrendingUp, Activity, Briefcase, DollarSign, GraduationCap } from 'lucide-react'
+import { TrendingUp, Activity, Briefcase, DollarSign, GraduationCap, Building2 } from 'lucide-react'
 
 interface SuburbStatsProps {
   suburb?: string
@@ -30,6 +30,8 @@ interface SuburbStatsProps {
   affordability_reason?: string
   lifestyle_education_verdict?: string
   lifestyle_education_reason?: string
+  supply_verdict?: string
+  supply_reason?: string
   population?: number
   buyer_profile?: string
 }
@@ -61,6 +63,8 @@ const OUTLOOK_COLOR: Record<string, string> = {
   Weak: 'text-[#b91c1c]',
   Caution: 'text-[#d97706]',
   Challenging: 'text-[#d97706]',
+  'Low Risk': 'text-[#16a34a]',
+  'High Risk': 'text-[#b91c1c]',
 }
 
 const VERDICT_DOT: Record<string, string> = {
@@ -70,6 +74,8 @@ const VERDICT_DOT: Record<string, string> = {
   Weak: 'bg-[#b91c1c]',
   Caution: 'bg-[#d97706]',
   Challenging: 'bg-[#d97706]',
+  'Low Risk': 'bg-[#16a34a]',
+  'High Risk': 'bg-[#b91c1c]',
 }
 
 function OutlookCard({
@@ -158,6 +164,8 @@ export default function SuburbStats({
   affordability_reason,
   lifestyle_education_verdict,
   lifestyle_education_reason,
+  supply_verdict,
+  supply_reason,
   buyer_profile,
 }: SuburbStatsProps) {
   // Prefer SQM 1-year growth (real data), fall back to Gemini's growth_12mo or annual_growth
@@ -269,26 +277,12 @@ export default function SuburbStats({
       </div>
 
       {/* Long-term factors */}
-      {(economic_verdict || affordability_verdict || lifestyle_education_verdict) && (
+      {(economic_verdict || affordability_verdict || lifestyle_education_verdict || supply_verdict) && (
         <div className="mt-[10px] divide-y divide-[#f0f0f0] border-t border-[#f0f0f0]">
-          <FactorRow
-            icon={Briefcase}
-            label="Economic"
-            verdict={economic_verdict}
-            reason={economic_reason}
-          />
-          <FactorRow
-            icon={DollarSign}
-            label="Affordability"
-            verdict={affordability_verdict}
-            reason={affordability_reason}
-          />
-          <FactorRow
-            icon={GraduationCap}
-            label="Lifestyle & Education"
-            verdict={lifestyle_education_verdict}
-            reason={lifestyle_education_reason}
-          />
+          <FactorRow icon={Briefcase} label="Economic" verdict={economic_verdict} reason={economic_reason} />
+          <FactorRow icon={DollarSign} label="Affordability" verdict={affordability_verdict} reason={affordability_reason} />
+          <FactorRow icon={GraduationCap} label="Lifestyle & Education" verdict={lifestyle_education_verdict} reason={lifestyle_education_reason} />
+          <FactorRow icon={Building2} label="Supply Risk" verdict={supply_verdict} reason={supply_reason} />
         </div>
       )}
 

@@ -1,15 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import type React from 'react'
 import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
-  price?: string
+  price?: string | number
   bedrooms?: number
   bathrooms?: number
   carspaces?: number
+  parking?: number        // alias from Gemini tool call
   land_size?: string
+  land_sqm?: number       // alias from Gemini tool call
   property_type?: string
   images?: string[]
   description?: string
@@ -27,7 +30,9 @@ export default function PropertyCard({
   bedrooms,
   bathrooms,
   carspaces,
+  parking,
   land_size,
+  land_sqm,
   property_type,
   images = [],
   description,
@@ -36,14 +41,17 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [current, setCurrent] = useState(0)
 
+  const cars = carspaces ?? parking
+  const land = land_size ?? (land_sqm != null ? `${land_sqm}` : undefined)
+
   const prev = () => setCurrent(i => (i - 1 + images.length) % images.length)
   const next = () => setCurrent(i => (i + 1) % images.length)
 
   const stats = [
-    bedrooms  != null ? { icon: BedDouble,     value: `${bedrooms}`,  label: 'bed' }  : null,
-    bathrooms != null ? { icon: Bath,           value: `${bathrooms}`, label: 'bath' } : null,
-    carspaces != null ? { icon: Car,            value: `${carspaces}`, label: 'car' }  : null,
-    land_size         ? { icon: SquareDashed,   value: land_size,      label: 'm²' }   : null,
+    bedrooms != null ? { icon: BedDouble,   value: `${bedrooms}`,  label: 'bed' }  : null,
+    bathrooms != null ? { icon: Bath,        value: `${bathrooms}`, label: 'bath' } : null,
+    cars != null      ? { icon: Car,         value: `${cars}`,      label: 'car' }  : null,
+    land              ? { icon: SquareDashed, value: land,          label: 'm²' }   : null,
   ].filter(Boolean) as Array<{ icon: React.ComponentType<{ size?: number; strokeWidth?: number }>, value: string, label: string }>
 
   const addressSub = [property_type].filter(Boolean).join(' · ')
