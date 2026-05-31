@@ -123,13 +123,6 @@ export default function SignUpPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <GoogleButton label="Sign up with Google" />
-
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-[#EEEEEE]" />
-              <span className="text-xs text-[#AFAFAF]">or</span>
-              <div className="flex-1 h-px bg-[#EEEEEE]" />
-            </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-[#3A3A3A] mb-1.5">
@@ -203,6 +196,14 @@ export default function SignUpPage() {
             >
               {loading ? 'Creating account…' : 'Create account'}
             </button>
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+              <span className="text-xs text-[#AFAFAF]">or</span>
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+            </div>
+
+            <GoogleButton label="Sign up with Google" />
 
             <p className="text-center text-xs text-[#AFAFAF] leading-relaxed">
               By creating an account you agree to our{' '}

@@ -88,13 +88,6 @@ export default function SignInPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <GoogleButton label="Continue with Google" />
-
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-[#EEEEEE]" />
-              <span className="text-xs text-[#AFAFAF]">or</span>
-              <div className="flex-1 h-px bg-[#EEEEEE]" />
-            </div>
             <div>
               <label className="block text-xs font-semibold text-[#3A3A3A] mb-1.5">
                 Email
@@ -143,6 +136,14 @@ export default function SignInPage() {
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+              <span className="text-xs text-[#AFAFAF]">or</span>
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+            </div>
+
+            <GoogleButton label="Continue with Google" />
           </form>
 
           <p className="text-center text-sm text-[#6B6B6B] mt-6">
