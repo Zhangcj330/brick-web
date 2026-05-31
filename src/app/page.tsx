@@ -2,19 +2,19 @@ import type { Metadata } from 'next'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: 'Brick AI — The AI buyer's agent for first-home buyers',
+  title: "Brick AI — The AI buyer's agent for first-home buyers",
   description:
     'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork. Analyse suburbs, check grants, and buy with confidence.',
   alternates: { canonical: 'https://thebrickai.com' },
   openGraph: {
-    title: 'Brick AI — The AI buyer's agent for first-home buyers',
+    title: "Brick AI — The AI buyer's agent for first-home buyers",
     description:
       'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.',
     url: 'https://thebrickai.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Brick AI — The AI buyer's agent for first-home buyers',
+    title: "Brick AI — The AI buyer's agent for first-home buyers",
     description:
       'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.',
   },

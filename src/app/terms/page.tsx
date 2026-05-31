@@ -3,17 +3,17 @@ import Footer from '@/components/Footer'
 
 export const metadata = {
   title: 'Terms of Service',
-  description: 'Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.',
+  description: "Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.",
   alternates: { canonical: 'https://thebrickai.com/terms' },
   openGraph: {
     title: 'Terms of Service — Brick AI',
-    description: 'Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.',
+    description: "Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.",
     url: 'https://thebrickai.com/terms',
   },
   twitter: {
     card: 'summary',
     title: 'Terms of Service — Brick AI',
-    description: 'Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.',
+    description: "Terms and conditions for using Brick AI — the AI buyer's agent for first-home buyers in Australia.",
   },
 }
 

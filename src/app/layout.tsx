@@ -12,7 +12,7 @@ const hanken = Hanken_Grotesk({
 })
 
 const siteUrl = 'https://thebrickai.com'
-const defaultTitle = 'Brick AI — The AI buyer's agent for first-home buyers'
+const defaultTitle = "Brick AI — The AI buyer's agent for first-home buyers"
 const defaultDescription =
   'Brick AI gives first-home buyers the clarity, data, and negotiation edge to buy right — without the guesswork.'
 
