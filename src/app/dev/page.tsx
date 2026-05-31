@@ -34,11 +34,14 @@ const PROPERTY_CARD = {
 const SUBURB_STATS = {
   suburb: 'Surry Hills',
   state: 'NSW',
+  postcode: '2010',
   median_price: 1_450_000,
   annual_growth: 7.4,
   clearance_rate: 74,
   days_on_market: 22,
   rental_yield: 3.2,
+  vacancy_rate: 2.0,
+  stock_on_market: 142,
   buyer_profile: 'Popular with young professionals and first-home buyers seeking inner-city lifestyle.',
 }
 

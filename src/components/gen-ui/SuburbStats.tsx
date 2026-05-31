@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 interface SuburbStatsProps {
   suburb?: string
   state?: string
+  postcode?: string
   median_price?: number
   median_rent?: number
   annual_growth?: number
@@ -12,6 +13,7 @@ interface SuburbStatsProps {
   days_on_market?: number
   stock_on_market?: number
   rental_yield?: number
+  vacancy_rate?: number
   population?: number
   buyer_profile?: string
 }
@@ -44,6 +46,7 @@ export default function SuburbStats({
   clearance_rate,
   days_on_market,
   rental_yield,
+  vacancy_rate,
   stock_on_market,
   buyer_profile,
 }: SuburbStatsProps) {
@@ -59,6 +62,11 @@ export default function SuburbStats({
       label: 'Rental yield',
       width: rental_yield == null ? 0 : clamp((rental_yield / 8) * 100, 0, 100),
       value: rental_yield == null ? '—' : `${rental_yield.toFixed(1)}%`,
+    },
+    {
+      label: 'Vacancy rate',
+      width: vacancy_rate == null ? 0 : clamp((vacancy_rate / 5) * 100, 0, 100),
+      value: vacancy_rate == null ? '—' : `${vacancy_rate.toFixed(1)}%`,
     },
     {
       label: 'Stock on market',
