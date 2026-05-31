@@ -16,7 +16,7 @@ export default function Nav() {
           <a href="#suggestions" className="hover:text-black transition-colors">Features</a>
           <a href="#how" className="hover:text-black transition-colors">How it works</a>
           <a href="#proof" className="hover:text-black transition-colors">Reviews</a>
-          <Link href="/game" className="hover:text-black transition-colors font-semibold text-black border border-[#E2E2E2] px-3 py-1.5 rounded-full hover:bg-[#F6F6F6]">🎮 Play game</Link>
+          
         </div>
         <Link
           href="/waitlist"
@@ -35,7 +35,7 @@ export default function Nav() {
           <a href="#suggestions" className="text-sm font-medium" onClick={() => setOpen(false)}>Features</a>
           <a href="#how" className="text-sm font-medium" onClick={() => setOpen(false)}>How it works</a>
           <a href="#proof" className="text-sm font-medium" onClick={() => setOpen(false)}>Reviews</a>
-          <Link href="/game" className="text-sm font-semibold" onClick={() => setOpen(false)}>🎮 Play game</Link>
+          
           <Link href="/waitlist" className="text-sm font-semibold" onClick={() => setOpen(false)}>Join waitlist →</Link>
         </div>
       )}
