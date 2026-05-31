@@ -262,7 +262,7 @@ export default function PropertyCard({
             )}
             {t_junction != null && (
               <CheckRow icon={TriangleAlert} ok={!t_junction}
-                label="T-junction (路冲)"
+                label="T-junction"
                 note={t_junction_note} />
             )}
             {orientation && (
