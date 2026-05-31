@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type React from 'react'
-import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, Hammer, MountainSnow, Volume2, HardHat, History, ClipboardCheck, Bug } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, MountainSnow, Volume2, History, ClipboardCheck, Bug } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -50,35 +50,39 @@ function proxyUrl(url: string) {
   return `/api/proxy-image?url=${encodeURIComponent(url)}`
 }
 
-function StreetRow({ icon: Icon, concern, label, note }: {
+// Uber-style monochrome check row: icon + label · note
+function CheckRow({ icon: Icon, ok, label, note }: {
   icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
-  concern: boolean
+  ok: boolean
   label: string
   note?: string
 }) {
   return (
-    <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${concern ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
-      <Icon size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${concern ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
-      <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
-        <span className="font-semibold">{label}</span>
-        {note ? ` — ${note}` : ''}
+    <div className="flex items-start gap-2.5 py-[5px]">
+      <Icon size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
+      <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
+        {label}
+        {note && <span className="text-[#8a8a8a]"> · {note}</span>}
+      </span>
+      <span className={`ml-auto shrink-0 text-[11px] font-semibold tabular-nums ${ok ? 'text-[#0d0d0d]' : 'text-[#0d0d0d]'}`}>
+        {ok ? 'No' : 'Yes'}
       </span>
     </div>
   )
 }
 
-const CONDITION_COLOR: Record<string, string> = {
-  Modern: 'border-[#bbf7d0] bg-[#f0fdf4] text-[#16a34a]',
-  Good: 'border-[#e2f0d9] bg-[#f6fbf3] text-[#4a7c3f]',
-  Fair: 'border-[#fde68a] bg-[#fffbeb] text-[#b45309]',
-  'Needs Renovation': 'border-[#fca5a5] bg-[#fef2f2] text-[#b91c1c]',
-}
-
-function ConditionChip({ label, condition }: { label: string; condition: string }) {
-  const cls = CONDITION_COLOR[condition] ?? 'border-[#f0f0f0] bg-[#f9f9f9] text-[#8a8a8a]'
+function ConditionBox({ label, condition, renovationNeeded }: {
+  label: string
+  condition: string
+  renovationNeeded?: boolean
+}) {
   return (
-    <div className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${cls}`}>
-      {label}: {condition}
+    <div className="flex-1 rounded-[6px] border border-[#e5e7eb] px-3 py-2.5">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">{label}</div>
+      <div className="mt-0.5 text-[13px] font-semibold text-[#0d0d0d]">{condition}</div>
+      {renovationNeeded && (
+        <div className="mt-1 text-[11px] text-[#8a8a8a]">Renovation needed</div>
+      )}
     </div>
   )
 }
@@ -243,119 +247,112 @@ export default function PropertyCard({
 
       {/* Street check */}
       {(on_main_road != null || powerlines_nearby != null || t_junction != null || orientation) && (
-        <div className="mt-3 flex flex-col gap-[6px]">
-          {on_main_road != null && (
-            <StreetRow icon={Navigation} concern={on_main_road}
-              label={on_main_road ? 'Main road' : 'Quiet street'}
-              note={main_road_note} />
-          )}
-          {powerlines_nearby != null && (
-            <StreetRow icon={Zap} concern={powerlines_nearby}
-              label={powerlines_nearby ? 'Powerlines detected' : 'No powerlines'}
-              note={powerlines_note} />
-          )}
-          {t_junction != null && (
-            <StreetRow icon={TriangleAlert} concern={t_junction}
-              label={t_junction ? 'T-junction (路冲)' : 'No T-junction'}
-              note={t_junction_note} />
-          )}
-          {orientation && (
-            <StreetRow icon={Sun} concern={orientation.toLowerCase().includes('south')}
-              label={orientation}
-              note={sunlight_note} />
-          )}
+        <div className="mt-3 border-t border-[#f0f0f0] pt-3">
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Street</div>
+          <div className="divide-y divide-[#f0f0f0]">
+            {on_main_road != null && (
+              <CheckRow icon={Navigation} ok={!on_main_road}
+                label="Main road"
+                note={main_road_note} />
+            )}
+            {powerlines_nearby != null && (
+              <CheckRow icon={Zap} ok={!powerlines_nearby}
+                label="Powerlines"
+                note={powerlines_note} />
+            )}
+            {t_junction != null && (
+              <CheckRow icon={TriangleAlert} ok={!t_junction}
+                label="T-junction (路冲)"
+                note={t_junction_note} />
+            )}
+            {orientation && (
+              <div className="flex items-start gap-2.5 py-[5px]">
+                <Sun size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
+                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
+                  Orientation
+                  {sunlight_note && <span className="text-[#8a8a8a]"> · {sunlight_note}</span>}
+                </span>
+                <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{orientation.replace('-facing', '')}</span>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      {/* Renovation assessment */}
+      {/* Condition */}
       {(kitchen_condition || bathroom_condition) && (
         <div className="mt-3 border-t border-[#f0f0f0] pt-3">
-          <div className="mb-2 flex items-center gap-1.5">
-            <Hammer size={13} strokeWidth={2} className="text-[#8a8a8a]" />
+          <div className="mb-2 flex items-center justify-between">
             <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Condition</span>
-            {renovation_needed && (
-              <span className="ml-auto rounded-full bg-[#fef3c7] px-2 py-0.5 text-[10px] font-semibold text-[#d97706]">Renovation likely</span>
+            {renovation_note && (
+              <span className="text-[11px] text-[#8a8a8a]">{renovation_note}</span>
             )}
           </div>
           <div className="flex gap-2">
             {kitchen_condition && (
-              <ConditionChip label="Kitchen" condition={kitchen_condition} />
+              <ConditionBox label="Kitchen" condition={kitchen_condition}
+                renovationNeeded={renovation_needed && kitchen_condition !== 'Modern' && kitchen_condition !== 'Good'} />
             )}
             {bathroom_condition && (
-              <ConditionChip label="Bathroom" condition={bathroom_condition} />
+              <ConditionBox label="Bathroom" condition={bathroom_condition}
+                renovationNeeded={renovation_needed && bathroom_condition !== 'Modern' && bathroom_condition !== 'Good'} />
             )}
           </div>
-          {renovation_note && (
-            <p className="mt-2 text-[11px] leading-[1.4] text-[#8a8a8a]">{renovation_note}</p>
-          )}
         </div>
       )}
 
-      {/* Risk section */}
-      {(land_slope || noise_level || builder_quality || property_history_flags.length > 0 || needs_inspection || needs_pest_control) && (
+      {/* Risk */}
+      {(land_slope || noise_level || property_history_flags.length > 0 || needs_inspection || needs_pest_control) && (
         <div className="mt-3 border-t border-[#f0f0f0] pt-3">
-          <div className="mb-2 flex items-center gap-1.5">
-            <ClipboardCheck size={13} strokeWidth={2} className="text-[#8a8a8a]" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Risk</span>
-          </div>
-          <div className="flex flex-col gap-[6px]">
-            {/* Land slope */}
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Risk</div>
+          <div className="divide-y divide-[#f0f0f0]">
             {land_slope && (
-              <StreetRow icon={MountainSnow} concern={land_slope === 'Steep Slope'}
-                label={land_slope}
-                note={land_slope_note} />
-            )}
-            {/* Noise */}
-            {noise_level && (
-              <div className={`flex items-start gap-2 rounded-[6px] px-2.5 py-2 ${noise_level === 'High' ? 'bg-[#fef2f2]' : noise_level === 'Moderate' ? 'bg-[#fff7ed]' : 'bg-[#f0fdf4]'}`}>
-                <Volume2 size={13} strokeWidth={2} className={`mt-0.5 shrink-0 ${noise_level === 'High' ? 'text-[#b91c1c]' : noise_level === 'Moderate' ? 'text-[#d97706]' : 'text-[#16a34a]'}`} />
-                <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
-                  <span className="font-semibold">Noise: {noise_level}</span>
-                  {noise_sources.length > 0 && <span className="text-[#8a8a8a]"> — {noise_sources.join(', ')}</span>}
-                  {noise_note && !noise_sources.length && ` — ${noise_note}`}
+              <div className="flex items-start gap-2.5 py-[5px]">
+                <MountainSnow size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
+                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
+                  Slope
+                  {land_slope_note && <span className="text-[#8a8a8a]"> · {land_slope_note}</span>}
                 </span>
+                <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{land_slope}</span>
               </div>
             )}
-            {/* Builder quality */}
-            {builder_quality && builder_quality !== 'Unknown' && (
-              <StreetRow icon={HardHat} concern={builder_quality === 'Poor track record'}
-                label={builder_name ? `Builder: ${builder_name}` : 'Builder quality'}
-                note={builder_note} />
+            {noise_level && (
+              <div className="flex items-start gap-2.5 py-[5px]">
+                <Volume2 size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
+                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
+                  Noise
+                  {noise_sources.length > 0 && <span className="text-[#8a8a8a]"> · {noise_sources.join(', ')}</span>}
+                  {noise_note && !noise_sources.length && <span className="text-[#8a8a8a]"> · {noise_note}</span>}
+                </span>
+                <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{noise_level}</span>
+              </div>
             )}
-            {/* Property history flags */}
             {property_history_flags.length > 0 && (
-              <div className="flex items-start gap-2 rounded-[6px] bg-[#fff7ed] px-2.5 py-2">
-                <History size={13} strokeWidth={2} className="mt-0.5 shrink-0 text-[#d97706]" />
-                <span className="text-[12px] leading-[1.4] text-[#0d0d0d]">
-                  <span className="font-semibold">History flags</span>
-                  <span className="text-[#8a8a8a]"> — {property_history_flags.join(' · ')}</span>
+              <div className="flex items-start gap-2.5 py-[5px]">
+                <History size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
+                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
+                  History
+                  <span className="text-[#8a8a8a]"> · {property_history_flags.join(' · ')}</span>
                 </span>
               </div>
             )}
           </div>
-
-          {/* Due diligence callout */}
           {(needs_inspection || needs_pest_control) && (
-            <div className="mt-2 rounded-[8px] border border-[#e5e7eb] bg-[#f9f9f9] px-3 py-2.5">
-              <div className="flex items-center gap-2">
-                <span className="text-[12px] font-semibold text-[#0d0d0d]">Recommended before offer</span>
-              </div>
-              <div className="mt-1.5 flex flex-wrap gap-1.5">
-                {needs_inspection && (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-[#e5e7eb] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0d0d0d]">
-                    <ClipboardCheck size={10} strokeWidth={2.5} />
-                    Building inspection
-                  </span>
-                )}
-                {needs_pest_control && (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-[#e5e7eb] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0d0d0d]">
-                    <Bug size={10} strokeWidth={2.5} />
-                    Pest inspection
-                  </span>
-                )}
-              </div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {needs_inspection && (
+                <span className="inline-flex items-center gap-1 rounded-[4px] border border-[#0d0d0d] px-2 py-1 text-[11px] font-semibold text-[#0d0d0d]">
+                  <ClipboardCheck size={10} strokeWidth={2.5} />
+                  Building inspection
+                </span>
+              )}
+              {needs_pest_control && (
+                <span className="inline-flex items-center gap-1 rounded-[4px] border border-[#0d0d0d] px-2 py-1 text-[11px] font-semibold text-[#0d0d0d]">
+                  <Bug size={10} strokeWidth={2.5} />
+                  Pest inspection
+                </span>
+              )}
               {due_diligence_note && (
-                <p className="mt-1.5 text-[11px] leading-[1.4] text-[#8a8a8a]">{due_diligence_note}</p>
+                <p className="mt-1 w-full text-[11px] leading-[1.4] text-[#8a8a8a]">{due_diligence_note}</p>
               )}
             </div>
           )}
