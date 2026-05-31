@@ -6,6 +6,8 @@ const ALLOWED_DOMAINS = [
   'bucket.realestate.com.au',
   'media.realestate.com.au',
   'photos.domain.com.au',
+  'i2.au.reastatic.net',
+  'bucket-api.domain.com.au',
   'images.unsplash.com',
   'streetviewpixels-pa.googleapis.com',
   'maps.googleapis.com',
@@ -44,8 +46,19 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    // Use the site's own origin as Referer to pass CDN hotlink checks
+    const siteReferer = parsed.hostname.includes('domain.com.au')
+      ? 'https://www.domain.com.au/'
+      : parsed.hostname.includes('realestate.com.au')
+      ? 'https://www.realestate.com.au/'
+      : `https://${parsed.hostname}/`
+
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; BrickBot/1.0)' },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Referer': siteReferer,
+        'Accept': 'image/webp,image/avif,image/*,*/*',
+      },
       signal: AbortSignal.timeout(8000),
     })
 
