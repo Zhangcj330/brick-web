@@ -171,9 +171,9 @@ export default function SuburbStats({
       value: days_on_market == null ? '—' : `${days_on_market} days`,
     },
     {
-      label: 'Rental yield',
-      width: rental_yield == null ? 0 : clamp((rental_yield / 8) * 100, 0, 100),
-      value: rental_yield == null ? '—' : `${rental_yield.toFixed(1)}%`,
+      label: '5yr price growth',
+      width: growth_5yr == null ? 0 : clamp((growth_5yr / 100) * 100, 0, 100),
+      value: growth_5yr == null ? '—' : `${growth_5yr > 0 ? '+' : ''}${growth_5yr.toFixed(1)}%`,
     },
     {
       label: 'Vacancy rate',
