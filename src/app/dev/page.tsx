@@ -42,6 +42,13 @@ const SUBURB_STATS = {
   rental_yield: 3.2,
   vacancy_rate: 2.0,
   stock_on_market: 142,
+  growth_1yr: 7.4,
+  growth_5yr: 32.1,
+  growth_10yr: 78.5,
+  short_term_outlook: 'Strong',
+  short_term_reason: 'Low vacancy rate and tight days-on-market signal strong renter and buyer demand.',
+  long_term_outlook: 'Moderate',
+  long_term_reason: 'Solid 10-year track record, but affordability constraints may moderate future gains.',
   buyer_profile: 'Popular with young professionals and first-home buyers seeking inner-city lifestyle.',
 }
 

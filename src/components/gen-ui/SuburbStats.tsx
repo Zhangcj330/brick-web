@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import type React from 'react'
+import { TrendingUp, Activity } from 'lucide-react'
 
 interface SuburbStatsProps {
   suburb?: string
@@ -14,6 +16,13 @@ interface SuburbStatsProps {
   stock_on_market?: number
   rental_yield?: number
   vacancy_rate?: number
+  growth_1yr?: number
+  growth_5yr?: number
+  growth_10yr?: number
+  short_term_outlook?: string
+  short_term_reason?: string
+  long_term_outlook?: string
+  long_term_reason?: string
   population?: number
   buyer_profile?: string
 }
@@ -38,6 +47,42 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
 }
 
+const OUTLOOK_COLOR: Record<string, string> = {
+  Strong: 'text-[#0d0d0d]',
+  Moderate: 'text-[#0d0d0d]',
+  Neutral: 'text-[#6b6b6b]',
+  Weak: 'text-[#b91c1c]',
+  Caution: 'text-[#d97706]',
+}
+
+function OutlookCard({
+  icon: Icon,
+  label,
+  verdict,
+  reason,
+}: {
+  icon: React.ElementType
+  label: string
+  verdict?: string
+  reason?: string
+}) {
+  const color = verdict ? (OUTLOOK_COLOR[verdict] ?? 'text-[#0d0d0d]') : 'text-[#c0c0c0]'
+  return (
+    <div className="flex-1 rounded-[10px] border border-[#f0f0f0] bg-white p-4">
+      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-[#0d0d0d]">
+        <Icon size={18} strokeWidth={2} className="text-white" />
+      </div>
+      <div className="mb-1 text-[12px] font-semibold text-[#8a8a8a] uppercase tracking-[0.06em]">{label}</div>
+      <div className={`text-[22px] font-black tracking-[-0.03em] leading-none ${color}`}>
+        {verdict ?? '—'}
+      </div>
+      {reason && (
+        <div className="mt-2 text-[11px] leading-[1.4] text-[#8a8a8a]">{reason}</div>
+      )}
+    </div>
+  )
+}
+
 export default function SuburbStats({
   suburb,
   state,
@@ -48,6 +93,13 @@ export default function SuburbStats({
   rental_yield,
   vacancy_rate,
   stock_on_market,
+  growth_1yr,
+  growth_5yr,
+  growth_10yr,
+  short_term_outlook,
+  short_term_reason,
+  long_term_outlook,
+  long_term_reason,
   buyer_profile,
 }: SuburbStatsProps) {
   const barRefs = useRef<Array<HTMLDivElement | null>>([])
@@ -106,6 +158,22 @@ export default function SuburbStats({
       <div className="text-[16px] font-bold tracking-[-0.01em] text-[#0d0d0d]">
         {suburb ?? 'Suburb'}
         {state ? <span className="ml-1 text-[#8a8a8a]">{state}</span> : null}
+      </div>
+
+      {/* Growth outlook cards */}
+      <div className="mt-[12px] flex gap-[10px]">
+        <OutlookCard
+          icon={TrendingUp}
+          label="1-5 Year Growth"
+          verdict={short_term_outlook}
+          reason={short_term_reason}
+        />
+        <OutlookCard
+          icon={Activity}
+          label="6-15 Year Growth"
+          verdict={long_term_outlook}
+          reason={long_term_reason}
+        />
       </div>
 
       <div className="mt-[14px] grid grid-cols-4 overflow-hidden rounded-[6px] border border-[#f0f0f0]">
