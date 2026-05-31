@@ -1,9 +1,32 @@
 'use client'
 
 import { useState, useCallback, useRef } from 'react'
-import type { ChatMessage, GenUIBlock, WarningEvent, SSEEvent } from '@/types/chat'
+import type { ChatMessage, GenUIBlock, WarningEvent, SSEEvent, SourceSupport, SourceItem } from '@/types/chat'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
+
+/** Insert [n] citation markers into text after grounding-supported segments */
+function injectCitations(content: string, supports: SourceSupport[], sources: SourceItem[]): string {
+  if (!supports.length || !sources.length) return content
+
+  // Build a deduped URL list to get stable [n] numbers
+  const urlList = sources.map(s => s.url)
+
+  // Sort by segment text length descending (replace longer matches first to avoid nested issues)
+  const sorted = [...supports].sort((a, b) => b.text.length - a.text.length)
+
+  let result = content
+  for (const support of sorted) {
+    if (!support.text || !support.source_indices.length) continue
+    const idx = support.source_indices[0]
+    if (idx >= urlList.length) continue
+    const citNum = idx + 1
+    const escaped = support.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    // Only replace first occurrence, append [n] if not already annotated
+    result = result.replace(new RegExp(`(${escaped})(?!\\s*\\[${citNum}\\])`), `$1 [${citNum}]`)
+  }
+  return result
+}
 
 export function usePropertyChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -112,6 +135,18 @@ export function usePropertyChat() {
                   ? { ...m, sources: [...(m.sources ?? []), ...event.items] }
                   : m
               )
+            )
+          } else if (event.type === 'supports') {
+            setMessages(prev =>
+              prev.map(m => {
+                if (m.id !== assistantId) return m
+                const updated = { ...m, supports: event.items }
+                // Inject [n] citations into content using source_indices
+                if (m.sources && m.sources.length > 0) {
+                  updated.content = injectCitations(m.content, event.items, m.sources)
+                }
+                return updated
+              })
             )
           } else if (event.type === 'warning') {
             setActiveWarnings(prev => [...prev, { level: event.level, text: event.text }])

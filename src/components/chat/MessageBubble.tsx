@@ -68,12 +68,13 @@ export default function MessageBubble({ message, isStreaming }: MessageBubblePro
                     href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 bg-white border border-[#E5E5E5] rounded-full px-2.5 py-1 text-[11px] font-medium text-[#3A3A3A] hover:border-black hover:text-black transition-colors"
+                    className="inline-flex items-center gap-1.5 bg-white border border-[#E5E5E5] rounded-full px-2.5 py-1 text-[11px] font-medium text-[#3A3A3A] hover:border-black hover:text-black transition-colors"
                   >
+                    <span className="text-[10px] font-bold text-[#AFAFAF]">[{i + 1}]</span>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="opacity-40 flex-shrink-0">
                       <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    {s.title || new URL(s.url).hostname.replace('www.','')}
+                    {s.title || (s.url ? new URL(s.url).hostname.replace('www.', '') : 'Source')}
                   </a>
                 ))}
               </div>

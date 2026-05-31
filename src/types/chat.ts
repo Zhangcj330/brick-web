@@ -3,6 +3,13 @@ export type MessageRole = 'user' | 'assistant'
 export interface SourceItem {
   title: string
   url: string
+  domain?: string
+}
+
+export interface SourceSupport {
+  text: string
+  source_indices: number[]
+  confidence: number[]
 }
 
 export interface ChatMessage {
@@ -11,6 +18,7 @@ export interface ChatMessage {
   content: string
   timestamp: number
   sources?: SourceItem[]
+  supports?: SourceSupport[]
 }
 
 export interface ToolCallEvent {
@@ -28,6 +36,7 @@ export type SSEEvent =
   | { type: 'text_delta'; content: string }
   | { type: 'tool_call'; id: string; name: string; args: Record<string, unknown> }
   | { type: 'sources'; items: SourceItem[] }
+  | { type: 'supports'; items: SourceSupport[] }
   | { type: 'warning'; level: 'high' | 'medium' | 'low'; text: string }
   | { type: 'error'; message: string }
   | { type: 'done' }
