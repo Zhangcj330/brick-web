@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
+import GoogleButton from '@/components/GoogleButton'
 
 const FEATURES = [
   'AI-powered suburb & property analysis',
@@ -87,6 +88,13 @@ export default function SignInPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <GoogleButton label="Continue with Google" />
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+              <span className="text-xs text-[#AFAFAF]">or</span>
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+            </div>
             <div>
               <label className="block text-xs font-semibold text-[#3A3A3A] mb-1.5">
                 Email

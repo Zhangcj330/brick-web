@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase'
+import GoogleButton from '@/components/GoogleButton'
 
 const FEATURES = [
   'AI-powered suburb & property analysis',
@@ -122,6 +123,13 @@ export default function SignUpPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <GoogleButton label="Sign up with Google" />
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+              <span className="text-xs text-[#AFAFAF]">or</span>
+              <div className="flex-1 h-px bg-[#EEEEEE]" />
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-[#3A3A3A] mb-1.5">
@@ -133,7 +141,7 @@ export default function SignUpPage() {
                   autoComplete="given-name"
                   value={firstName}
                   onChange={e => setFirstName(e.target.value)}
-                  placeholder="Alex"
+                  placeholder=""
                   className="w-full border border-[#E2E2E2] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors placeholder:text-[#C0C0C0]"
                 />
               </div>
@@ -146,7 +154,7 @@ export default function SignUpPage() {
                   autoComplete="family-name"
                   value={lastName}
                   onChange={e => setLastName(e.target.value)}
-                  placeholder="Smith"
+                  placeholder=""
                   className="w-full border border-[#E2E2E2] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors placeholder:text-[#C0C0C0]"
                 />
               </div>
