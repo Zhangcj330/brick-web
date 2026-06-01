@@ -98,7 +98,7 @@ export default function MapView({
         const bg = p.active ? '#000' : '#fff'
         const color = p.active ? '#fff' : '#000'
         const border = p.active ? '' : 'border:1.5px solid #E2E2E2;'
-        return `<div style="background:${bg};color:${color};padding:4px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.15);${border}">${p.label}</div>`
+        return `<div style="background:${bg};color:${color};padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.18);${border}display:inline-block;">${p.label}</div>`
       }
 
       propsRef.current.forEach(prop => {
@@ -160,21 +160,17 @@ export default function MapView({
           <button
             key={t}
             onClick={() => handleFilter(t)}
-            className={`rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-sm transition-colors ${
-              filter === t ? 'border-black bg-black text-white' : 'border-[#E2E2E2] bg-white/90 text-black hover:bg-white'
-            }`}
+            className="rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-sm transition-colors"
+            style={filter === t
+              ? { background: '#000', borderColor: '#000', color: '#fff' }
+              : { background: 'rgba(255,255,255,0.9)', borderColor: '#E2E2E2', color: '#000' }
+            }
           >
             {t === 'all' ? 'All' : t === 'buy' ? 'Owner-occupier' : 'Investment'}
           </button>
         ))}
       </div>
 
-      {/* Suburb label */}
-      {suburb && (
-        <div className="absolute right-3 top-3 z-[1000] rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-black shadow-sm backdrop-blur-sm">
-          {suburb}
-        </div>
-      )}
 
       {/* Property card overlay */}
       {selected && (

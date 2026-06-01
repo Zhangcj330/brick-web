@@ -101,7 +101,7 @@ export default function RiskSummary({
               key={`${categoryName}-${index}`}
               className="flex items-start gap-3 border-b border-[#f9f9f9] py-3 last:border-b-0"
             >
-              <div className={`mt-0.5 flex-shrink-0 ${style.icon}`}>
+              <div className="mt-0.5 flex-shrink-0 text-[#0d0d0d]">
                 <Icon size={16} strokeWidth={2} />
               </div>
               <div className="min-w-0 flex-1">

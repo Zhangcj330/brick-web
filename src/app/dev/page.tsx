@@ -7,6 +7,7 @@ import RiskSummary from '@/components/gen-ui/RiskSummary'
 import Grants from '@/components/gen-ui/Grants'
 import Comparison from '@/components/gen-ui/Comparison'
 import StreetView from '@/components/gen-ui/StreetView'
+import MapView from '@/components/gen-ui/MapView'
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
@@ -153,6 +154,54 @@ const STREET_VIEW = {
   address: '22 Addison Avenue, Roseville NSW 2069',
 }
 
+const MAP_VIEW = {
+  suburb: 'Roseville',
+  lat: -33.7750,
+  lng: 151.1817,
+  zoom: 14,
+  properties: [
+    {
+      address: '22 Addison Ave, Roseville',
+      lat: -33.7750,
+      lng: 151.1817,
+      label: '$2,450,000',
+      meta: '4 bed · 2 bath',
+      type: 'buy' as const,
+      verdict: 'Strong buy',
+      verdict_sentiment: 'positive' as const,
+      growth: '+6.2% YoY',
+      median_suburb: '$2.1M',
+      clearance_rate: '74%',
+      days_on_market: '18 days',
+    },
+    {
+      address: '8 Boundary St, Roseville',
+      lat: -33.7770,
+      lng: 151.1850,
+      label: '$1,880,000',
+      meta: '3 bed · 2 bath',
+      type: 'invest' as const,
+      verdict: 'Good value',
+      verdict_sentiment: 'positive' as const,
+      growth: '+4.8% YoY',
+      median_suburb: '$2.1M',
+      clearance_rate: '74%',
+      days_on_market: '22 days',
+    },
+    {
+      address: '45 Hill St, Roseville',
+      lat: -33.7730,
+      lng: 151.1790,
+      label: '$3,100,000',
+      meta: '5 bed · 3 bath',
+      type: 'buy' as const,
+      verdict: 'Premium',
+      verdict_sentiment: 'neutral' as const,
+      growth: '+3.1% YoY',
+    },
+  ],
+}
+
 // ─── Section wrapper ──────────────────────────────────────────────────────────
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -204,6 +253,10 @@ export default function DevComponentsPage() {
 
           <Section title="Street View — show_street_view">
             <StreetView {...STREET_VIEW} />
+          </Section>
+
+          <Section title="Map View — show_map">
+            <MapView {...MAP_VIEW} />
           </Section>
         </div>
 
