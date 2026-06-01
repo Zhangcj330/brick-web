@@ -50,21 +50,17 @@ function proxyUrl(url: string) {
   return `/api/proxy-image?url=${encodeURIComponent(url)}`
 }
 
-// Uber-style monochrome check row: icon + label · note
-function CheckRow({ icon: Icon, ok, label, note }: {
+// Uber-style monochrome check row: icon + label + Yes/No
+function CheckRow({ icon: Icon, ok, label }: {
   icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
   ok: boolean
   label: string
-  note?: string
 }) {
   return (
-    <div className="flex items-start gap-2.5 py-[5px]">
-      <Icon size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
-      <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
-        {label}
-        {note && <span className="text-[#8a8a8a]"> · {note}</span>}
-      </span>
-      <span className={`ml-auto shrink-0 text-[11px] font-semibold tabular-nums ${ok ? 'text-[#0d0d0d]' : 'text-[#0d0d0d]'}`}>
+    <div className="flex items-center gap-2.5 py-[5px]">
+      <Icon size={13} strokeWidth={2} className="shrink-0 text-[#8a8a8a]" />
+      <span className="text-[12px] text-[#0d0d0d]">{label}</span>
+      <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">
         {ok ? 'No' : 'Yes'}
       </span>
     </div>
@@ -252,27 +248,18 @@ export default function PropertyCard({
           <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Street</div>
           <div className="divide-y divide-[#f0f0f0]">
             {on_main_road != null && (
-              <CheckRow icon={Navigation} ok={!on_main_road}
-                label="Main road"
-                note={main_road_note} />
+              <CheckRow icon={Navigation} ok={!on_main_road} label="Main road" />
             )}
             {powerlines_nearby != null && (
-              <CheckRow icon={Zap} ok={!powerlines_nearby}
-                label="Powerlines"
-                note={powerlines_note} />
+              <CheckRow icon={Zap} ok={!powerlines_nearby} label="Powerlines" />
             )}
             {t_junction != null && (
-              <CheckRow icon={TriangleAlert} ok={!t_junction}
-                label="T-junction"
-                note={t_junction_note} />
+              <CheckRow icon={TriangleAlert} ok={!t_junction} label="T-junction" />
             )}
             {orientation && (
-              <div className="flex items-start gap-2.5 py-[5px]">
-                <Sun size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
-                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
-                  Orientation
-                  {sunlight_note && <span className="text-[#8a8a8a]"> · {sunlight_note}</span>}
-                </span>
+              <div className="flex items-center gap-2.5 py-[5px]">
+                <Sun size={13} strokeWidth={2} className="shrink-0 text-[#8a8a8a]" />
+                <span className="text-[12px] text-[#0d0d0d]">Orientation</span>
                 <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{orientation.replace('-facing', '')}</span>
               </div>
             )}
@@ -283,12 +270,7 @@ export default function PropertyCard({
       {/* Condition */}
       {(kitchen_condition || bathroom_condition) && (
         <div className="mt-3 border-t border-[#f0f0f0] pt-3">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Condition</span>
-            {renovation_note && (
-              <span className="text-[11px] text-[#8a8a8a]">{renovation_note}</span>
-            )}
-          </div>
+          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Condition</div>
           <div className="flex gap-2">
             {kitchen_condition && (
               <ConditionBox label="Kitchen" condition={kitchen_condition}
@@ -299,6 +281,9 @@ export default function PropertyCard({
                 renovationNeeded={renovation_needed && bathroom_condition !== 'Excellent' && bathroom_condition !== 'Good'} />
             )}
           </div>
+          {renovation_note && (
+            <p className="mt-2 text-[11px] leading-[1.4] text-[#8a8a8a]">{renovation_note}</p>
+          )}
         </div>
       )}
 
