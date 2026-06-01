@@ -1,9 +1,9 @@
 'use client'
 
-import { Landmark, Waves, Flame, FileText, Building2, AlertTriangle, ShieldCheck, HelpCircle } from 'lucide-react'
+import { Landmark, Waves, Flame, FileText, Building2, AlertTriangle, ShieldCheck, HelpCircle, MountainSnow, Volume2, History, ClipboardCheck, Bug } from 'lucide-react'
 
 interface Risk {
-  category: string
+  category?: string
   name?: string
   level?: 'high' | 'medium' | 'low'
   severity?: 'high' | 'medium' | 'low'
@@ -59,6 +59,16 @@ function getRiskIcon(category: string) {
     return Building2
   if (name.includes('contamination') || name.includes('hazard') || name.includes('asbestos'))
     return AlertTriangle
+  if (name.includes('slope') || name.includes('land'))
+    return MountainSnow
+  if (name.includes('noise') || name.includes('sound'))
+    return Volume2
+  if (name.includes('history') || name.includes('flag'))
+    return History
+  if (name.includes('building inspection') || name.includes('inspection'))
+    return ClipboardCheck
+  if (name.includes('pest'))
+    return Bug
   if (name.includes('clear') || name.includes('safe') || name.includes('good'))
     return ShieldCheck
   return HelpCircle

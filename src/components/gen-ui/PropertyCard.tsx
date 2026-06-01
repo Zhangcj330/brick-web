@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type React from 'react'
-import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun, MountainSnow, Volume2, History, ClipboardCheck, Bug } from 'lucide-react'
+import { BedDouble, Bath, Car, SquareDashed, ChevronLeft, ChevronRight, ArrowRight, Navigation, Zap, TriangleAlert, Sun } from 'lucide-react'
 
 interface PropertyCardProps {
   address?: string
@@ -17,6 +17,7 @@ interface PropertyCardProps {
   images?: string[]
   description?: string
   listing_url?: string
+  domain_url?: string
   warnings?: string[]
   on_main_road?: boolean
   main_road_note?: string
@@ -30,20 +31,6 @@ interface PropertyCardProps {
   bathroom_condition?: string
   renovation_needed?: boolean
   renovation_note?: string
-  // Risk assessment
-  land_slope?: string
-  land_slope_note?: string
-  noise_level?: string
-  noise_sources?: string[]
-  noise_note?: string
-  builder_name?: string
-  builder_quality?: string
-  builder_note?: string
-  property_history_flags?: string[]
-  property_history_note?: string
-  needs_inspection?: boolean
-  needs_pest_control?: boolean
-  due_diligence_note?: string
 }
 
 function proxyUrl(url: string) {
@@ -97,6 +84,7 @@ export default function PropertyCard({
   images = [],
   description,
   listing_url,
+  domain_url,
   warnings = [],
   on_main_road,
   main_road_note,
@@ -110,19 +98,6 @@ export default function PropertyCard({
   bathroom_condition,
   renovation_needed,
   renovation_note,
-  land_slope,
-  land_slope_note,
-  noise_level,
-  noise_sources = [],
-  noise_note,
-  builder_name,
-  builder_quality,
-  builder_note,
-  property_history_flags = [],
-  property_history_note,
-  needs_inspection,
-  needs_pest_control,
-  due_diligence_note,
 }: PropertyCardProps) {
   const [current, setCurrent] = useState(0)
 
@@ -287,89 +262,24 @@ export default function PropertyCard({
         </div>
       )}
 
-      {/* Risk */}
-      {(land_slope || noise_level || property_history_flags.length > 0 || needs_inspection || needs_pest_control) && (
-        <div className="mt-3 border-t border-[#f0f0f0] pt-3">
-          <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">Risk</div>
-          <div className="divide-y divide-[#f0f0f0]">
-            {land_slope && (
-              <div className="flex items-start gap-2.5 py-[5px]">
-                <MountainSnow size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
-                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
-                  Slope
-                  {land_slope_note && <span className="text-[#8a8a8a]"> · {land_slope_note}</span>}
-                </span>
-                <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{land_slope}</span>
-              </div>
-            )}
-            {noise_level && (
-              <div className="flex items-start gap-2.5 py-[5px]">
-                <Volume2 size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
-                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
-                  Noise
-                  {noise_sources.length > 0 && <span className="text-[#8a8a8a]"> · {noise_sources.join(', ')}</span>}
-                  {noise_note && !noise_sources.length && <span className="text-[#8a8a8a]"> · {noise_note}</span>}
-                </span>
-                <span className="ml-auto shrink-0 text-[11px] font-semibold text-[#0d0d0d]">{noise_level}</span>
-              </div>
-            )}
-            {property_history_flags.length > 0 && (
-              <div className="flex items-start gap-2.5 py-[5px]">
-                <History size={13} strokeWidth={2} className="mt-[1px] shrink-0 text-[#8a8a8a]" />
-                <span className="text-[12px] leading-[1.5] text-[#0d0d0d]">
-                  History
-                  <span className="text-[#8a8a8a]"> · {property_history_flags.join(' · ')}</span>
-                </span>
-              </div>
-            )}
-          </div>
-          {(needs_inspection || needs_pest_control) && (
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {needs_inspection && (
-                <span className="inline-flex items-center gap-1 rounded-[4px] border border-[#0d0d0d] px-2 py-1 text-[11px] font-semibold text-[#0d0d0d]">
-                  <ClipboardCheck size={10} strokeWidth={2.5} />
-                  Building inspection
-                </span>
-              )}
-              {needs_pest_control && (
-                <span className="inline-flex items-center gap-1 rounded-[4px] border border-[#0d0d0d] px-2 py-1 text-[11px] font-semibold text-[#0d0d0d]">
-                  <Bug size={10} strokeWidth={2.5} />
-                  Pest inspection
-                </span>
-              )}
-              {due_diligence_note && (
-                <p className="mt-1 w-full text-[11px] leading-[1.4] text-[#8a8a8a]">{due_diligence_note}</p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
       {description && (
         <p className="mt-[14px] text-[12px] leading-5 text-[#8a8a8a]">{description}</p>
       )}
 
-      {warnings.length > 0 && (
-        <div className="mt-[14px] space-y-1">
-          {warnings.map((warning, index) => (
-            <p key={`${warning}-${index}`} className="text-[12px] leading-5 text-[#8a8a8a]">
-              {warning}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {listing_url && (
+      {(listing_url || domain_url) && (() => {
+        const url = listing_url ?? domain_url!
+        const source = listing_url ? 'realestate.com.au' : 'domain.com.au'
+        return (
         <div className="mt-[14px] flex items-center gap-[10px] border-t border-[#f0f0f0] pt-[14px]">
           <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] bg-[#f9f9f9]">
             <ArrowRight size={14} strokeWidth={2} />
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-[13px] font-semibold text-[#0d0d0d]">Listing available</div>
-            <div className="mt-px text-[12px] text-[#8a8a8a]">Open the source listing in a new tab</div>
+            <div className="mt-px text-[12px] text-[#8a8a8a]">{source}</div>
           </div>
           <a
-            href={listing_url}
+            href={url}
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 text-[13px] font-semibold text-[#0d0d0d] no-underline hover:underline"
@@ -377,7 +287,8 @@ export default function PropertyCard({
             View listing
           </a>
         </div>
-      )}
+        )
+      })()}
     </div>
   )
 }

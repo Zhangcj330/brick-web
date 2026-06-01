@@ -43,20 +43,6 @@ const PROPERTY_CARD = {
   bathroom_condition: 'Poor',
   renovation_needed: true,
   renovation_note: 'Original 1970s bathroom tiles and dated kitchen — budget $60–90k for full refresh',
-  // Risk
-  land_slope: 'Gentle Slope',
-  land_slope_note: 'Slight rear slope — check retaining walls and drainage',
-  noise_level: 'Low',
-  noise_sources: ['Some traffic from Pacific Hwy 400m west'],
-  noise_note: 'Generally quiet — no flight path or rail line impact',
-  builder_name: undefined,
-  builder_quality: 'Unknown',
-  builder_note: 'Older 1970s brick construction — no known builder defects',
-  property_history_flags: ['Heritage conservation area — check council DCP before any works'],
-  property_history_note: 'No flood risk; heritage overlay may limit renovation scope',
-  needs_inspection: true,
-  needs_pest_control: true,
-  due_diligence_note: 'Pre-purchase building + pest inspection strongly recommended — older brick construction with unknown structural history',
 }
 
 const SUBURB_STATS = {
@@ -103,11 +89,13 @@ const AFFORDABILITY = {
 const RISK_SUMMARY = {
   overall_rating: 'medium' as const,
   risks: [
-    { category: 'Flood risk', severity: 'low' as const, description: 'Property is outside the 1-in-100 year flood zone.' },
-    { category: 'Bushfire', severity: 'low' as const, description: 'Not in a mapped bushfire prone area.' },
-    { category: 'Heritage overlay', severity: 'high' as const, description: 'Heritage conservation area — council approval required for exterior changes.' },
-    { category: 'Contract risk', severity: 'medium' as const, description: 'Section 149 certificate shows minor stormwater easement.' },
-    { category: 'Zoning overlay', severity: 'low' as const, description: 'R2 Low Density Residential — standard single dwelling.' },
+    { name: 'Flood risk', severity: 'low' as const, description: 'Property is outside the 1-in-100 year flood zone.', status: 'Clear' },
+    { name: 'Bushfire', severity: 'low' as const, description: 'Not in a mapped bushfire prone area.', status: 'Clear' },
+    { name: 'Heritage overlay', severity: 'high' as const, description: 'Heritage conservation area — council approval required for exterior changes.', status: 'Flag' },
+    { name: 'Contract risk', severity: 'medium' as const, description: 'Section 149 certificate shows minor stormwater easement.', status: 'Review' },
+    { name: 'Land Slope', severity: 'medium' as const, description: 'Slight rear slope — check retaining walls and drainage.', status: 'Gentle Slope' },
+    { name: 'Building Inspection', severity: 'medium' as const, description: 'Pre-purchase building + pest inspection strongly recommended — older brick construction.', status: 'Recommended' },
+    { name: 'Pest Inspection', severity: 'low' as const, description: 'Pest inspection recommended before purchase.', status: 'Recommended' },
   ],
   recommendation: 'The heritage overlay is the main watch-out. Get legal advice before planning any renovations.',
 }

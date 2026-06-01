@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import type React from 'react'
 import { TrendingUp, Activity, Briefcase, DollarSign, GraduationCap, Building2 } from 'lucide-react'
 
@@ -52,10 +51,6 @@ function formatGrowth(value?: number) {
   if (value == null) return '—'
   const arrow = value > 0 ? '↑' : value < 0 ? '↓' : '→'
   return `${arrow} ${Math.abs(value).toFixed(1)}%`
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
 }
 
 const OUTLOOK_COLOR: Record<string, string> = {
@@ -172,51 +167,7 @@ export default function SuburbStats({
   supply_reason,
   buyer_profile,
 }: SuburbStatsProps) {
-  // Prefer SQM 1-year growth (real data), fall back to Gemini's growth_12mo or annual_growth
   const displayGrowth = growth_1yr ?? growth_12mo ?? annual_growth
-  const barRefs = useRef<Array<HTMLDivElement | null>>([])
-
-  const bars = [
-    {
-      label: 'Days on market',
-      width: days_on_market == null ? 0 : clamp((days_on_market / 90) * 100, 0, 100),
-      value: days_on_market == null ? '—' : `${days_on_market} days`,
-    },
-    {
-      label: 'Vacancy rate',
-      width: vacancy_rate == null ? 0 : clamp((vacancy_rate / 5) * 100, 0, 100),
-      value: vacancy_rate == null ? '—' : `${vacancy_rate.toFixed(1)}%`,
-    },
-    {
-      label: 'Stock on market',
-      width: stock_on_market == null ? 0 : clamp((stock_on_market / 500) * 100, 0, 100),
-      value: stock_on_market == null ? '—' : `${stock_on_market}`,
-    },
-    {
-      label: 'Crime rate',
-      width: crime_rate == null ? 0 : clamp((crime_rate / 200) * 100, 0, 100),
-      value: crime_rate == null ? '—' : crime_label ? `${crime_label}` : `${crime_rate}/1k`,
-      warning: crime_rate != null && crime_rate > 100,
-    },
-  ]
-
-  useEffect(() => {
-    barRefs.current.forEach(bar => {
-      if (bar) {
-        bar.style.width = '0%'
-      }
-    })
-
-    const timeout = window.setTimeout(() => {
-      barRefs.current.forEach((bar, index) => {
-        if (bar) {
-          bar.style.width = `${bars[index]?.width ?? 0}%`
-        }
-      })
-    }, 40)
-
-    return () => window.clearTimeout(timeout)
-  }, [bars])
 
   const growthColor = displayGrowth == null
     ? 'text-[#0d0d0d]'
@@ -266,24 +217,23 @@ export default function SuburbStats({
           <div className="text-[18px] font-bold tracking-[-0.02em] text-[#0d0d0d]">{formatPercent(rental_yield, 1)}</div>
           <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Rental yield</div>
         </div>
-      </div>
-
-      <div className="mt-[14px] flex flex-col gap-[10px]">
-        {bars.map((bar, index) => (
-          <div key={bar.label} className="flex items-center gap-[10px]">
-            <div className="min-w-[130px] text-[13px] text-[#0d0d0d]">{bar.label}</div>
-            <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#f0f0f0]">
-              <div
-                ref={element => {
-                  barRefs.current[index] = element
-                }}
-                className={`h-full rounded-full transition-[width] duration-700 ease-out ${bar.warning ? 'bg-[#d97706]' : 'bg-[#0d0d0d]'}`}
-                style={{ width: 0 }}
-              />
-            </div>
-            <div className={`min-w-[52px] text-right text-[13px] font-semibold ${bar.warning ? 'text-[#d97706]' : 'text-[#0d0d0d]'}`}>{bar.value}</div>
-          </div>
-        ))}
+        <div className="col-span-4 border-t border-[#f0f0f0]" />
+        <div className="border-r border-[#f0f0f0] p-3 text-center last:border-r-0">
+          <div className="text-[18px] font-bold tracking-[-0.02em] text-[#0d0d0d]">{days_on_market != null ? `${days_on_market}d` : '—'}</div>
+          <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Days on market</div>
+        </div>
+        <div className="border-r border-[#f0f0f0] p-3 text-center last:border-r-0">
+          <div className="text-[18px] font-bold tracking-[-0.02em] text-[#0d0d0d]">{vacancy_rate != null ? `${vacancy_rate.toFixed(1)}%` : '—'}</div>
+          <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Vacancy rate</div>
+        </div>
+        <div className="border-r border-[#f0f0f0] p-3 text-center last:border-r-0">
+          <div className="text-[18px] font-bold tracking-[-0.02em] text-[#0d0d0d]">{stock_on_market != null ? `${stock_on_market}` : '—'}</div>
+          <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Stock on market</div>
+        </div>
+        <div className="p-3 text-center">
+          <div className="text-[18px] font-bold tracking-[-0.02em] text-[#0d0d0d]">{crime_label ?? (crime_rate != null ? `${crime_rate}/1k` : '—')}</div>
+          <div className="mt-0.5 text-[11px] text-[#8a8a8a]">Crime rate</div>
+        </div>
       </div>
 
       {/* Long-term factors */}
