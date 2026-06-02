@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown'
 import type { ChatMessage } from '@/types/chat'
+import ThinkingBlock from './ThinkingBlock'
 
 interface MessageBubbleProps {
   message: ChatMessage
@@ -11,7 +12,8 @@ interface MessageBubbleProps {
 export default function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
   const isUser = message.role === 'user'
   const hasContent = message.content.trim().length > 0
-  const showTypingIndicator = !isUser && isStreaming && !hasContent
+  const hasThinking = !!message.thinking
+  const showTypingIndicator = !isUser && isStreaming && !hasContent && !hasThinking
 
   if (isUser) {
     return (
@@ -38,6 +40,13 @@ export default function MessageBubble({ message, isStreaming }: MessageBubblePro
           </span>
         ) : (
           <>
+            {/* Thinking block — shown during round 0 and collapses after */}
+            {hasThinking && (
+              <ThinkingBlock
+                content={message.thinking!}
+                duration={message.thinkingDuration}
+              />
+            )}
             <ReactMarkdown
               components={{
                 p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
@@ -58,7 +67,7 @@ export default function MessageBubble({ message, isStreaming }: MessageBubblePro
             {isStreaming && hasContent && (
               <span className="inline-block w-0.5 h-3.5 bg-black ml-0.5 align-middle animate-[chat-cursor-blink_0.8s_step-end_infinite]" />
             )}
-          {!isStreaming && message.sources && message.sources.length > 0 && (
+          {message.sources && message.sources.length > 0 && (
             <div className="mt-2 pt-2 border-t border-black/10">
               <p className="text-[10px] font-semibold text-[#AFAFAF] uppercase tracking-wide mb-1.5">Sources</p>
               <div className="flex flex-wrap gap-1.5">

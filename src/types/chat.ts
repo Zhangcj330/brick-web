@@ -19,6 +19,8 @@ export interface ChatMessage {
   timestamp: number
   sources?: SourceItem[]
   supports?: SourceSupport[]
+  thinking?: string           // round 0 streamed text
+  thinkingDuration?: number   // seconds, set when thinking_done arrives
 }
 
 export interface ToolCallEvent {
@@ -33,7 +35,8 @@ export interface WarningEvent {
 }
 
 export type SSEEvent =
-  | { type: 'text_delta'; content: string }
+  | { type: 'text_delta'; content: string; thinking?: boolean }
+  | { type: 'thinking_done'; duration: number }
   | { type: 'tool_call'; id: string; name: string; args: Record<string, unknown> }
   | { type: 'sources'; items: SourceItem[] }
   | { type: 'supports'; items: SourceSupport[] }

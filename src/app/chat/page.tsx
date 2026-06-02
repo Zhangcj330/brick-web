@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { LayoutDashboard, Menu, RefreshCw } from 'lucide-react'
+import { LayoutDashboard, PanelRightClose, PanelRightOpen, RefreshCw } from 'lucide-react'
 import { usePropertyChat } from '@/hooks/usePropertyChat'
 import { getSupabase } from '@/lib/supabase'
 import MessageList from '@/components/chat/MessageList'
@@ -41,6 +41,13 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
   const chatPanelRef = useRef<HTMLElement>(null)
   const handleRef = useRef<HTMLDivElement>(null)
   const [mobileReportFocus, setMobileReportFocus] = useState(false)
+  const [canvasCollapsed, setCanvasCollapsed] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+
+  const handleSignOut = async () => {
+    await getSupabase().auth.signOut()
+    window.location.href = '/sign-in'
+  }
 
   useEffect(() => {
     const handle = handleRef.current
@@ -199,18 +206,25 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           letter-spacing: -0.02em;
           color: var(--black);
           display: flex;
+          flex-direction: row;
           align-items: center;
           gap: 8px;
           white-space: nowrap;
         }
 
-        .topbar-brand::before {
-          content: '';
-          width: 24px;
-          height: 24px;
-          border-radius: 999px;
-          background: var(--black);
+        .topbar-brand-icon {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           flex-shrink: 0;
+        }
+
+        .topbar-brand-icon img {
+          width: 32px;
+          height: 32px;
+          object-fit: contain;
         }
 
         .report-label {
@@ -243,6 +257,70 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           font-size: 11px;
           font-weight: 700;
           flex-shrink: 0;
+          cursor: pointer;
+        }
+
+        .user-menu-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .user-menu-trigger {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          border-radius: 8px;
+          padding: 4px 6px;
+          transition: background 160ms;
+        }
+
+        .user-menu-trigger:hover {
+          background: var(--grey-100);
+        }
+
+        .user-menu-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          right: 0;
+          background: var(--white);
+          border: 1px solid var(--line);
+          border-radius: 10px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+          min-width: 160px;
+          z-index: 100;
+          overflow: hidden;
+        }
+
+        .user-menu-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          width: 100%;
+          padding: 10px 14px;
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--grey-800);
+          background: transparent;
+          border: 0;
+          cursor: pointer;
+          text-align: left;
+          transition: background 120ms;
+        }
+
+        .user-menu-item:hover {
+          background: var(--grey-100);
+          color: var(--black);
+        }
+
+        .user-menu-item.danger {
+          color: #c0392b;
+        }
+
+        .user-menu-item.danger:hover {
+          background: #fff5f5;
         }
 
         .panels {
@@ -251,6 +329,16 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           min-height: 0;
           overflow: hidden;
           --chat-w: 42%;
+        }
+
+        .panels.canvas-collapsed .chat-panel {
+          width: 100% !important;
+          max-width: 100% !important;
+          border-right: none !important;
+        }
+
+        .panels.canvas-collapsed .resize-handle {
+          display: none;
         }
 
         .chat-panel {
@@ -293,16 +381,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           padding: 4px 8px;
           border-radius: 8px;
           cursor: default;
-        }
-
-        .chat-header-title::after {
-          content: '';
-          width: 0;
-          height: 0;
-          border-left: 4px solid transparent;
-          border-right: 4px solid transparent;
-          border-top: 5px solid var(--grey-400);
-          margin-left: 2px;
         }
 
         .refresh-btn {
@@ -633,37 +711,65 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
       <div className={`app${mobileReportFocus ? ' mobile-report-focus' : ''}`}>
         <header className="topbar">
           <div className="topbar-left">
-            <button className="menu-btn" type="button" aria-label="Open menu">
-              <Menu size={18} />
-            </button>
-            <div className="topbar-brand">Brick AI</div>
+            <div className="topbar-brand">
+                <div className="topbar-brand-icon">
+                  <img src="/logo-on-black.svg" alt="Brick AI" width={32} height={32} />
+                </div>
+                <span style={{ marginTop: 3 }}>Brick AI</span>
+              </div>
           </div>
 
           <div className="topbar-fill" />
 
           <div className="topbar-right">
-            <div className="report-label">Property Report</div>
-            <div className="topbar-divider">|</div>
-            <div className="topbar-name">{userName || '…'}</div>
-            {userAvatar
-              ? <img src={userAvatar} alt={initials} className="topbar-avatar" style={{ objectFit: 'cover' }} />
-              : <div className="topbar-avatar" aria-hidden="true">{initials}</div>
-            }
+            <div className="user-menu-wrap">
+              <button
+                className="user-menu-trigger"
+                type="button"
+                onClick={() => setUserMenuOpen(v => !v)}
+                aria-label="User menu"
+              >
+                <span className="topbar-name">{userName || '…'}</span>
+                {userAvatar
+                  ? <img src={userAvatar} alt={initials} className="topbar-avatar" style={{ objectFit: 'cover' }} />
+                  : <div className="topbar-avatar" aria-hidden="true">{initials}</div>
+                }
+              </button>
+              {userMenuOpen && (
+                <>
+                  <div style={{ position: 'fixed', inset: 0, zIndex: 99 }} onClick={() => setUserMenuOpen(false)} />
+                  <div className="user-menu-dropdown">
+                    <button className="user-menu-item danger" type="button" onClick={handleSignOut}>
+                      Sign out
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </header>
 
-        <div className="panels" ref={panelsRef} style={{ '--chat-w': '42%' } as CSSProperties}>
+        <div className={`panels${canvasCollapsed ? ' canvas-collapsed' : ''}`} ref={panelsRef} style={{ '--chat-w': '42%' } as CSSProperties}>
           <section className="chat-panel" ref={chatPanelRef} aria-label="Chat panel">
             <div className="chat-header">
               <div className="chat-header-copy">
                 <div className="chat-header-title" style={{ gap: 8 }}>
                   <span style={{ width: 8, height: 8, borderRadius: 999, background: '#22c55e', flexShrink: 0, display: 'inline-block' }} />
-                  Brick AI
+                  Buyer's Agent
                 </div>
               </div>
-              <div style={{ marginLeft: 'auto', fontSize: 12, color: 'var(--grey-500)', whiteSpace: 'nowrap' }}>Online</div>
+              <div style={{ marginLeft: 'auto' }} />
               <button className="refresh-btn" type="button" aria-label="Reset conversation" onClick={onReset}>
                 <RefreshCw size={16} />
+              </button>
+              <button
+                className="refresh-btn"
+                type="button"
+                aria-label={canvasCollapsed ? 'Expand canvas' : 'Collapse canvas'}
+                onClick={() => setCanvasCollapsed(v => !v)}
+                title={canvasCollapsed ? 'Expand report canvas' : 'Collapse report canvas'}
+              >
+                {canvasCollapsed ? <PanelRightOpen size={16} /> : <PanelRightClose size={16} />}
               </button>
             </div>
 
@@ -684,8 +790,9 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             </div>
           </section>
 
-          <div className="resize-handle" ref={handleRef} title="Drag to resize" />
+          {!canvasCollapsed && <div className="resize-handle" ref={handleRef} title="Drag to resize" />}
 
+          {!canvasCollapsed && (
           <section className="report-canvas-wrap" aria-label="Report canvas">
             <button
               className="mobile-swap-button"
@@ -712,6 +819,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
               )}
             </div>
           </section>
+          )}
         </div>
       </div>
     </>

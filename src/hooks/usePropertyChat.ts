@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef } from 'react'
+import { flushSync } from 'react-dom'
 import type { ChatMessage, GenUIBlock, WarningEvent, SSEEvent, SourceSupport, SourceItem } from '@/types/chat'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
@@ -104,10 +105,28 @@ export function usePropertyChat() {
           }
 
           if (event.type === 'text_delta') {
+            if (event.thinking) {
+              flushSync(() => setMessages(prev =>
+                prev.map(m =>
+                  m.id === assistantId
+                    ? { ...m, thinking: (m.thinking ?? '') + event.content }
+                    : m
+                )
+              ))
+            } else {
+              flushSync(() => setMessages(prev =>
+                prev.map(m =>
+                  m.id === assistantId
+                    ? { ...m, content: m.content + event.content }
+                    : m
+                )
+              ))
+            }
+          } else if (event.type === 'thinking_done') {
             setMessages(prev =>
               prev.map(m =>
                 m.id === assistantId
-                  ? { ...m, content: m.content + event.content }
+                  ? { ...m, thinkingDuration: event.duration }
                   : m
               )
             )
@@ -118,7 +137,7 @@ export function usePropertyChat() {
               args: event.args,
               updatedAt: Date.now(),
             }
-            setGenUIBlocks(prev => [...prev, block])
+            flushSync(() => setGenUIBlocks(prev => [...prev, block]))
           } else if (event.type === 'sources') {
             setMessages(prev =>
               prev.map(m =>
