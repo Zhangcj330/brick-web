@@ -22,8 +22,17 @@ import StreetView from './StreetView'
 import Grants from './Grants'
 import Comparison from './Comparison'
 
+// null → undefined so React destructuring defaults (e.g. images = []) kick in
+function sanitizeArgs(args: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(args).map(([k, v]) => [k, v === null ? undefined : v])
+  )
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyProps = Record<string, any>
+
+
 
 type BlockMeta = {
   title: string
@@ -122,7 +131,7 @@ export default function GenUIPanel({ blocks }: GenUIPanelProps) {
             {/* Body — collapses */}
             {!isCollapsed && (
               <div className="border-t border-[#F0F0F0] p-4">
-                <Component {...block.args} />
+                <Component {...sanitizeArgs(block.args)} />
               </div>
             )}
           </div>

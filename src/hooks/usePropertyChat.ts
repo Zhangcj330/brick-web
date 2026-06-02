@@ -118,16 +118,7 @@ export function usePropertyChat() {
               args: event.args,
               updatedAt: Date.now(),
             }
-            // Replace existing block of same tool type, or append
-            setGenUIBlocks(prev => {
-              const idx = prev.findIndex(b => b.name === event.name)
-              if (idx >= 0) {
-                const next = [...prev]
-                next[idx] = block
-                return next
-              }
-              return [...prev, block]
-            })
+            setGenUIBlocks(prev => [...prev, block])
           } else if (event.type === 'sources') {
             setMessages(prev =>
               prev.map(m =>

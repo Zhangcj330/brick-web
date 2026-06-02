@@ -28,6 +28,7 @@ interface MapViewProps {
   lng?: number
   zoom?: number
   properties?: PropertyPin[]
+  listings?: PropertyPin[]   // alias accepted from agent
   // legacy fallback fields
   center_lat?: number
   center_lng?: number
@@ -46,6 +47,7 @@ export default function MapView({
   lng,
   zoom = 15,
   properties = [],
+  listings = [],
   center_lat,
   center_lng,
   pins = [],
@@ -60,7 +62,9 @@ export default function MapView({
 
   const allProps: PropertyPin[] = properties.length > 0
     ? properties
-    : pins.map(p => ({ address: p.address ?? '', lat: p.lat, lng: p.lng, label: p.price ?? p.label ?? '●' }))
+    : listings.length > 0
+      ? listings
+      : pins.map(p => ({ address: p.address ?? '', lat: p.lat, lng: p.lng, label: p.price ?? p.label ?? '●' }))
 
   const [selected, setSelected] = useState<(PropertyPin & { active: boolean; id: number }) | null>(null)
   const [filter, setFilter] = useState<'all' | 'buy' | 'invest'>('all')
