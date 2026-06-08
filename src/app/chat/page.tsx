@@ -830,22 +830,41 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           .report-canvas-wrap.canvas-collapsed {
             display: flex !important;
           }
-          .collapse-btn {
-            display: none;
-          }
+          .icon-desktop { display: none !important; }
+        }
+        @media (min-width: 768px) {
+          .icon-mobile { display: none !important; }
+        }
+
+        /* Mobile canvas trigger button in chat header */
+        .mobile-canvas-btn {
+          display: none;
         }
 
         .mobile-sheet-close {
           display: none;
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          z-index: 10;
+          width: 32px;
+          height: 32px;
+          border: 0;
+          border-radius: 8px;
+          background: var(--grey-100);
+          color: var(--grey-800);
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background 160ms;
         }
 
-        /* Mobile report toggle in topbar — hidden on desktop */
-        .mobile-report-btn {
-          display: none;
+        .mobile-sheet-close:hover {
+          background: var(--grey-200);
         }
 
         @media (max-width: 767px) {
-          .mobile-report-btn {
+          .mobile-canvas-btn {
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -862,11 +881,11 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             white-space: nowrap;
           }
 
-          .mobile-report-btn:hover {
+          .mobile-canvas-btn:hover {
             background: var(--grey-100);
           }
 
-          .mobile-report-btn .dot {
+          .mobile-canvas-btn .dot {
             width: 6px;
             height: 6px;
             border-radius: 999px;
@@ -874,9 +893,8 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             flex-shrink: 0;
           }
 
-          /* Also hide old mobile-canvas-btn in chat header */
-          .mobile-canvas-btn {
-            display: none !important;
+          .mobile-sheet-close {
+            display: flex;
           }
         }
       `}</style>
@@ -895,18 +913,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           <div className="topbar-fill" />
 
           <div className="topbar-right">
-            {/* Mobile report toggle — only on mobile, only when blocks exist */}
-            {genUIBlocks.length > 0 && (
-              <button
-                className="mobile-report-btn"
-                type="button"
-                onClick={() => setMobileSheetOpen(v => !v)}
-                aria-label={mobileSheetOpen ? 'Close report' : 'View report'}
-              >
-                {mobileSheetOpen ? <X size={13} /> : <span className="dot" />}
-                {mobileSheetOpen ? 'Close' : 'View report'}
-              </button>
-            )}
             {/* Donate button */}
             <div className="donate-wrap">
               <button
@@ -984,11 +990,21 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
               <button
                 className="refresh-btn collapse-btn"
                 type="button"
-                aria-label={canvasCollapsed ? 'Expand canvas' : 'Collapse canvas'}
-                onClick={() => setCanvasCollapsed(v => !v)}
-                title={canvasCollapsed ? 'Expand report canvas' : 'Collapse report canvas'}
+                aria-label="Toggle canvas"
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setMobileSheetOpen(v => !v)
+                  } else {
+                    setCanvasCollapsed(v => !v)
+                  }
+                }}
               >
-                {canvasCollapsed ? <PanelRightOpen size={16} /> : <PanelRightClose size={16} />}
+                <span className="icon-mobile">
+                  {mobileSheetOpen ? <PanelRightClose size={16} /> : <PanelRightOpen size={16} />}
+                </span>
+                <span className="icon-desktop">
+                  {canvasCollapsed ? <PanelRightOpen size={16} /> : <PanelRightClose size={16} />}
+                </span>
               </button>
             </div>
 
@@ -1015,6 +1031,15 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             className={`report-canvas-wrap${mobileSheetOpen ? ' mobile-sheet-open' : ''}${canvasCollapsed ? ' canvas-collapsed' : ''}`}
             aria-label="Report canvas"
           >
+            {/* Mobile close button */}
+            <button
+              className="mobile-sheet-close"
+              type="button"
+              aria-label="Close report"
+              onClick={() => setMobileSheetOpen(false)}
+            >
+              <X size={16} />
+            </button>
             <div className="report-canvas">
               {genUIBlocks.length === 0 && (
                 <div className="report-empty">
