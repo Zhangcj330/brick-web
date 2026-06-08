@@ -13,6 +13,11 @@ export default function GoogleButton({ label = 'Continue with Google' }: { label
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+        skipBrowserRedirect: false,
       },
     })
     // Browser will redirect — no need to setLoading(false)

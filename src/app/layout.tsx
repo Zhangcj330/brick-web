@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Hanken_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
+import AuthRedirect from '@/components/AuthRedirect'
 import './globals.css'
 
 const hanken = Hanken_Grotesk({
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={hanken.variable}>
       <body className={hanken.className}>
+        <AuthRedirect />
         {children}
         <Analytics />
         <Script
