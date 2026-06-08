@@ -761,6 +761,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           .panels {
             flex-direction: column;
             position: relative;
+            overflow: hidden;
           }
 
           .resize-handle {
@@ -778,7 +779,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
 
           /* Canvas as full-screen overlay sheet */
           .report-canvas-wrap {
-            position: fixed !important;
+            position: absolute !important;
             inset: 0;
             z-index: 200;
             height: 100% !important;
@@ -792,7 +793,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           }
 
           .mobile-swap-button {
-            display: inline-flex;
+            display: none;
           }
 
           .report-label,
