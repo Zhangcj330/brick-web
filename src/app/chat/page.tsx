@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { useRouter } from 'next/navigation'
-import { LayoutDashboard, PanelRightClose, PanelRightOpen, RefreshCw, Heart } from 'lucide-react'
+import { LayoutDashboard, PanelRightClose, PanelRightOpen, RefreshCw, Heart, X } from 'lucide-react'
 import { usePropertyChat } from '@/hooks/usePropertyChat'
 import { getSupabase } from '@/lib/supabase'
 import MessageList from '@/components/chat/MessageList'
@@ -51,6 +51,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
   const [canvasCollapsed, setCanvasCollapsed] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [donateOpen, setDonateOpen] = useState(false)
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false)
 
   const handleSignOut = async () => {
     await getSupabase().auth.signOut()
@@ -759,6 +760,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
         @media (max-width: 767px) {
           .panels {
             flex-direction: column;
+            position: relative;
           }
 
           .resize-handle {
@@ -769,25 +771,28 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             width: 100% !important;
             min-width: 0;
             max-width: none;
-            height: 50%;
+            height: 100% !important;
             border-right: 0;
-            border-bottom: 1px solid var(--grey-100);
+            border-bottom: none;
           }
 
+          /* Canvas as full-screen overlay sheet */
           .report-canvas-wrap {
-            height: 50%;
+            position: fixed !important;
+            inset: 0;
+            z-index: 200;
+            height: 100% !important;
+            transform: translateY(100%);
+            transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--white);
+          }
+
+          .report-canvas-wrap.mobile-sheet-open {
+            transform: translateY(0);
           }
 
           .mobile-swap-button {
             display: inline-flex;
-          }
-
-          .app.mobile-report-focus .chat-panel {
-            height: 35%;
-          }
-
-          .app.mobile-report-focus .report-canvas-wrap {
-            height: 65%;
           }
 
           .report-label,
@@ -802,6 +807,75 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           .report-header {
             flex-direction: column;
             align-items: flex-start;
+          }
+
+          /* Mobile canvas close button */
+          .mobile-sheet-close {
+            display: flex;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .mobile-sheet-close {
+            display: none;
+          }
+        }
+
+        .mobile-sheet-close {
+          display: none;
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          z-index: 10;
+          width: 32px;
+          height: 32px;
+          border: 0;
+          border-radius: 8px;
+          background: var(--grey-100);
+          color: var(--grey-800);
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background 160ms;
+        }
+
+        .mobile-sheet-close:hover {
+          background: var(--grey-200);
+        }
+
+        /* Mobile canvas trigger button in chat header */
+        .mobile-canvas-btn {
+          display: none;
+        }
+
+        @media (max-width: 767px) {
+          .mobile-canvas-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--white);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--grey-800);
+            cursor: pointer;
+            transition: background 160ms;
+            white-space: nowrap;
+          }
+
+          .mobile-canvas-btn:hover {
+            background: var(--grey-100);
+          }
+
+          .mobile-canvas-btn .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #22c55e;
+            flex-shrink: 0;
           }
         }
       `}</style>
@@ -891,6 +965,18 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
                 </div>
               </div>
               <div style={{ marginLeft: 'auto' }} />
+              {/* Mobile canvas toggle — only shows when there are blocks */}
+              {genUIBlocks.length > 0 && (
+                <button
+                  className="mobile-canvas-btn"
+                  type="button"
+                  onClick={() => setMobileSheetOpen(true)}
+                  aria-label="View report"
+                >
+                  <span className="dot" />
+                  View report
+                </button>
+              )}
               <button className="refresh-btn" type="button" aria-label="Reset conversation" onClick={onReset}>
                 <RefreshCw size={16} />
               </button>
@@ -925,15 +1011,15 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           {!canvasCollapsed && <div className="resize-handle" ref={handleRef} title="Drag to resize" />}
 
           {!canvasCollapsed && (
-          <section className="report-canvas-wrap" aria-label="Report canvas">
+          <section className={`report-canvas-wrap${mobileSheetOpen ? ' mobile-sheet-open' : ''}`} aria-label="Report canvas">
+            {/* Mobile close button */}
             <button
-              className="mobile-swap-button"
+              className="mobile-sheet-close"
               type="button"
-              aria-label="Swap panel focus"
-              onClick={() => setMobileReportFocus(current => !current)}
+              aria-label="Close report"
+              onClick={() => setMobileSheetOpen(false)}
             >
-              <span className="mobile-swap-grip" />
-              <span>Swap report focus</span>
+              <X size={16} />
             </button>
 
             <div className="report-canvas">
