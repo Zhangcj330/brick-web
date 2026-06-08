@@ -819,8 +819,16 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           }
         }
 
-        @media (min-width: 768px) {
-          .mobile-sheet-close {
+        .report-canvas-wrap.canvas-collapsed {
+          display: none;
+        }
+
+        /* Hide desktop collapse button on mobile */
+        @media (max-width: 767px) {
+          .report-canvas-wrap.canvas-collapsed {
+            display: flex !important;
+          }
+          .collapse-btn {
             display: none;
           }
         }
@@ -985,7 +993,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
                 <RefreshCw size={16} />
               </button>
               <button
-                className="refresh-btn"
+                className="refresh-btn collapse-btn"
                 type="button"
                 aria-label={canvasCollapsed ? 'Expand canvas' : 'Collapse canvas'}
                 onClick={() => setCanvasCollapsed(v => !v)}
@@ -1014,8 +1022,10 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
 
           {!canvasCollapsed && <div className="resize-handle" ref={handleRef} title="Drag to resize" />}
 
-          {!canvasCollapsed && (
-          <section className={`report-canvas-wrap${mobileSheetOpen ? ' mobile-sheet-open' : ''}`} aria-label="Report canvas">
+          <section
+            className={`report-canvas-wrap${mobileSheetOpen ? ' mobile-sheet-open' : ''}${canvasCollapsed ? ' canvas-collapsed' : ''}`}
+            aria-label="Report canvas"
+          >
             {/* Mobile close button */}
             <button
               className="mobile-sheet-close"
@@ -1041,7 +1051,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
               )}
             </div>
           </section>
-          )}
         </div>
       </div>
     </>
