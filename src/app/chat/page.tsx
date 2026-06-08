@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { LayoutDashboard, PanelRightClose, PanelRightOpen, RefreshCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { LayoutDashboard, PanelRightClose, PanelRightOpen, RefreshCw, Heart } from 'lucide-react'
 import { usePropertyChat } from '@/hooks/usePropertyChat'
 import { getSupabase } from '@/lib/supabase'
 import MessageList from '@/components/chat/MessageList'
@@ -10,15 +11,21 @@ import WarningBanner from '@/components/chat/WarningBanner'
 import GenUIPanel from '@/components/gen-ui/GenUIPanel'
 
 function ChatPageContent({ onReset }: { onReset: () => void }) {
+  const router = useRouter()
+  const [authChecked, setAuthChecked] = useState(false)
   const [userName, setUserName] = useState('')
   const [userAvatar, setUserAvatar] = useState('')
 
   useEffect(() => {
     getSupabase().auth.getUser().then(({ data: { user } }) => {
-      if (!user) return
+      if (!user) {
+        router.replace('/sign-in')
+        return
+      }
       const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email || ''
       setUserName(name)
       setUserAvatar(user.user_metadata?.avatar_url || user.user_metadata?.picture || '')
+      setAuthChecked(true)
     })
   }, [])
 
@@ -43,6 +50,7 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
   const [mobileReportFocus, setMobileReportFocus] = useState(false)
   const [canvasCollapsed, setCanvasCollapsed] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [donateOpen, setDonateOpen] = useState(false)
 
   const handleSignOut = async () => {
     await getSupabase().auth.signOut()
@@ -96,6 +104,11 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
 
   return (
     <>
+      {!authChecked && (
+        <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: '#fff' }} />
+      )}
+      {authChecked && (
+        <>
       <style jsx global>{`
         :root {
           --black: #0d0d0d;
@@ -321,6 +334,91 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
 
         .user-menu-item.danger:hover {
           background: #fff5f5;
+        }
+
+        .donate-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .donate-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          height: 32px;
+          padding: 0 12px;
+          border: 1px solid #e5e5e5;
+          border-radius: 8px;
+          background: var(--white);
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--grey-800);
+          cursor: pointer;
+          transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+          white-space: nowrap;
+        }
+
+        .donate-btn:hover {
+          background: #fff0f0;
+          border-color: #f4a0a0;
+          color: #c0392b;
+        }
+
+        .donate-btn .donate-heart {
+          color: #e74c3c;
+          transition: transform 160ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .donate-btn:hover .donate-heart {
+          transform: scale(1.2);
+        }
+
+        .donate-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          right: 0;
+          background: var(--white);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+          min-width: 220px;
+          z-index: 100;
+          padding: 16px;
+        }
+
+        .donate-dropdown-title {
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--black);
+          margin-bottom: 4px;
+        }
+
+        .donate-dropdown-sub {
+          font-size: 12px;
+          color: var(--grey-500);
+          margin-bottom: 14px;
+          line-height: 1.5;
+        }
+
+        .donate-cta {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          width: 100%;
+          padding: 9px 0;
+          border-radius: 8px;
+          background: #000;
+          color: #fff;
+          font-size: 13px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: background 160ms;
+        }
+
+        .donate-cta:hover {
+          background: #222;
         }
 
         .panels {
@@ -722,6 +820,40 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           <div className="topbar-fill" />
 
           <div className="topbar-right">
+            {/* Donate button */}
+            <div className="donate-wrap">
+              <button
+                className="donate-btn"
+                type="button"
+                onClick={() => setDonateOpen(v => !v)}
+                aria-label="Support Brick AI"
+              >
+                <Heart className="donate-heart" size={13} fill="currentColor" />
+                Support
+              </button>
+              {donateOpen && (
+                <>
+                  <div style={{ position: 'fixed', inset: 0, zIndex: 99 }} onClick={() => setDonateOpen(false)} />
+                  <div className="donate-dropdown">
+                    <div className="donate-dropdown-title">Support Brick AI ❤️</div>
+                    <div className="donate-dropdown-sub">
+                      Enjoying the tool? A small tip keeps it running and improving.
+                    </div>
+                    <a
+                      className="donate-cta"
+                      href="https://square.link/u/0mAhPIez"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setDonateOpen(false)}
+                    >
+                      <Heart size={13} fill="currentColor" />
+                      Donate via Square
+                    </a>
+                  </div>
+                </>
+              )}
+            </div>
+
             <div className="user-menu-wrap">
               <button
                 className="user-menu-trigger"
@@ -822,6 +954,8 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           )}
         </div>
       </div>
+    </>
+      )}
     </>
   )
 }

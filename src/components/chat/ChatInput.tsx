@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, Square } from 'lucide-react'
+import { ArrowRight, Square, Home, Gift, Calculator, Droplets, BarChart2, LucideIcon } from 'lucide-react'
 
 interface ChatInputProps {
   onSend: (text: string) => void
@@ -9,12 +9,12 @@ interface ChatInputProps {
   onStop?: () => void
 }
 
-const QUICK_PROMPTS = [
-  '🏠 Analyse a property',
-  '🎁 Check my grants',
-  '💰 Test my budget',
-  '🌊 Check flood risk',
-  '📊 Suburb report',
+const QUICK_PROMPTS: { label: string; icon: LucideIcon; text: string }[] = [
+  { label: 'Analyse a property', icon: Home,        text: 'Analyse a property' },
+  { label: 'Check my grants',    icon: Gift,        text: 'Check my grants' },
+  { label: 'Test my budget',     icon: Calculator,  text: 'Test my budget' },
+  { label: 'Check flood risk',   icon: Droplets,    text: 'Check flood risk' },
+  { label: 'Suburb report',      icon: BarChart2,   text: 'Suburb report' },
 ]
 
 export default function ChatInput({ onSend, isStreaming, onStop }: ChatInputProps) {
@@ -48,15 +48,16 @@ export default function ChatInput({ onSend, isStreaming, onStop }: ChatInputProp
       {/* Quick prompt chips — hide after first message */}
       {!hasStarted && (
         <div className="flex flex-wrap gap-1.5 border-t border-[#EEEEEE] bg-white px-4 pb-2.5 pt-2">
-          {QUICK_PROMPTS.map(prompt => (
+          {QUICK_PROMPTS.map(({ label, icon: Icon, text }) => (
             <button
-              key={prompt}
+              key={label}
               type="button"
-              onClick={() => handleSend(prompt)}
+              onClick={() => handleSend(text)}
               disabled={isStreaming}
-              className="whitespace-nowrap rounded-full border border-[#EEEEEE] bg-white px-3.5 py-1.5 text-xs font-semibold text-black shadow-sm transition-colors hover:bg-[#F6F6F6] disabled:opacity-40"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#EEEEEE] bg-white px-3.5 py-1.5 text-xs font-semibold text-black shadow-sm transition-colors hover:bg-[#F6F6F6] disabled:opacity-40"
             >
-              {prompt}
+              <Icon className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
+              {label}
             </button>
           ))}
         </div>
