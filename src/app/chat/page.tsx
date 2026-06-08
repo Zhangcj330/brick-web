@@ -159,6 +159,8 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           padding: 0 16px;
           border-bottom: 1px solid var(--line);
           flex-shrink: 0;
+          position: relative;
+          z-index: 1001;
         }
 
         .topbar-left,
@@ -776,15 +778,15 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             border-bottom: none;
           }
 
-          /* Canvas as full-screen fixed sheet */
+          /* Canvas as full-screen fixed sheet — below topbar */
           .report-canvas-wrap {
             position: fixed !important;
-            top: 0 !important;
+            top: 52px !important;
             left: 0 !important;
             right: 0 !important;
             bottom: 0 !important;
             width: 100% !important;
-            height: 100% !important;
+            height: calc(100% - 52px) !important;
             z-index: 999;
             transform: translateY(100%);
             transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -835,33 +837,15 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
 
         .mobile-sheet-close {
           display: none;
-          position: absolute;
-          top: 12px;
-          right: 16px;
-          z-index: 10;
-          width: 32px;
-          height: 32px;
-          border: 0;
-          border-radius: 8px;
-          background: var(--grey-100);
-          color: var(--grey-800);
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: background 160ms;
         }
 
-        .mobile-sheet-close:hover {
-          background: var(--grey-200);
-        }
-
-        /* Mobile canvas trigger button in chat header */
-        .mobile-canvas-btn {
+        /* Mobile report toggle in topbar — hidden on desktop */
+        .mobile-report-btn {
           display: none;
         }
 
         @media (max-width: 767px) {
-          .mobile-canvas-btn {
+          .mobile-report-btn {
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -878,16 +862,21 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             white-space: nowrap;
           }
 
-          .mobile-canvas-btn:hover {
+          .mobile-report-btn:hover {
             background: var(--grey-100);
           }
 
-          .mobile-canvas-btn .dot {
+          .mobile-report-btn .dot {
             width: 6px;
             height: 6px;
             border-radius: 999px;
             background: #22c55e;
             flex-shrink: 0;
+          }
+
+          /* Also hide old mobile-canvas-btn in chat header */
+          .mobile-canvas-btn {
+            display: none !important;
           }
         }
       `}</style>
@@ -906,6 +895,18 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           <div className="topbar-fill" />
 
           <div className="topbar-right">
+            {/* Mobile report toggle — only on mobile, only when blocks exist */}
+            {genUIBlocks.length > 0 && (
+              <button
+                className="mobile-report-btn"
+                type="button"
+                onClick={() => setMobileSheetOpen(v => !v)}
+                aria-label={mobileSheetOpen ? 'Close report' : 'View report'}
+              >
+                {mobileSheetOpen ? <X size={13} /> : <span className="dot" />}
+                {mobileSheetOpen ? 'Close' : 'View report'}
+              </button>
+            )}
             {/* Donate button */}
             <div className="donate-wrap">
               <button
@@ -977,18 +978,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
                 </div>
               </div>
               <div style={{ marginLeft: 'auto' }} />
-              {/* Mobile canvas toggle — only shows when there are blocks */}
-              {genUIBlocks.length > 0 && (
-                <button
-                  className="mobile-canvas-btn"
-                  type="button"
-                  onClick={() => setMobileSheetOpen(true)}
-                  aria-label="View report"
-                >
-                  <span className="dot" />
-                  View report
-                </button>
-              )}
               <button className="refresh-btn" type="button" aria-label="Reset conversation" onClick={onReset}>
                 <RefreshCw size={16} />
               </button>
@@ -1026,16 +1015,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             className={`report-canvas-wrap${mobileSheetOpen ? ' mobile-sheet-open' : ''}${canvasCollapsed ? ' canvas-collapsed' : ''}`}
             aria-label="Report canvas"
           >
-            {/* Mobile close button */}
-            <button
-              className="mobile-sheet-close"
-              type="button"
-              aria-label="Close report"
-              onClick={() => setMobileSheetOpen(false)}
-            >
-              <X size={16} />
-            </button>
-
             <div className="report-canvas">
               {genUIBlocks.length === 0 && (
                 <div className="report-empty">
