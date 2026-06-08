@@ -761,7 +761,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
           .panels {
             flex-direction: column;
             position: relative;
-            overflow: hidden;
           }
 
           .resize-handle {
@@ -777,15 +776,20 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             border-bottom: none;
           }
 
-          /* Canvas as full-screen overlay sheet */
+          /* Canvas as full-screen fixed sheet */
           .report-canvas-wrap {
-            position: absolute !important;
-            inset: 0;
-            z-index: 200;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
             height: 100% !important;
+            z-index: 999;
             transform: translateY(100%);
             transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
             background: var(--white);
+            flex: none !important;
           }
 
           .report-canvas-wrap.mobile-sheet-open {
@@ -810,7 +814,6 @@ function ChatPageContent({ onReset }: { onReset: () => void }) {
             align-items: flex-start;
           }
 
-          /* Mobile canvas close button */
           .mobile-sheet-close {
             display: flex;
           }
