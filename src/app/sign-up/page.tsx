@@ -47,8 +47,6 @@ export default function SignUpPage() {
         setError(authError.message)
       } else {
         setDone(true)
-        // If email confirmation is disabled in Supabase, redirect immediately
-        setTimeout(() => router.push('/chat'), 1500)
       }
     } catch {
       setError('Something went wrong. Please try again.')
@@ -68,8 +66,14 @@ export default function SignUpPage() {
           </div>
           <h1 className="text-2xl font-black tracking-[-0.03em] mb-3">You&apos;re in.</h1>
           <p className="text-[#6B6B6B] text-sm leading-relaxed">
-            Check your email to confirm your account, then we&apos;ll take you to Brick AI.
+            Check your email to confirm your account, then sign in to Brick AI.
           </p>
+          <Link
+            href="/sign-in"
+            className="mt-8 inline-flex items-center justify-center w-full h-11 bg-black text-white text-sm font-semibold rounded-xl hover:bg-[#222] transition-colors"
+          >
+            Go to sign in
+          </Link>
         </div>
       </div>
     )
